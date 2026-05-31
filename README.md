@@ -68,6 +68,32 @@ results\
 python src\predict.py --image "path\to\image.jpg"
 ```
 
+## 5. Distortion Methods
+
+Apply common digital image distortion methods to one image:
+
+```bash
+python src\distortion_methods.py --image "path\to\image.jpg"
+```
+
+If `--image` is not provided, the script uses one image from `data\processed\test`.
+
+Distortion outputs are saved to:
+
+```text
+results\distortions\
+  distortion_grid.png
+  methods.txt
+  gaussian_noise.png
+  salt_and_pepper.png
+  gaussian_blur.png
+  brightness_contrast.png
+  rotation.png
+  perspective_warp.png
+  barrel_distortion.png
+  pixelation.png
+```
+
 ## Notes
 
 This project is for learning and experimentation. It is not a medical diagnostic
