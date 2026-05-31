@@ -1,0 +1,13 @@
+Super-Resolution Task
+
+Step 1: Downsample the image by x2.
+Step 2: Upscale the low-resolution image back to the original size.
+
+Methods:
+1. Nearest-neighbor interpolation.
+2. Bilinear interpolation.
+3. Bicubic interpolation.
+4. Lanczos interpolation.
+5. Lanczos interpolation followed by unsharp masking.
+
+PSNR is higher when the reconstructed image is closer to the original.

@@ -145,6 +145,38 @@ results\cnn_on_distortion_restoration\
   tumor_probability_chart.png
 ```
 
+## 8. Super-Resolution
+
+Start by downsampling an image by x2, then reconstruct it back to the original
+size with interpolation-based super-resolution techniques:
+
+```bash
+python src\super_resolution.py
+```
+
+Or choose a specific image:
+
+```bash
+python src\super_resolution.py --image "path\to\image.jpg"
+```
+
+Super-resolution outputs are saved to:
+
+```text
+results\super_resolution\
+  original.png
+  downsampled_x2.png
+  downsampled_x2_preview.png
+  nearest.png
+  bilinear.png
+  bicubic.png
+  lanczos.png
+  sharpened_lanczos.png
+  super_resolution_grid.png
+  metrics.csv
+  methods.txt
+```
+
 ## Notes
 
 This project is for learning and experimentation. It is not a medical diagnostic
