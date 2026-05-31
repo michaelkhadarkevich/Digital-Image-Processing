@@ -199,6 +199,34 @@ SSIM: closer to 1 is better
 Reconstruction score: closer to 100 is better
 ```
 
+## 9. YOLO Detection
+
+Run YOLO on clear images, distortion images, and restoration images:
+
+```bash
+python src\yolo_detection.py
+```
+
+This uses `yolo11n.pt` by default. You can also pass a custom YOLO model:
+
+```bash
+python src\yolo_detection.py --model "path\to\custom_model.pt"
+```
+
+YOLO outputs are saved to:
+
+```text
+results\yolo_detection\
+  summary.txt
+  yolo_predictions.csv
+  clear\annotated\
+  distortions\annotated\
+  restoration\annotated\
+```
+
+Note: pretrained YOLO models are trained on natural images, not MRI scans.
+For medical tumor localization, train YOLO on MRI bounding-box annotations.
+
 ## Notes
 
 This project is for learning and experimentation. It is not a medical diagnostic

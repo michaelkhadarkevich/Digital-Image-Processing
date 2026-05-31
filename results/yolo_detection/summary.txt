@@ -1,0 +1,20 @@
+YOLO Detection Summary
+
+This task runs the same YOLO model on clear, distorted, and restored images.
+For MRI images, pretrained COCO YOLO detections may not be medically meaningful.
+The value is comparing how image processing changes detector behavior.
+
+clear:
+  images: 12
+  total detections: 6
+  images with detections: 5
+
+distortions:
+  images: 9
+  total detections: 6
+  images with detections: 6
+
+restoration:
+  images: 8
+  total detections: 6
+  images with detections: 6
