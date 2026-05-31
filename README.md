@@ -121,6 +121,30 @@ results\restoration\
   pixelation_restored.png
 ```
 
+## 7. CNN on Distorted and Restored Images
+
+Run the trained CNN on the distortion images and the restored images:
+
+```bash
+python src\evaluate_distortion_restoration.py
+```
+
+Run these first:
+
+```bash
+python src\distortion_methods.py
+python src\image_restoration.py
+```
+
+The CNN comparison outputs are saved to:
+
+```text
+results\cnn_on_distortion_restoration\
+  cnn_predictions.csv
+  summary.txt
+  tumor_probability_chart.png
+```
+
 ## Notes
 
 This project is for learning and experimentation. It is not a medical diagnostic
