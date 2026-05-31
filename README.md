@@ -94,6 +94,33 @@ results\distortions\
   pixelation.png
 ```
 
+## 6. Image Restoration
+
+Apply restoration techniques to the distortion outputs:
+
+```bash
+python src\image_restoration.py
+```
+
+Run `distortion_methods.py` first, because this script uses files from
+`results\distortions`.
+
+Restoration outputs are saved to:
+
+```text
+results\restoration\
+  restoration_grid.png
+  methods.txt
+  gaussian_noise_restored.png
+  salt_and_pepper_restored.png
+  gaussian_blur_restored.png
+  brightness_contrast_restored.png
+  rotation_restored.png
+  perspective_warp_restored.png
+  barrel_distortion_restored.png
+  pixelation_restored.png
+```
+
 ## Notes
 
 This project is for learning and experimentation. It is not a medical diagnostic
