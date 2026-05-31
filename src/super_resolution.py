@@ -16,6 +16,8 @@ if hasattr(sys.stdout, "reconfigure"):
 
 
 DEFAULT_INPUT_DIR = Path("data/processed/test")
+DISTORTION_DIR = Path("results/distortions")
+RESTORATION_DIR = Path("results/restoration")
 OUTPUT_DIR = Path("results/super_resolution")
 IMAGE_SIZE = (224, 224)
 DOWNSCALE_FACTOR = 2
@@ -31,6 +33,11 @@ def parse_args() -> argparse.Namespace:
         "--output",
         default=str(OUTPUT_DIR),
         help="Directory where super-resolution results are saved.",
+    )
+    parser.add_argument(
+        "--include-derived",
+        action="store_true",
+        help="Also run super-resolution on distortion and restoration result images.",
     )
     return parser.parse_args()
 
@@ -113,10 +120,23 @@ def save_grid(images: dict[str, Image.Image], output_path: Path) -> None:
     plt.close()
 
 
-def main() -> None:
-    args = parse_args()
-    image_path = Path(args.image) if args.image else find_default_image()
-    output_dir = Path(args.output)
+def collect_pngs(directory: Path) -> list[Path]:
+    excluded = {
+        "distortion_grid.png",
+        "restoration_grid.png",
+        "super_resolution_grid.png",
+        "downsampled_x2_preview.png",
+    }
+    if not directory.exists():
+        return []
+    return sorted(
+        path
+        for path in directory.glob("*.png")
+        if path.is_file() and path.name not in excluded
+    )
+
+
+def super_resolve_image(image_path: Path, output_dir: Path) -> list[str]:
     output_dir.mkdir(parents=True, exist_ok=True)
 
     original = load_image(image_path)
@@ -157,6 +177,11 @@ def main() -> None:
         metric_lines.append(f"{name},{mse(original, image):.4f},{psnr(original, image):.4f}")
 
     (output_dir / "metrics.csv").write_text("\n".join(metric_lines), encoding="utf-8")
+    return metric_lines
+
+
+def run_single_image(image_path: Path, output_dir: Path) -> None:
+    super_resolve_image(image_path, output_dir)
     (output_dir / "methods.txt").write_text(
         "\n".join(
             [
@@ -179,7 +204,78 @@ def main() -> None:
     )
 
     print("Input image:", image_path.resolve())
-    print("Saved super-resolution results to:", output_dir.resolve())
+    print("Saved single-image super-resolution results to:", output_dir.resolve())
+
+
+def run_collection(group_name: str, image_paths: list[Path], output_dir: Path) -> None:
+    group_dir = output_dir / group_name
+    group_dir.mkdir(parents=True, exist_ok=True)
+
+    summary_lines = [
+        f"Super-Resolution on {group_name.title()} Images",
+        "",
+        "image,method,mse,psnr",
+    ]
+
+    for image_path in image_paths:
+        image_output_dir = group_dir / image_path.stem
+        metric_lines = super_resolve_image(image_path, image_output_dir)
+        for line in metric_lines:
+            if not line or line.startswith(("Super-", "Input", "Original", "Downsampled", "method")):
+                continue
+            summary_lines.append(f"{image_path.name},{line}")
+
+    (group_dir / "summary_metrics.csv").write_text(
+        "\n".join(summary_lines),
+        encoding="utf-8",
+    )
+
+
+def write_methods(output_dir: Path) -> None:
+    (output_dir / "methods.txt").write_text(
+        "\n".join(
+            [
+                "Super-Resolution Task",
+                "",
+                "Step 1: Downsample the image by x2.",
+                "Step 2: Upscale the low-resolution image back to the original size.",
+                "",
+                "Methods:",
+                "1. Nearest-neighbor interpolation.",
+                "2. Bilinear interpolation.",
+                "3. Bicubic interpolation.",
+                "4. Lanczos interpolation.",
+                "5. Lanczos interpolation followed by unsharp masking.",
+                "",
+                "The same process can be run on original, distorted, and restored images.",
+                "PSNR is higher when the reconstructed image is closer to the input before downsampling.",
+            ]
+        ),
+        encoding="utf-8",
+    )
+
+
+def main() -> None:
+    args = parse_args()
+    image_path = Path(args.image) if args.image else find_default_image()
+    output_dir = Path(args.output)
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    run_single_image(image_path, output_dir)
+    write_methods(output_dir)
+
+    if args.include_derived:
+        distortion_images = collect_pngs(DISTORTION_DIR)
+        restoration_images = collect_pngs(RESTORATION_DIR)
+        if not distortion_images:
+            raise FileNotFoundError("No distortion images found. Run distortion_methods.py first.")
+        if not restoration_images:
+            raise FileNotFoundError("No restoration images found. Run image_restoration.py first.")
+
+        run_collection("distortions", distortion_images, output_dir)
+        run_collection("restoration", restoration_images, output_dir)
+        print("Saved distortion super-resolution results to:", (output_dir / "distortions").resolve())
+        print("Saved restoration super-resolution results to:", (output_dir / "restoration").resolve())
 
 
 if __name__ == "__main__":

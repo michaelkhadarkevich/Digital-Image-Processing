@@ -1,0 +1,12 @@
+Super-Resolution Results
+
+Input image: C:\Users\micha\OneDrive\שולחן העבודה\wordsFiles\Brain_Mri\results\distortions\gaussian_blur.png
+Original size: 224x224
+Downsampled x2 size: 112x112
+
+method,mse,psnr
+nearest,11.9052,37.3734
+bilinear,0.9746,48.2426
+bicubic,0.2500,54.1517
+lanczos,0.2723,53.7800
+sharpened_lanczos,2.6198,43.9481

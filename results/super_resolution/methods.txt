@@ -10,4 +10,5 @@ Methods:
 4. Lanczos interpolation.
 5. Lanczos interpolation followed by unsharp masking.
 
-PSNR is higher when the reconstructed image is closer to the original.
+The same process can be run on original, distorted, and restored images.
+PSNR is higher when the reconstructed image is closer to the input before downsampling.

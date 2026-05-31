@@ -1,0 +1,12 @@
+Super-Resolution Results
+
+Input image: C:\Users\micha\OneDrive\שולחן העבודה\wordsFiles\Brain_Mri\results\restoration\perspective_warp_restored.png
+Original size: 224x224
+Downsampled x2 size: 112x112
+
+method,mse,psnr
+nearest,242.2736,24.2877
+bilinear,180.4113,25.5682
+bicubic,104.9008,27.9230
+lanczos,73.5474,29.4651
+sharpened_lanczos,136.4904,26.7798

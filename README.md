@@ -177,6 +177,19 @@ results\super_resolution\
   methods.txt
 ```
 
+To also run super-resolution on all distortion and restoration images:
+
+```bash
+python src\super_resolution.py --include-derived
+```
+
+Additional outputs are saved to:
+
+```text
+results\super_resolution\distortions\
+results\super_resolution\restoration\
+```
+
 ## Notes
 
 This project is for learning and experimentation. It is not a medical diagnostic

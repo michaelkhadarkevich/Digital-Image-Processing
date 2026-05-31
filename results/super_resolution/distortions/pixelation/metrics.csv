@@ -1,0 +1,12 @@
+Super-Resolution Results
+
+Input image: C:\Users\micha\OneDrive\שולחן העבודה\wordsFiles\Brain_Mri\results\distortions\pixelation.png
+Original size: 224x224
+Downsampled x2 size: 112x112
+
+method,mse,psnr
+nearest,29.0608,33.4977
+bilinear,26.7477,33.8579
+bicubic,22.6048,34.5888
+lanczos,21.6550,34.7752
+sharpened_lanczos,29.6568,33.4096

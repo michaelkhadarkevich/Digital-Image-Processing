@@ -1,0 +1,12 @@
+Super-Resolution Results
+
+Input image: C:\Users\micha\OneDrive\שולחן העבודה\wordsFiles\Brain_Mri\results\distortions\rotation.png
+Original size: 224x224
+Downsampled x2 size: 112x112
+
+method,mse,psnr
+nearest,236.1376,24.3992
+bilinear,176.8008,25.6560
+bicubic,107.4494,27.8188
+lanczos,79.8725,29.1068
+sharpened_lanczos,141.7831,26.6146

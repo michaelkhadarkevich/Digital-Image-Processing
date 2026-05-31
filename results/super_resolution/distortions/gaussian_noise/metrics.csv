@@ -1,0 +1,12 @@
+Super-Resolution Results
+
+Input image: C:\Users\micha\OneDrive\שולחן העבודה\wordsFiles\Brain_Mri\results\distortions\gaussian_noise.png
+Original size: 224x224
+Downsampled x2 size: 112x112
+
+method,mse,psnr
+nearest,503.9519,21.1069
+bilinear,465.5869,21.4508
+bicubic,391.7885,22.2003
+lanczos,364.5309,22.5135
+sharpened_lanczos,427.4339,21.8221

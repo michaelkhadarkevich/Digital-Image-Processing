@@ -1,0 +1,12 @@
+Super-Resolution Results
+
+Input image: C:\Users\micha\OneDrive\שולחן העבודה\wordsFiles\Brain_Mri\results\restoration\salt_and_pepper_restored.png
+Original size: 224x224
+Downsampled x2 size: 112x112
+
+method,mse,psnr
+nearest,169.6124,25.8362
+bilinear,112.5543,27.6172
+bicubic,65.0733,29.9968
+lanczos,47.1880,31.3925
+sharpened_lanczos,110.7883,27.6859

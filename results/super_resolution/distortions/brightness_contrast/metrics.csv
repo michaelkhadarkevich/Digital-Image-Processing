@@ -1,0 +1,12 @@
+Super-Resolution Results
+
+Input image: C:\Users\micha\OneDrive\שולחן העבודה\wordsFiles\Brain_Mri\results\distortions\brightness_contrast.png
+Original size: 224x224
+Downsampled x2 size: 112x112
+
+method,mse,psnr
+nearest,459.0688,21.5120
+bilinear,377.7893,22.3583
+bicubic,248.7175,24.1737
+lanczos,201.3507,25.0913
+sharpened_lanczos,183.1206,25.5034

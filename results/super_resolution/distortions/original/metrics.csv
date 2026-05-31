@@ -1,0 +1,12 @@
+Super-Resolution Results
+
+Input image: C:\Users\micha\OneDrive\שולחן העבודה\wordsFiles\Brain_Mri\results\distortions\original.png
+Original size: 224x224
+Downsampled x2 size: 112x112
+
+method,mse,psnr
+nearest,220.8784,24.6893
+bilinear,163.4758,25.9963
+bicubic,97.3954,28.2454
+lanczos,70.9715,29.6200
+sharpened_lanczos,133.6529,26.8710
