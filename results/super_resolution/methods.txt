@@ -11,4 +11,9 @@ Methods:
 5. Lanczos interpolation followed by unsharp masking.
 
 The same process can be run on original, distorted, and restored images.
-PSNR is higher when the reconstructed image is closer to the input before downsampling.
+
+Success metrics:
+1. MSE/RMSE/MAE: lower is better.
+2. PSNR: higher is better.
+3. SSIM: closer to 1 is better.
+4. Reconstruction score: closer to 100 is better.

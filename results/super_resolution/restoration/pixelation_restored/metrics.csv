@@ -4,9 +4,9 @@ Input image: C:\Users\micha\OneDrive\שולחן העבודה\wordsFiles\Brain_Mr
 Original size: 224x224
 Downsampled x2 size: 112x112
 
-method,mse,psnr
-nearest,105.8688,27.8831
-bilinear,112.5485,27.6174
-bicubic,99.8036,28.1393
-lanczos,97.2264,28.2530
-sharpened_lanczos,111.0385,27.6761
+method,mse,rmse,mae,psnr,ssim,reconstruction_score
+nearest,105.8688,10.2893,3.9181,27.8831,0.982131,98.46
+bilinear,112.5485,10.6089,4.7181,27.6174,0.980814,98.15
+bicubic,99.8036,9.9902,4.5056,28.1393,0.983093,98.23
+lanczos,97.2264,9.8603,4.7355,28.2530,0.983562,98.14
+sharpened_lanczos,111.0385,10.5375,5.7359,27.6761,0.981835,97.75

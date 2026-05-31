@@ -190,6 +190,15 @@ results\super_resolution\distortions\
 results\super_resolution\restoration\
 ```
 
+Super-resolution success is measured without the CNN using:
+
+```text
+MSE / RMSE / MAE: lower is better
+PSNR: higher is better
+SSIM: closer to 1 is better
+Reconstruction score: closer to 100 is better
+```
+
 ## Notes
 
 This project is for learning and experimentation. It is not a medical diagnostic

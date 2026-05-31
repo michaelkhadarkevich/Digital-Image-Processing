@@ -96,11 +96,57 @@ def mse(original: Image.Image, reconstructed: Image.Image) -> float:
     return float(np.mean((original_array - reconstructed_array) ** 2))
 
 
+def mae(original: Image.Image, reconstructed: Image.Image) -> float:
+    original_array = np.asarray(original, dtype=np.float32)
+    reconstructed_array = np.asarray(reconstructed, dtype=np.float32)
+    return float(np.mean(np.abs(original_array - reconstructed_array)))
+
+
+def rmse(original: Image.Image, reconstructed: Image.Image) -> float:
+    return math.sqrt(mse(original, reconstructed))
+
+
 def psnr(original: Image.Image, reconstructed: Image.Image) -> float:
     error = mse(original, reconstructed)
     if error == 0:
         return math.inf
     return 20 * math.log10(255.0 / math.sqrt(error))
+
+
+def ssim(original: Image.Image, reconstructed: Image.Image) -> float:
+    original_gray = np.asarray(original.convert("L"), dtype=np.float64)
+    reconstructed_gray = np.asarray(reconstructed.convert("L"), dtype=np.float64)
+
+    c1 = (0.01 * 255) ** 2
+    c2 = (0.03 * 255) ** 2
+
+    mean_original = original_gray.mean()
+    mean_reconstructed = reconstructed_gray.mean()
+    variance_original = original_gray.var()
+    variance_reconstructed = reconstructed_gray.var()
+    covariance = ((original_gray - mean_original) * (reconstructed_gray - mean_reconstructed)).mean()
+
+    numerator = (2 * mean_original * mean_reconstructed + c1) * (2 * covariance + c2)
+    denominator = (mean_original**2 + mean_reconstructed**2 + c1) * (
+        variance_original + variance_reconstructed + c2
+    )
+    return float(numerator / denominator)
+
+
+def reconstruction_score(original: Image.Image, reconstructed: Image.Image) -> float:
+    score = 100 * (1 - mae(original, reconstructed) / 255)
+    return max(0.0, min(100.0, score))
+
+
+def calculate_metrics(original: Image.Image, reconstructed: Image.Image) -> dict[str, float]:
+    return {
+        "mse": mse(original, reconstructed),
+        "rmse": rmse(original, reconstructed),
+        "mae": mae(original, reconstructed),
+        "psnr": psnr(original, reconstructed),
+        "ssim": ssim(original, reconstructed),
+        "reconstruction_score": reconstruction_score(original, reconstructed),
+    }
 
 
 def save_grid(images: dict[str, Image.Image], output_path: Path) -> None:
@@ -169,12 +215,21 @@ def super_resolve_image(image_path: Path, output_dir: Path) -> list[str]:
         f"Original size: {original.size[0]}x{original.size[1]}",
         f"Downsampled x2 size: {low_resolution.size[0]}x{low_resolution.size[1]}",
         "",
-        "method,mse,psnr",
+        "method,mse,rmse,mae,psnr,ssim,reconstruction_score",
     ]
 
     for name, image in reconstructions.items():
         image.save(output_dir / f"{name}.png")
-        metric_lines.append(f"{name},{mse(original, image):.4f},{psnr(original, image):.4f}")
+        metrics = calculate_metrics(original, image)
+        metric_lines.append(
+            f"{name},"
+            f"{metrics['mse']:.4f},"
+            f"{metrics['rmse']:.4f},"
+            f"{metrics['mae']:.4f},"
+            f"{metrics['psnr']:.4f},"
+            f"{metrics['ssim']:.6f},"
+            f"{metrics['reconstruction_score']:.2f}"
+        )
 
     (output_dir / "metrics.csv").write_text("\n".join(metric_lines), encoding="utf-8")
     return metric_lines
@@ -197,7 +252,11 @@ def run_single_image(image_path: Path, output_dir: Path) -> None:
                 "4. Lanczos interpolation.",
                 "5. Lanczos interpolation followed by unsharp masking.",
                 "",
-                "PSNR is higher when the reconstructed image is closer to the original.",
+                "Success metrics:",
+                "1. MSE/RMSE/MAE: lower is better.",
+                "2. PSNR: higher is better.",
+                "3. SSIM: closer to 1 is better.",
+                "4. Reconstruction score: closer to 100 is better.",
             ]
         ),
         encoding="utf-8",
@@ -214,7 +273,7 @@ def run_collection(group_name: str, image_paths: list[Path], output_dir: Path) -
     summary_lines = [
         f"Super-Resolution on {group_name.title()} Images",
         "",
-        "image,method,mse,psnr",
+        "image,method,mse,rmse,mae,psnr,ssim,reconstruction_score",
     ]
 
     for image_path in image_paths:
@@ -248,7 +307,12 @@ def write_methods(output_dir: Path) -> None:
                 "5. Lanczos interpolation followed by unsharp masking.",
                 "",
                 "The same process can be run on original, distorted, and restored images.",
-                "PSNR is higher when the reconstructed image is closer to the input before downsampling.",
+                "",
+                "Success metrics:",
+                "1. MSE/RMSE/MAE: lower is better.",
+                "2. PSNR: higher is better.",
+                "3. SSIM: closer to 1 is better.",
+                "4. Reconstruction score: closer to 100 is better.",
             ]
         ),
         encoding="utf-8",
