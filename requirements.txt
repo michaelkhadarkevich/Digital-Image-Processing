@@ -1,0 +1,7 @@
+kagglehub
+certifi
+python-certifi-win32
+tensorflow
+numpy
+pillow
+matplotlib
