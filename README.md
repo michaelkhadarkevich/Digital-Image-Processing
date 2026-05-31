@@ -7,6 +7,22 @@ training a CNN binary classifier, and predicting whether a new MRI image shows a
 
 Dataset: `navoneel/brain-mri-images-for-brain-tumor-detection`
 
+## Future Enhancements
+
+Planned improvements are tracked in:
+
+```text
+ENHANCEMENTS.md
+```
+
+GitHub issue templates are included for:
+
+```text
+CNN enhancement
+Super-resolution enhancement
+YOLO enhancement
+```
+
 ## Setup
 
 ```bash
