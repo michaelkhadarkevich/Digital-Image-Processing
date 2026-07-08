@@ -126,7 +126,7 @@ def main() -> None:
     output_dir = Path(args.output)
 
     if not model_path.exists():
-        raise FileNotFoundError("Model not found. Run train.py first.")
+        raise FileNotFoundError("Model not found. Run train_cnn.py first.")
     if not distortion_dir.exists():
         raise FileNotFoundError("Distortion folder not found. Run distortion_methods.py first.")
     if not restoration_dir.exists():

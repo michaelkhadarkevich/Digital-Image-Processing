@@ -59,7 +59,7 @@ data\processed\
 ## 3. Train CNN
 
 ```bash
-python src\train.py
+python src\train_cnn.py
 ```
 
 The trained model is saved to:
