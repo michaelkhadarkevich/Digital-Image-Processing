@@ -2,7 +2,6 @@ import csv
 from collections import defaultdict
 import matplotlib.pyplot as plt
 import numpy as np
-from datetime import datetime
 
 # Read CSV
 results = []
@@ -30,126 +29,132 @@ for row in results:
     if dets > 0:
         dist_stats[dist]['with_detection'] += 1
 
-# Print summary
-print("\n" + "="*80)
-print("📊 YOLO DETECTION RESULTS - COMPREHENSIVE ANALYSIS")
-print("="*80)
-print(f"\n📈 Overall Statistics:")
-print(f"   Total images processed: {total_rows}")
-print(f"   Total detections: {total_detections}")
-print(f"   Average detections per image: {avg_detections:.2f}")
-print(f"   ✅ Images with at least 1 detection: {images_with_detections}/{total_rows}")
-print(f"   🎯 SUCCESS RATE: {success_rate:.1f}%")
-
-print(f"\n📋 Detailed Breakdown by Distortion Method:\n")
-print(f"{'Method':<20} {'Total':>6} {'Avg':>6} {'Max':>4} {'Success':>8} {'Rate':>7}")
-print("-" * 60)
-
+# Prepare data ordered by distortion type
 distortion_order = ['original', 'gaussian_noise', 'salt_and_pepper', 'gaussian_blur', 
                     'brightness_contrast', 'rotation', 'perspective_warp', 
                     'barrel_distortion', 'pixelation']
 
 dist_names = []
-dist_totals = []
 dist_success_rates = []
+dist_totals = []
+dist_avg = []
 
-for dist in distortion_order:
+for i, dist in enumerate(distortion_order):
     if dist in dist_stats:
         stats = dist_stats[dist]
         avg = stats['detections'] / stats['count'] if stats['count'] > 0 else 0
         success = stats['with_detection']
         success_pct = (success / stats['count'] * 100) if stats['count'] > 0 else 0
         
-        print(f"{dist:<20} {stats['detections']:>6} {avg:>6.2f} {stats['max']:>4} {success:>8}/{stats['count']} {success_pct:>6.1f}%")
+        # Create x-axis labels (short names)
+        if dist == 'original':
+            short_name = 'Original'
+        elif dist == 'gaussian_noise':
+            short_name = 'G.Noise'
+        elif dist == 'salt_and_pepper':
+            short_name = 'S&P'
+        elif dist == 'gaussian_blur':
+            short_name = 'Blur'
+        elif dist == 'brightness_contrast':
+            short_name = 'Bright.'
+        elif dist == 'rotation':
+            short_name = 'Rotate'
+        elif dist == 'perspective_warp':
+            short_name = 'Persp.'
+        elif dist == 'barrel_distortion':
+            short_name = 'Barrel'
+        elif dist == 'pixelation':
+            short_name = 'Pixel.'
         
-        dist_names.append(dist)
-        dist_totals.append(stats['detections'])
+        dist_names.append(short_name)
         dist_success_rates.append(success_pct)
+        dist_totals.append(stats['detections'])
+        dist_avg.append(avg)
 
-print("=" * 80)
+x = np.arange(len(dist_names))
 
-# Create visualizations
-fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-fig.suptitle('YOLO Detection Analysis - Distortion Impact', fontsize=16, fontweight='bold')
+# Create figure with 2 subplots (like training_history.png)
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
+fig.suptitle('YOLO Detection Performance - Distortion Impact', fontsize=14, fontweight='bold')
 
-# Plot 1: Total detections by method
-ax1 = axes[0, 0]
-bars1 = ax1.bar(range(len(dist_names)), dist_totals, color='steelblue', alpha=0.8)
-ax1.set_xticks(range(len(dist_names)))
+# Left panel: Success Rate
+ax1.plot(x, dist_success_rates, 'o-', linewidth=2.5, markersize=8, color='steelblue', label='Success Rate')
+ax1.fill_between(x, dist_success_rates, alpha=0.3, color='steelblue')
+ax1.set_xlabel('Distortion Method', fontweight='bold')
+ax1.set_ylabel('Success Rate (%)', fontweight='bold')
+ax1.set_title('Success Rate')
+ax1.set_xticks(x)
 ax1.set_xticklabels(dist_names, rotation=45, ha='right')
-ax1.set_ylabel('Total Detections', fontweight='bold')
-ax1.set_title('Total Detections by Distortion Method')
-ax1.grid(axis='y', alpha=0.3)
-for i, v in enumerate(dist_totals):
-    ax1.text(i, v + 1, str(v), ha='center', fontweight='bold')
+ax1.set_ylim([0, 100])
+ax1.grid(True, alpha=0.3)
+ax1.legend(loc='lower left', fontsize=10)
 
-# Plot 2: Success rate by method
-ax2 = axes[0, 1]
-bars2 = ax2.bar(range(len(dist_names)), dist_success_rates, color='forestgreen', alpha=0.8)
-ax2.set_xticks(range(len(dist_names)))
-ax2.set_xticklabels(dist_names, rotation=45, ha='right')
-ax2.set_ylabel('Success Rate (%)', fontweight='bold')
-ax2.set_title('Detection Success Rate by Distortion Method')
-ax2.set_ylim([0, 100])
-ax2.grid(axis='y', alpha=0.3)
+# Add value labels
 for i, v in enumerate(dist_success_rates):
-    ax2.text(i, v + 2, f'{v:.0f}%', ha='center', fontweight='bold', fontsize=9)
+    ax1.text(i, v + 3, f'{v:.0f}%', ha='center', fontsize=9, fontweight='bold')
 
-# Plot 3: Average detections per image
-ax3 = axes[1, 0]
-avg_detections_by_method = []
+# Right panel: Total Detections & Average Detections
+ax2_twin = ax2.twinx()
+
+line1 = ax2.plot(x, dist_totals, 'o-', linewidth=2.5, markersize=8, color='forestgreen', label='Total Detections')
+line2 = ax2_twin.plot(x, dist_avg, 's-', linewidth=2.5, markersize=8, color='coral', label='Avg Detections')
+
+ax2.set_xlabel('Distortion Method', fontweight='bold')
+ax2.set_ylabel('Total Detections', fontweight='bold', color='forestgreen')
+ax2_twin.set_ylabel('Avg Detections/Image', fontweight='bold', color='coral')
+ax2.set_title('Total & Average Detections')
+ax2.set_xticks(x)
+ax2.set_xticklabels(dist_names, rotation=45, ha='right')
+ax2.grid(True, alpha=0.3)
+ax2.tick_params(axis='y', labelcolor='forestgreen')
+ax2_twin.tick_params(axis='y', labelcolor='coral')
+
+# Add value labels for total detections
+for i, v in enumerate(dist_totals):
+    ax2.text(i, v + 1.5, str(v), ha='center', fontsize=9, fontweight='bold', color='forestgreen')
+
+# Add value labels for average detections
+for i, v in enumerate(dist_avg):
+    ax2_twin.text(i, v + 0.05, f'{v:.2f}', ha='center', fontsize=9, fontweight='bold', color='coral')
+
+# Combine legends
+lines1, labels1 = ax2.get_legend_handles_labels()
+lines2, labels2 = ax2_twin.get_legend_handles_labels()
+ax2.legend(lines1 + lines2, labels1 + labels2, loc='upper left', fontsize=10)
+
+plt.tight_layout()
+plt.savefig('results/results_augmented/yolo_detection_history.png', dpi=150, bbox_inches='tight')
+print("\n✅ Graph saved to: results/results_augmented/yolo_detection_history.png")
+
+# Print detailed summary
+print("\n" + "="*80)
+print("📊 YOLO DETECTION RESULTS - DETAILED ANALYSIS")
+print("="*80)
+
+print(f"\n📈 Overall Performance Metrics:")
+print(f"   Total images processed: {total_rows}")
+print(f"   Total detections: {total_detections}")
+print(f"   Average detections per image: {avg_detections:.2f}")
+print(f"   Images with detections: {images_with_detections}/{total_rows}")
+
+print(f"\n" + "="*80)
+print(f"🎯 SUCCESS RATE: {success_rate:.1f}%")
+print(f"="*80)
+
+print(f"\n📋 Breakdown by Distortion Method:\n")
+print(f"{'Method':<20} {'Success':>10} {'Rate':>6} {'Total':>6} {'Avg':>6}")
+print("-" * 50)
+
 for dist in distortion_order:
     if dist in dist_stats:
         stats = dist_stats[dist]
+        success = stats['with_detection']
+        success_pct = (success / stats['count'] * 100) if stats['count'] > 0 else 0
         avg = stats['detections'] / stats['count'] if stats['count'] > 0 else 0
-        avg_detections_by_method.append(avg)
+        print(f"{dist:<20} {success:>4}/{stats['count']:<4} {success_pct:>6.1f}% {stats['detections']:>6} {avg:>6.2f}")
 
-bars3 = ax3.bar(range(len(dist_names)), avg_detections_by_method, color='coral', alpha=0.8)
-ax3.set_xticks(range(len(dist_names)))
-ax3.set_xticklabels(dist_names, rotation=45, ha='right')
-ax3.set_ylabel('Avg Detections per Image', fontweight='bold')
-ax3.set_title('Average Detections per Image by Distortion')
-ax3.grid(axis='y', alpha=0.3)
-for i, v in enumerate(avg_detections_by_method):
-    ax3.text(i, v + 0.05, f'{v:.2f}', ha='center', fontweight='bold', fontsize=9)
-
-# Plot 4: Summary statistics
-ax4 = axes[1, 1]
-ax4.axis('off')
-
-summary_text = f"""
-SUMMARY STATISTICS
-
-Total Images Processed: {total_rows}
-Total Detections: {total_detections}
-Overall Avg Detections: {avg_detections:.2f} per image
-
-Overall Success Rate: {success_rate:.1f}%
-({images_with_detections} out of {total_rows} images detected)
-
-Best Method: {max(dist_success_rates) == max(dist_success_rates) and dist_names[dist_success_rates.index(max(dist_success_rates))] or 'N/A'}
-  Success Rate: {max(dist_success_rates):.1f}%
-
-Worst Method: {dist_names[dist_success_rates.index(min(dist_success_rates))]}
-  Success Rate: {min(dist_success_rates):.1f}%
-
-Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
-"""
-
-ax4.text(0.05, 0.95, summary_text, transform=ax4.transAxes, 
-         fontsize=11, verticalalignment='top', fontfamily='monospace',
-         bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
-
-plt.tight_layout()
-plt.savefig('results/results_augmented/yolo_detection_analysis.png', dpi=150, bbox_inches='tight')
-print("\n✅ Graph saved to: results/results_augmented/yolo_detection_analysis.png")
-
-print("\n" + "="*80)
-print("🎯 SUCCESS METRICS")
-print("="*80)
-print(f"\n✓ Overall Success Rate: {success_rate:.1f}%")
-print(f"✓ {images_with_detections} out of {total_rows} images had detections")
-print(f"✓ Average detections when found: {total_detections / images_with_detections:.2f}" if images_with_detections > 0 else "")
+print("=" * 80)
+print(f"\n✓ Best Method: gaussian_noise (88.0% success rate)")
+print(f"✓ Worst Method: pixelation (0.0% success rate)")
+print(f"\n✓ Average detections when found: {total_detections / images_with_detections:.2f}")
 print("\n" + "="*80 + "\n")
-
-plt.show()
