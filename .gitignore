@@ -28,8 +28,13 @@ dist/
 .kaggle/
 
 # Brain MRI generated files
-data/raw/
-data/processed/
+data/
 models/*.keras
 models/*.h5
-*.pt
+yolov8n.pt
+
+# Results - images are too large
+results/results_augmented/distorted_images/
+results/**/annotated/
+results/**/distorted_images/
+download_log.txt
