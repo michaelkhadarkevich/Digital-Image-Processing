@@ -35,7 +35,15 @@ data/processed_augmented/
 models/*.keras
 models/*.h5
 models/backups/
-*.pt
+models/cnn/**/*.keras
+models/cnn/**/*.h5
+training/checkpoints/**
+training/logs/**
+
+# Pre-trained models (too large to commit, can be downloaded)
+# Uncomment if you want to exclude pre-trained models:
+# models/yolo/*.pt
+# Instead, track a models/yolo/README.md with download instructions
 
 # Results - images are too large
 results/results_augmented/distorted_images/

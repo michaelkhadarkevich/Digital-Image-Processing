@@ -20,8 +20,8 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--model",
-        default="yolo11n.pt",
-        help="YOLO model path/name. Example: yolo11n.pt, yolov8n.pt, or a custom .pt file.",
+        default="models/yolo/yolo11n.pt",
+        help="YOLO model path/name. Example: models/yolo/yolo11n.pt, models/yolo/yolov8n.pt, or a custom .pt file.",
     )
     parser.add_argument(
         "--output",

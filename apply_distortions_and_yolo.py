@@ -145,7 +145,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--model",
-        default="yolov8n.pt",
+        default="models/yolo/yolov8n.pt",
         help="YOLO model",
     )
     parser.add_argument(
