@@ -1,9 +1,9 @@
 Brain MRI CNN Results
 
-Test loss: 0.5106
-Test accuracy: 78.95%
+Test loss: 0.6590
+Test accuracy: 81.58%
 
 Confusion matrix rows are actual labels; columns are predicted labels.
 Classes: no_tumor, tumor
-[[10  5]
- [ 3 20]]
+[[13  2]
+ [ 5 18]]

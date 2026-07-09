@@ -16,9 +16,9 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
 
 
-DATA_DIR = Path("data/processed")
-MODEL_PATH = Path("models/brain_mri_classifier.keras")
-RESULTS_DIR = Path("results")
+DATA_DIR = Path("data/processed_augmented")
+MODEL_PATH = Path("models/brain_mri_classifier_augmented.keras")
+RESULTS_DIR = Path("results_augmented")
 IMAGE_SIZE = (224, 224)
 BATCH_SIZE = 16
 EPOCHS = 50
@@ -250,7 +250,12 @@ def main() -> None:
     val_ds = val_ds.cache().prefetch(buffer_size=autotune)
     test_ds = test_ds.cache().prefetch(buffer_size=autotune)
 
-    model = build_model()
+    if MODEL_PATH.exists():
+        print("Loading existing model from:", MODEL_PATH.resolve())
+        model = tf.keras.models.load_model(MODEL_PATH)
+    else:
+        model = build_model()
+
     best_test_checkpoint = BestTestCheckpoint(
         test_ds,
         MODEL_PATH,

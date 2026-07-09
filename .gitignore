@@ -30,6 +30,8 @@ dist/
 # Brain MRI generated files
 data/raw/
 data/processed/
+data/processed_augmented/
 models/*.keras
 models/*.h5
+models/backups/
 *.pt
