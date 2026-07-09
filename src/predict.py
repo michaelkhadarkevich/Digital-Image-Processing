@@ -34,7 +34,7 @@ def main() -> None:
     image_path = Path(args.image)
 
     if not model_path.exists():
-        raise FileNotFoundError("Model not found. Run train.py first.")
+        raise FileNotFoundError("Model not found. Run train_cnn.py first.")
     if not image_path.exists():
         raise FileNotFoundError(f"Image not found: {image_path}")
 

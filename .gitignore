@@ -29,9 +29,13 @@ dist/
 
 # Brain MRI generated files
 data/
+data/raw/
+data/processed/
+data/processed_augmented/
 models/*.keras
 models/*.h5
-yolov8n.pt
+models/backups/
+*.pt
 
 # Results - images are too large
 results/results_augmented/distorted_images/

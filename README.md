@@ -59,7 +59,25 @@ data\processed\
 ## 3. Train CNN
 
 ```bash
-python src\train.py
+python src\train_cnn.py
+```
+
+Optional: create a bigger training dataset with rotated copies:
+
+```bash
+python src\augment_train_rotate.py
+```
+
+This writes:
+
+```text
+data\processed_augmented\
+```
+
+Train using the augmented dataset:
+
+```bash
+python src\train_cnn_augmented.py
 ```
 
 The trained model is saved to:

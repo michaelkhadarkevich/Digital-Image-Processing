@@ -1,0 +1,39 @@
+image_path,actual,predicted,tumor_probability
+"data\processed_augmented\test\no_tumor\14 no_28.jpg",no_tumor,no_tumor,0.000026
+"data\processed_augmented\test\no_tumor\19 no_16.jpg",no_tumor,no_tumor,0.000082
+"data\processed_augmented\test\no_tumor\20 no_19.jpg",no_tumor,tumor,0.811383
+"data\processed_augmented\test\no_tumor\27 no_2.jpg",no_tumor,no_tumor,0.000001
+"data\processed_augmented\test\no_tumor\32 no_1.jpg",no_tumor,no_tumor,0.000375
+"data\processed_augmented\test\no_tumor\34 no_0.jpg",no_tumor,no_tumor,0.204462
+"data\processed_augmented\test\no_tumor\39 no_11.jpg",no_tumor,no_tumor,0.000000
+"data\processed_augmented\test\no_tumor\N11_25.jpg",no_tumor,no_tumor,0.407502
+"data\processed_augmented\test\no_tumor\N15_10.jpg",no_tumor,tumor,0.998380
+"data\processed_augmented\test\no_tumor\N16_26.jpg",no_tumor,no_tumor,0.135575
+"data\processed_augmented\test\no_tumor\N17_7.jpg",no_tumor,no_tumor,0.082861
+"data\processed_augmented\test\no_tumor\N21_34.jpg",no_tumor,no_tumor,0.000002
+"data\processed_augmented\test\no_tumor\N22_31.jpg",no_tumor,no_tumor,0.013747
+"data\processed_augmented\test\no_tumor\N26_21.jpg",no_tumor,no_tumor,0.451621
+"data\processed_augmented\test\no_tumor\No21_6.jpg",no_tumor,no_tumor,0.000000
+"data\processed_augmented\test\tumor\Y115_5.jpg",tumor,no_tumor,0.057608
+"data\processed_augmented\test\tumor\Y116_17.jpg",tumor,tumor,0.790817
+"data\processed_augmented\test\tumor\Y155_24.jpg",tumor,tumor,0.999977
+"data\processed_augmented\test\tumor\Y162_27.jpg",tumor,tumor,0.955965
+"data\processed_augmented\test\tumor\Y180_33.jpg",tumor,tumor,1.000000
+"data\processed_augmented\test\tumor\Y1_22.jpg",tumor,tumor,0.999963
+"data\processed_augmented\test\tumor\Y20_15.jpg",tumor,tumor,0.800897
+"data\processed_augmented\test\tumor\Y21_36.jpg",tumor,tumor,0.864901
+"data\processed_augmented\test\tumor\Y257_9.jpg",tumor,no_tumor,0.053424
+"data\processed_augmented\test\tumor\Y258_32.jpg",tumor,no_tumor,0.119531
+"data\processed_augmented\test\tumor\Y35_37.jpg",tumor,tumor,0.872844
+"data\processed_augmented\test\tumor\Y36_23.jpg",tumor,tumor,0.986885
+"data\processed_augmented\test\tumor\Y37_20.jpg",tumor,tumor,0.999998
+"data\processed_augmented\test\tumor\Y3_35.jpg",tumor,tumor,0.957552
+"data\processed_augmented\test\tumor\Y41_14.jpg",tumor,tumor,1.000000
+"data\processed_augmented\test\tumor\Y54_18.jpg",tumor,tumor,0.999496
+"data\processed_augmented\test\tumor\Y61_12.jpg",tumor,tumor,0.921299
+"data\processed_augmented\test\tumor\Y6_4.jpg",tumor,tumor,0.998357
+"data\processed_augmented\test\tumor\Y73_29.jpg",tumor,tumor,0.999202
+"data\processed_augmented\test\tumor\Y78_30.jpg",tumor,no_tumor,0.016610
+"data\processed_augmented\test\tumor\Y79_13.jpg",tumor,tumor,0.999910
+"data\processed_augmented\test\tumor\Y90_3.jpg",tumor,no_tumor,0.094320
+"data\processed_augmented\test\tumor\Y95_8.jpg",tumor,tumor,0.943500

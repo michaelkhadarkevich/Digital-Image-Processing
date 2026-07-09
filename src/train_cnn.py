@@ -1,5 +1,8 @@
+import shutil
 from pathlib import Path
 import sys
+from datetime import datetime
+import re
 
 import matplotlib
 
@@ -18,7 +21,75 @@ MODEL_PATH = Path("models/brain_mri_classifier.keras")
 RESULTS_DIR = Path("results")
 IMAGE_SIZE = (224, 224)
 BATCH_SIZE = 16
-EPOCHS = 25
+EPOCHS = 50
+EARLY_STOPPING_PATIENCE = 10
+ACCURACY_TOLERANCE = 0.001
+
+
+def backup_existing_model() -> Path | None:
+    if not MODEL_PATH.exists():
+        return None
+
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    backup_dir = MODEL_PATH.parent / "backups"
+    backup_dir.mkdir(parents=True, exist_ok=True)
+    backup_path = backup_dir / f"{MODEL_PATH.stem}_{timestamp}{MODEL_PATH.suffix}"
+    shutil.copy2(MODEL_PATH, backup_path)
+    print("Backed up existing model to:", backup_path.resolve())
+    return backup_path
+
+
+def read_saved_score(metrics_path: Path) -> tuple[float, float]:
+    if not metrics_path.exists():
+        return float("inf"), -1.0
+
+    text = metrics_path.read_text(encoding="utf-8")
+    loss_match = re.search(r"Test loss:\s*([0-9.]+)", text)
+    accuracy_match = re.search(r"Test accuracy:\s*([0-9.]+)%", text)
+    loss = float(loss_match.group(1)) if loss_match else float("inf")
+    accuracy = float(accuracy_match.group(1)) / 100.0 if accuracy_match else -1.0
+    return loss, accuracy
+
+
+def is_better_score(loss: float, accuracy: float, best_loss: float, best_accuracy: float) -> bool:
+    if accuracy > best_accuracy + ACCURACY_TOLERANCE:
+        return True
+    return abs(accuracy - best_accuracy) <= ACCURACY_TOLERANCE and loss < best_loss
+
+
+class BestTestCheckpoint(tf.keras.callbacks.Callback):
+    def __init__(
+        self,
+        test_ds: tf.data.Dataset,
+        output_path: Path,
+        best_loss: float,
+        best_accuracy: float,
+    ) -> None:
+        super().__init__()
+        self.test_ds = test_ds
+        self.output_path = output_path
+        self.best_loss = best_loss
+        self.best_accuracy = best_accuracy
+        self.best_epoch = 0
+        self.improved = False
+
+    def on_epoch_end(self, epoch: int, logs: dict | None = None) -> None:
+        test_loss, test_accuracy = self.model.evaluate(self.test_ds, verbose=0)
+        print(
+            f"Epoch {epoch + 1} test loss: {test_loss:.4f} - "
+            f"test accuracy: {test_accuracy:.2%}"
+        )
+
+        if not is_better_score(test_loss, test_accuracy, self.best_loss, self.best_accuracy):
+            return
+
+        self.best_loss = test_loss
+        self.best_accuracy = test_accuracy
+        self.best_epoch = epoch + 1
+        self.improved = True
+        self.output_path.parent.mkdir(parents=True, exist_ok=True)
+        self.model.save(self.output_path)
+        print("Saved new best model from epoch", self.best_epoch)
 
 
 def build_model() -> tf.keras.Model:
@@ -141,6 +212,9 @@ def save_metrics(
 
 
 def main() -> None:
+    backup_path = backup_existing_model()
+    previous_loss, previous_accuracy = read_saved_score(RESULTS_DIR / "metrics.txt")
+
     train_dir = DATA_DIR / "train"
     val_dir = DATA_DIR / "val"
     test_dir = DATA_DIR / "test"
@@ -177,17 +251,19 @@ def main() -> None:
     test_ds = test_ds.cache().prefetch(buffer_size=autotune)
 
     model = build_model()
+    best_test_checkpoint = BestTestCheckpoint(
+        test_ds,
+        MODEL_PATH,
+        previous_loss,
+        previous_accuracy,
+    )
     callbacks = [
         tf.keras.callbacks.EarlyStopping(
             monitor="val_loss",
-            patience=5,
+            patience=EARLY_STOPPING_PATIENCE,
             restore_best_weights=True,
         ),
-        tf.keras.callbacks.ModelCheckpoint(
-            MODEL_PATH,
-            monitor="val_loss",
-            save_best_only=True,
-        ),
+        best_test_checkpoint,
     ]
 
     model.summary()
@@ -197,6 +273,19 @@ def main() -> None:
         epochs=EPOCHS,
         callbacks=callbacks,
     )
+
+    if best_test_checkpoint.improved:
+        print("Using best test epoch:", best_test_checkpoint.best_epoch)
+        model = tf.keras.models.load_model(MODEL_PATH)
+    else:
+        print(
+            "No epoch beat the saved best "
+            f"({previous_accuracy:.2%}, loss {previous_loss:.4f})."
+        )
+        if backup_path is not None:
+            shutil.copy2(backup_path, MODEL_PATH)
+            print("Restored previous best model from:", backup_path.resolve())
+        return
 
     test_loss, test_accuracy = model.evaluate(test_ds, verbose=0)
     probabilities = model.predict(test_ds, verbose=0).reshape(-1)
@@ -209,8 +298,6 @@ def main() -> None:
     print(f"Test loss: {test_loss:.4f}")
     print(f"Test accuracy: {test_accuracy:.2%}")
 
-    MODEL_PATH.parent.mkdir(parents=True, exist_ok=True)
-    model.save(MODEL_PATH)
     print("Saved model to:", MODEL_PATH.resolve())
 
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
