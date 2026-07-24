@@ -1,0 +1,12 @@
+Super-Resolution Results
+
+Input image: C:\Users\micha\OneDrive\שולחן העבודה\wordsFiles\Brain_Mri\results\distortions\perspective_warp.png
+Original size: 224x224
+Downsampled x2 size: 112x112
+
+method,mse,rmse,mae,psnr,ssim,reconstruction_score
+nearest,228.4260,15.1138,6.3967,24.5433,0.972241,97.49
+bilinear,186.6952,13.6636,6.0263,25.4195,0.976459,97.64
+bicubic,122.8017,11.0816,4.8088,27.2388,0.984903,98.11
+lanczos,95.4369,9.7692,4.2426,28.3336,0.988371,98.34
+sharpened_lanczos,141.0977,11.8785,5.6737,26.6356,0.984208,97.78

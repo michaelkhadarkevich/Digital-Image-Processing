@@ -1,0 +1,19 @@
+Super-Resolution Task
+
+Step 1: Downsample the image by x2.
+Step 2: Upscale the low-resolution image back to the original size.
+
+Methods:
+1. Nearest-neighbor interpolation.
+2. Bilinear interpolation.
+3. Bicubic interpolation.
+4. Lanczos interpolation.
+5. Lanczos interpolation followed by unsharp masking.
+
+The same process can be run on original, distorted, and restored images.
+
+Success metrics:
+1. MSE/RMSE/MAE: lower is better.
+2. PSNR: higher is better.
+3. SSIM: closer to 1 is better.
+4. Reconstruction score: closer to 100 is better.

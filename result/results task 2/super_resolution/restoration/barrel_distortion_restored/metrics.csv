@@ -1,0 +1,12 @@
+Super-Resolution Results
+
+Input image: C:\Users\micha\OneDrive\שולחן העבודה\wordsFiles\Brain_Mri\results\restoration\barrel_distortion_restored.png
+Original size: 224x224
+Downsampled x2 size: 112x112
+
+method,mse,rmse,mae,psnr,ssim,reconstruction_score
+nearest,268.8442,16.3965,7.5996,23.8358,0.971517,97.02
+bilinear,207.5214,14.4056,7.0700,24.9602,0.977202,97.23
+bicubic,147.0742,12.1274,5.7302,26.4554,0.984263,97.75
+lanczos,123.3784,11.1076,5.1722,27.2184,0.986909,97.97
+sharpened_lanczos,181.8016,13.4834,7.0029,25.5348,0.982316,97.25

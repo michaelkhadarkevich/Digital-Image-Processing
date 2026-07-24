@@ -1,0 +1,22 @@
+CNN Evaluation on Distorted and Restored Images
+
+The tumor_probability column is the CNN output probability for the tumor class.
+Probability >= 0.5 is predicted as tumor; otherwise it is predicted as no_tumor.
+
+distorted    | barrel_distortion            | tumor    | tumor_probability=0.506625
+distorted    | brightness_contrast          | tumor    | tumor_probability=0.782131
+distorted    | gaussian_blur                | tumor    | tumor_probability=0.567509
+distorted    | gaussian_noise               | tumor    | tumor_probability=0.611787
+distorted    | original                     | tumor    | tumor_probability=0.546701
+distorted    | perspective_warp             | no_tumor | tumor_probability=0.479117
+distorted    | pixelation                   | no_tumor | tumor_probability=0.495794
+distorted    | rotation                     | tumor    | tumor_probability=0.538786
+distorted    | salt_and_pepper              | no_tumor | tumor_probability=0.452678
+restored     | barrel_distortion            | tumor    | tumor_probability=0.541913
+restored     | brightness_contrast          | tumor    | tumor_probability=0.724609
+restored     | gaussian_blur                | tumor    | tumor_probability=0.597589
+restored     | gaussian_noise               | tumor    | tumor_probability=0.586908
+restored     | perspective_warp             | tumor    | tumor_probability=0.540078
+restored     | pixelation                   | no_tumor | tumor_probability=0.491058
+restored     | rotation                     | tumor    | tumor_probability=0.539867
+restored     | salt_and_pepper              | tumor    | tumor_probability=0.548662

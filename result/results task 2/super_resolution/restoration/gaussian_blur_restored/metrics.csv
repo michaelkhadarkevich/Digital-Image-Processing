@@ -1,0 +1,12 @@
+Super-Resolution Results
+
+Input image: C:\Users\micha\OneDrive\שולחן העבודה\wordsFiles\Brain_Mri\results\restoration\gaussian_blur_restored.png
+Original size: 224x224
+Downsampled x2 size: 112x112
+
+method,mse,rmse,mae,psnr,ssim,reconstruction_score
+nearest,33.0978,5.7531,3.3795,32.9328,0.995769,98.67
+bilinear,6.3206,2.5141,1.6355,40.1232,0.999183,99.36
+bicubic,3.0062,1.7338,1.0328,43.3507,0.999615,99.59
+lanczos,2.7949,1.6718,0.9846,43.6671,0.999643,99.61
+sharpened_lanczos,18.5203,4.3035,2.4884,35.4543,0.997696,99.02

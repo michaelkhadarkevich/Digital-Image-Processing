@@ -1,0 +1,12 @@
+Super-Resolution Results
+
+Input image: C:\Users\micha\OneDrive\שולחן העבודה\wordsFiles\Brain_Mri\results\restoration\brightness_contrast_restored.png
+Original size: 224x224
+Downsampled x2 size: 112x112
+
+method,mse,rmse,mae,psnr,ssim,reconstruction_score
+nearest,332.0726,18.2229,8.2366,22.9185,0.975423,96.77
+bilinear,261.2013,16.1617,8.0227,23.9611,0.979965,96.85
+bicubic,173.7884,13.1829,6.4173,25.7306,0.987014,97.48
+lanczos,143.0277,11.9594,5.9178,26.5766,0.989407,97.68
+sharpened_lanczos,193.8731,13.9238,7.9980,25.2556,0.986788,96.86
