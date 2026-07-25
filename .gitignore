@@ -35,6 +35,7 @@ data/processed_augmented/
 models/*.keras
 models/*.h5
 models/backups/
+models/cnn_fine_tune_distortion/*.keras
 models/cnn/**/*.keras
 models/cnn/**/*.h5
 training/checkpoints/**

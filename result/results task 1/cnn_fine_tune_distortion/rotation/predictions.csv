@@ -1,0 +1,39 @@
+image_path,actual,predicted,tumor_probability
+"data\Data 1\test\no_tumor\14 no_28.jpg",no_tumor,no_tumor,0.145089
+"data\Data 1\test\no_tumor\19 no_16.jpg",no_tumor,no_tumor,0.079551
+"data\Data 1\test\no_tumor\20 no_19.jpg",no_tumor,no_tumor,0.262936
+"data\Data 1\test\no_tumor\27 no_2.jpg",no_tumor,no_tumor,0.257427
+"data\Data 1\test\no_tumor\32 no_1.jpg",no_tumor,no_tumor,0.056824
+"data\Data 1\test\no_tumor\34 no_0.jpg",no_tumor,tumor,0.805479
+"data\Data 1\test\no_tumor\39 no_11.jpg",no_tumor,no_tumor,0.278434
+"data\Data 1\test\no_tumor\N11_25.jpg",no_tumor,no_tumor,0.383831
+"data\Data 1\test\no_tumor\N15_10.jpg",no_tumor,no_tumor,0.335353
+"data\Data 1\test\no_tumor\N16_26.jpg",no_tumor,tumor,0.622735
+"data\Data 1\test\no_tumor\N17_7.jpg",no_tumor,tumor,0.623071
+"data\Data 1\test\no_tumor\N21_34.jpg",no_tumor,no_tumor,0.091534
+"data\Data 1\test\no_tumor\N22_31.jpg",no_tumor,tumor,0.543725
+"data\Data 1\test\no_tumor\N26_21.jpg",no_tumor,tumor,0.758937
+"data\Data 1\test\no_tumor\No21_6.jpg",no_tumor,no_tumor,0.304951
+"data\Data 1\test\tumor\Y115_5.jpg",tumor,tumor,0.736313
+"data\Data 1\test\tumor\Y116_17.jpg",tumor,tumor,0.526097
+"data\Data 1\test\tumor\Y155_24.jpg",tumor,tumor,0.967842
+"data\Data 1\test\tumor\Y162_27.jpg",tumor,no_tumor,0.352779
+"data\Data 1\test\tumor\Y180_33.jpg",tumor,tumor,0.996882
+"data\Data 1\test\tumor\Y1_22.jpg",tumor,tumor,0.586892
+"data\Data 1\test\tumor\Y20_15.jpg",tumor,tumor,0.672306
+"data\Data 1\test\tumor\Y21_36.jpg",tumor,tumor,0.658351
+"data\Data 1\test\tumor\Y257_9.jpg",tumor,tumor,0.735052
+"data\Data 1\test\tumor\Y258_32.jpg",tumor,tumor,0.628111
+"data\Data 1\test\tumor\Y35_37.jpg",tumor,tumor,0.501198
+"data\Data 1\test\tumor\Y36_23.jpg",tumor,tumor,0.928375
+"data\Data 1\test\tumor\Y37_20.jpg",tumor,tumor,0.903951
+"data\Data 1\test\tumor\Y3_35.jpg",tumor,tumor,0.682852
+"data\Data 1\test\tumor\Y41_14.jpg",tumor,tumor,0.932445
+"data\Data 1\test\tumor\Y54_18.jpg",tumor,tumor,0.888432
+"data\Data 1\test\tumor\Y61_12.jpg",tumor,tumor,0.623170
+"data\Data 1\test\tumor\Y6_4.jpg",tumor,tumor,0.662280
+"data\Data 1\test\tumor\Y73_29.jpg",tumor,tumor,0.771325
+"data\Data 1\test\tumor\Y78_30.jpg",tumor,no_tumor,0.420406
+"data\Data 1\test\tumor\Y79_13.jpg",tumor,tumor,0.940293
+"data\Data 1\test\tumor\Y90_3.jpg",tumor,no_tumor,0.180631
+"data\Data 1\test\tumor\Y95_8.jpg",tumor,no_tumor,0.299750

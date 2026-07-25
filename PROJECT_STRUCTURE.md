@@ -63,6 +63,6 @@ python "task\task 3 yolo\yolo_detection.py"
 - `task\task 3 yolo`: YOLO detection and YOLO analysis scripts.
 - `task\distortion methods`: distortion scripts.
 - `task\restoration`: restoration scripts.
-- `result\results task 1`: CNN outputs grouped as `cnn_on_basic`, `cnn_on_augmented`, and `cnn_on_distortion_restoration`.
+- `result\results task 1`: CNN outputs grouped as `cnn_on_basic`, `cnn_on_augmented`, `cnn_on_distortion`, `cnn_on_distortion_restoration`, and `cnn_fine_tune_distortion`.
 - `result\results task 2`: super-resolution outputs.
 - `result\results task 3`: YOLO outputs.

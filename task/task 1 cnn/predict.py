@@ -10,7 +10,7 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
 
 
-MODEL_PATH = Path("models/brain_mri_classifier.keras")
+MODEL_PATH = Path("models/cnn_basic.keras")
 IMAGE_SIZE = (224, 224)
 
 

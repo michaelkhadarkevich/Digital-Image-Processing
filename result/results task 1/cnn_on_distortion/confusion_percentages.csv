@@ -1,0 +1,10 @@
+source,TT_percent,TF_percent,FT_percent,FF_percent,total
+clean original,52.63,7.89,13.16,26.32,38
+gaussian_noise distorted,57.89,2.63,26.32,13.16,38
+salt_and_pepper distorted,5.26,55.26,0.00,39.47,38
+gaussian_blur distorted,60.53,0.00,39.47,0.00,38
+brightness_contrast distorted,47.37,13.16,28.95,10.53,38
+rotation distorted,50.00,10.53,13.16,26.32,38
+perspective_warp distorted,18.42,42.11,2.63,36.84,38
+barrel_distortion distorted,28.95,31.58,13.16,26.32,38
+pixelation distorted,60.53,0.00,39.47,0.00,38

@@ -16,7 +16,7 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
 
 
-MODEL_PATH = Path("models/brain_mri_classifier.keras")
+MODEL_PATH = Path("models/cnn_basic.keras")
 DEFAULT_INPUT_DIR = Path("data/Data 1/test")
 DISTORTION_DIR = Path("data/Data 1 with distortion/distortions")
 RESTORATION_DIR = Path("data/Data 1 with distortion/restoration")
@@ -51,6 +51,11 @@ def parse_args() -> argparse.Namespace:
         "--all-images",
         action="store_true",
         help="Evaluate clean, distorted, and restored versions of every test image.",
+    )
+    parser.add_argument(
+        "--single-image-demo",
+        action="store_true",
+        help="Evaluate the old single-image distortion/restoration demo outputs.",
     )
     return parser.parse_args()
 
@@ -377,7 +382,7 @@ def main() -> None:
     model = tf.keras.models.load_model(model_path)
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    if args.all_images:
+    if args.all_images or not args.single_image_demo:
         run_all_images_evaluation(model, output_dir)
         return
 

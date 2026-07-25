@@ -177,7 +177,7 @@ python "task\task 1 cnn\train_cnn.py"
 The trained model is saved to:
 
 ```text
-models\brain_mri_classifier.keras
+models\cnn_basic.keras
 ```
 
 Results are saved to:
@@ -227,7 +227,7 @@ data\Data 2\mri_segmentation\
 The augmented model is saved to:
 
 ```text
-models\brain_mri_classifier_augmented.keras
+models\cnn_augmented.keras
 ```
 
 Augmented results are saved to:
@@ -238,6 +238,28 @@ result\results task 1\cnn_on_augmented\
   confusion_matrix.png
   metrics.txt
   predictions.csv
+```
+
+Fine-tuned distortion CNN results should be saved to:
+
+```text
+result\results task 1\cnn_fine_tune_distortion\
+```
+
+Run the trained basic CNN on clean and distorted images only:
+
+```bash
+python "task\task 1 cnn\evaluate_distortion.py"
+```
+
+The distortion-only CNN outputs are saved to:
+
+```text
+result\results task 1\cnn_on_distortion\
+  cnn_predictions_all_images.csv
+  summary_all_images.txt
+  confusion_percentages.csv
+  total_true_percent_graph.png
 ```
 
 Predict one image:
