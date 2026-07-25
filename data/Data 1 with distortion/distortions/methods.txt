@@ -1,6 +1,6 @@
 Distortion Methods
 
-Input image: C:\Users\micha\OneDrive\שולחן העבודה\wordsFiles\Brain_Mri\data\processed\test\no_tumor\14 no_28.jpg
+Input image: C:\Users\micha\OneDrive\שולחן העבודה\wordsFiles\Brain_Mri\data\Data 1\test\no_tumor\14 no_28.jpg
 
 1. Gaussian noise: adds normally distributed random pixel noise.
 2. Salt and pepper noise: randomly turns pixels black or white.
