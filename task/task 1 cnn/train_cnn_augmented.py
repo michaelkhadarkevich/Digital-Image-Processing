@@ -18,7 +18,7 @@ if hasattr(sys.stdout, "reconfigure"):
 
 DATA_DIR = Path("data/Data 1 augmented")
 MODEL_PATH = Path("models/brain_mri_classifier_augmented.keras")
-RESULTS_DIR = Path("result/results task 1/augmented")
+RESULTS_DIR = Path("result/results task 1/cnn_on_augmented")
 IMAGE_SIZE = (224, 224)
 BATCH_SIZE = 16
 EPOCHS = 50

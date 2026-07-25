@@ -183,7 +183,7 @@ models\brain_mri_classifier.keras
 Results are saved to:
 
 ```text
-result\results task 1\
+result\results task 1\cnn_on_basic\
   training_history.png
   confusion_matrix.png
   metrics.txt
@@ -233,7 +233,7 @@ models\brain_mri_classifier_augmented.keras
 Augmented results are saved to:
 
 ```text
-result\results task 1\augmented\
+result\results task 1\cnn_on_augmented\
   training_history.png
   confusion_matrix.png
   metrics.txt

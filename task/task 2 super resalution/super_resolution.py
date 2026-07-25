@@ -484,6 +484,12 @@ def write_comparison_outputs(output_dir: Path) -> None:
         output_dir / "restoration" / "summary_metrics_vs_original.csv",
         "Restoration vs Original",
     )
+    for row in distortion_rows:
+        if Path(row["image"]).stem == "clean":
+            row["group"] = "Clean"
+    for row in distortion_vs_original_rows:
+        if Path(row["image"]).stem == "clean":
+            row["group"] = "Clean vs Original"
 
     detailed_rows = []
     for row in clean_rows:

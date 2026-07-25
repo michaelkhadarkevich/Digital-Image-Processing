@@ -1,4 +1,4 @@
-Super-Resolution on Distortions Images
+﻿Super-Resolution on Distortions Images
 
 image,method,mse,rmse,mae,psnr,ssim,reconstruction_score
 barrel_distortion.png,nearest,238.9933,15.4594,6.5100,24.3469,0.972708,97.45
@@ -21,11 +21,11 @@ gaussian_noise.png,bilinear,465.5869,21.5775,16.0992,21.4508,0.964740,93.69
 gaussian_noise.png,bicubic,391.7885,19.7936,14.8570,22.2003,0.973542,94.17
 gaussian_noise.png,lanczos,364.5309,19.0927,14.3969,22.5135,0.976771,94.35
 gaussian_noise.png,sharpened_lanczos,427.4339,20.6745,15.0389,21.8221,0.972509,94.10
-original.png,nearest,220.8784,14.8620,7.1610,24.6893,0.976723,97.19
-original.png,bilinear,163.4758,12.7858,6.3842,25.9963,0.982120,97.50
-original.png,bicubic,97.3954,9.8689,4.8489,28.2454,0.989627,98.10
-original.png,lanczos,70.9715,8.4245,4.1371,29.6200,0.992508,98.38
-original.png,sharpened_lanczos,133.6529,11.5608,6.3612,26.8710,0.987052,97.51
+clean.png,nearest,220.8784,14.8620,7.1610,24.6893,0.976723,97.19
+clean.png,bilinear,163.4758,12.7858,6.3842,25.9963,0.982120,97.50
+clean.png,bicubic,97.3954,9.8689,4.8489,28.2454,0.989627,98.10
+clean.png,lanczos,70.9715,8.4245,4.1371,29.6200,0.992508,98.38
+clean.png,sharpened_lanczos,133.6529,11.5608,6.3612,26.8710,0.987052,97.51
 perspective_warp.png,nearest,228.4260,15.1138,6.3967,24.5433,0.972241,97.49
 perspective_warp.png,bilinear,186.6952,13.6636,6.0263,25.4195,0.976459,97.64
 perspective_warp.png,bicubic,122.8017,11.0816,4.8088,27.2388,0.984903,98.11

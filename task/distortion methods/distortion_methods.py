@@ -171,7 +171,7 @@ def main() -> None:
 
     original = load_image(image_path)
     distortions = {
-        "original": original,
+        "clean": original,
         "gaussian_noise": gaussian_noise(original),
         "salt_and_pepper": salt_and_pepper_noise(original),
         "gaussian_blur": blur(original),
