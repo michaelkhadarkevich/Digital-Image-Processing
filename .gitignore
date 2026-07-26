@@ -22,6 +22,8 @@ dist/
 .mypy_cache/
 .ruff_cache/
 .matplotlib/
+.ultralytics/
+runs/
 
 # Local settings
 .env
@@ -45,6 +47,7 @@ training/logs/**
 # Uncomment if you want to exclude pre-trained models:
 # models/yolo/*.pt
 # Instead, track a models/yolo/README.md with download instructions
+yolov8n-seg.pt
 
 # Results - images are too large
 results/results_augmented/distorted_images/

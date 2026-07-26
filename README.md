@@ -318,8 +318,67 @@ result\results task 3\yolo_detection\
   restoration\annotated\
 ```
 
-Note: pretrained YOLO models are trained on natural images, not MRI scans.
-For medical tumor localization, train YOLO on MRI bounding-box annotations.
+Note: pretrained YOLO detection models are trained on natural images, not MRI
+scans. They are useful for an image-processing comparison, but they are not
+tumor detectors.
+
+## Task 3: YOLO Tumor Segmentation
+
+YOLO can mark tumor regions if it is trained as a segmentation model. Data 2
+uses the LGG MRI segmentation dataset masks and converts them into YOLO
+segmentation labels.
+
+Download Data 2:
+
+```bash
+python "data\Data 2\download_mri_data.py"
+```
+
+Convert the segmentation masks into YOLO segmentation format:
+
+```bash
+python "task\task 3 yolo\prepare_yolo_segmentation.py"
+```
+
+This creates:
+
+```text
+data\Data 2\yolo_segmentation\
+  data.yaml
+  images\train\
+  images\val\
+  images\test\
+  labels\train\
+  labels\val\
+  labels\test\
+```
+
+Train YOLO segmentation:
+
+```bash
+python "task\task 3 yolo\train_yolo_segmentation.py"
+```
+
+The trained tumor segmentation model is copied to:
+
+```text
+models\yolo\yolo_tumor_seg.pt
+```
+
+Use the trained model to mark tumors:
+
+```bash
+python "task\task 3 yolo\run_yolo_segmentation.py"
+```
+
+Tumor segmentation outputs are saved to:
+
+```text
+result\results task 3\yolo_tumor_segmentation\
+  tumor_segmentation_predictions.csv
+  annotated\
+  labels\
+```
 
 ## Future Enhancements
 

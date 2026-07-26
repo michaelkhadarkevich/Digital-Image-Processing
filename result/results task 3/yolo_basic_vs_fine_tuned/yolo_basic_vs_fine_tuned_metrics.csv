@@ -1,0 +1,4 @@
+distortion,basic_mask_map50,fine_tuned_mask_map50,basic_mask_map50_95,fine_tuned_mask_map50_95
+gaussian_noise,0.669,0.77462,0.376,0.44159
+gaussian_blur,0.787,0.83075,0.443,0.48067
+brightness_contrast,0.835,0.86418,0.507,0.52557

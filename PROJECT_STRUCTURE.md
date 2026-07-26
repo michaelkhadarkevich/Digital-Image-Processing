@@ -15,7 +15,8 @@ Brain_Mri/
 |   |-- Data 1 with distortion/
 |   |-- Data 2/
 |   |   |-- download_mri_data.py
-|   |   `-- mri_segmentation/
+|   |   |-- mri_segmentation/
+|   |   `-- yolo_segmentation/
 |   `-- Data 2 with distortion/
 |-- task/
 |   |-- task 1 cnn/
@@ -45,6 +46,9 @@ python "task\distortion methods\distortion_methods.py"
 python "task\restoration\image_restoration.py"
 python "task\task 2 super resalution\super_resolution.py"
 python "task\task 3 yolo\yolo_detection.py"
+python "task\task 3 yolo\prepare_yolo_segmentation.py"
+python "task\task 3 yolo\train_yolo_segmentation.py"
+python "task\task 3 yolo\run_yolo_segmentation.py"
 ```
 
 ## Folder Meaning
@@ -56,11 +60,12 @@ python "task\task 3 yolo\yolo_detection.py"
 - `data\Data 1 augmented`: augmented CNN dataset.
 - `data\Data 1 with distortion`: distortion/restoration images made from Data 1.
 - `data\Data 2`: YOLO MRI segmentation dataset.
+- `data\Data 2\yolo_segmentation`: converted YOLO segmentation images, labels, and `data.yaml`.
 - `data\Data 2 with distortion`: reserved for distorted YOLO data.
 - `task\task 1 cnn`: CNN training, prediction, and CNN evaluation scripts.
 - `task\augmentation`: augmentation scripts.
 - `task\task 2 super resalution`: super-resolution scripts.
-- `task\task 3 yolo`: YOLO detection and YOLO analysis scripts.
+- `task\task 3 yolo`: YOLO detection, YOLO segmentation, and YOLO analysis scripts.
 - `task\distortion methods`: distortion scripts.
 - `task\restoration`: restoration scripts.
 - `result\results task 1`: CNN outputs grouped as `cnn_on_basic`, `cnn_on_augmented`, `cnn_on_distortion`, `cnn_on_distortion_restoration`, and `cnn_fine_tune_distortion`.
