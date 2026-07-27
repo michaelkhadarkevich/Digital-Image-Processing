@@ -240,6 +240,15 @@ Train the CNN on the augmented dataset:
 python "task\task 1 cnn\train_cnn_augmented.py"
 ```
 
+Augmentation note:
+
+The basic CNN was improved by trying data augmentation. The reason for this
+choice was that Data 1 is not very large, so adding augmented training images
+could give the CNN more examples to learn from. After many runs, augmentation
+did improve the model, but only by a small amount. The main conclusion was that
+changing the position or rotation of the head does not help very much for this
+dataset.
+
 ## data\Data 2: YOLO Data
 
 `data\Data 2` is for the YOLO MRI segmentation dataset.
