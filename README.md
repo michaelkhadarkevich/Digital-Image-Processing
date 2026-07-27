@@ -102,6 +102,31 @@ SSIM: closer to 1 is better
 Reconstruction score: closer to 100 is better
 ```
 
+Run the Task 1-style SNR/level super-resolution experiment:
+
+```bash
+python "task\task 2 super resalution\super_resolution_snr.py"
+```
+
+Outputs are saved to:
+
+```text
+result\results task 2\super_resolution_snr\
+  distortions\
+  restoration\
+  super_resolution_results\
+  snr_super_resolution_metrics.csv
+  gaussian_noise_snr_psnr_graph.png
+  gaussian_noise_snr_ssim_graph.png
+  gaussian_noise_snr_reconstruction_score_graph.png
+  salt_and_pepper_density_psnr_graph.png
+  salt_and_pepper_density_ssim_graph.png
+  salt_and_pepper_density_reconstruction_score_graph.png
+  gaussian_blur_sigma_psnr_graph.png
+  gaussian_blur_sigma_ssim_graph.png
+  gaussian_blur_sigma_reconstruction_score_graph.png
+```
+
 ## Shared Distortion and Restoration
 
 Distortion and restoration are shared experiments. They can be used by all
@@ -285,9 +310,13 @@ The CNN comparison outputs are saved to:
 
 ```text
 result\results task 1\cnn_on_distortion_restoration\
-  cnn_predictions.csv
-  summary.txt
-  tumor_probability_chart.png
+  cnn_predictions_all_images.csv
+  summary_all_images.txt
+  confusion_percentages.csv
+  total_true_percent_graph.png
+  snr_total_true_percent_graph.png
+  salt_and_pepper_total_true_percent_graph.png
+  gaussian_blur_total_true_percent_graph.png
 ```
 
 ## Task 3: YOLO Detection
@@ -379,6 +408,223 @@ result\results task 3\yolo_tumor_segmentation\
   annotated\
   labels\
 ```
+
+Run YOLO distortion-level experiments:
+
+```bash
+python "task\task 3 yolo\prepare_yolo_distorted_segmentation.py"
+python "task\task 3 yolo\prepare_yolo_restored_segmentation.py"
+python "task\task 3 yolo\validate_yolo_basic_on_distortion_levels.py"
+python "task\task 3 yolo\validate_yolo_basic_on_restored_distortion_levels.py"
+python "task\task 3 yolo\plot_yolo_snr_results.py"
+```
+
+YOLO distortion-level results are saved to:
+
+```text
+result\results task 3\yolo_snr_results\
+  yolo_distortion_level_metrics.csv
+  yolo_basic_distortion_level_metrics.csv
+  yolo_basic_restored_distortion_level_metrics.csv
+  yolo_gaussian_noise_snr_map50_graph.png
+  yolo_gaussian_noise_snr_map50_95_graph.png
+  yolo_gaussian_blur_sigma_map50_graph.png
+  yolo_gaussian_blur_sigma_map50_95_graph.png
+  yolo_brightness_contrast_level_map50_graph.png
+  yolo_brightness_contrast_level_map50_95_graph.png
+```
+
+## Documentation Of Choices, Processing, And Results
+
+### Project Choices
+
+| Area | Choice |
+| --- | --- |
+| Data 1 | Brain MRI tumor/no-tumor image classification data. |
+| Data 2 | MRI segmentation data converted into YOLO segmentation format with images, masks, and YOLO labels. |
+| Task 1 | CNN binary classifier for tumor vs no tumor. |
+| Task 2 | x2 downsample then reconstruct using nearest, bilinear, bicubic, lanczos, and sharpened_lanczos. |
+| Task 3 | YOLO segmentation for marking tumor regions. |
+| Distortion levels | Gaussian noise SNR, salt-and-pepper density, gaussian blur sigma, and YOLO brightness/contrast levels. |
+| Restoration | Noise uses smoothing/sharpening, salt-and-pepper uses median filtering, blur uses unsharp masking, brightness/contrast uses intensity normalization. |
+
+### Input And Output Processing Steps
+
+1. Data 1 images are downloaded and split into `train`, `val`, and `test`.
+2. CNN inputs are resized and classified as tumor or no tumor.
+3. Distorted images are generated from clean MRI images.
+4. Restored images are generated from distorted images.
+5. Super-resolution downsamples each input by x2, then reconstructs it back to 224x224.
+6. Data 2 masks are converted to YOLO segmentation labels.
+7. YOLO outputs annotated images with predicted tumor masks.
+
+Important before/after and annotation outputs:
+
+```text
+data\Data 1 with distortion\distortions\distortion_grid.png
+data\Data 1 with distortion\restoration\restoration_grid.png
+result\results task 2\super_resolution\Clean\super_resolution_grid.png
+result\results task 2\super_resolution_snr\super_resolution_results\
+result\results task 3\yolo_tumor_segmentation\annotated\
+```
+
+Example distortion and restoration images:
+
+![Distortion grid](data/Data%201%20with%20distortion/distortions/distortion_grid.png)
+
+![Restoration grid](data/Data%201%20with%20distortion/restoration/restoration_grid.png)
+
+### Task 1 CNN Measurements
+
+CNN correctness is measured with four percentages:
+
+```text
+TT: tumor image predicted as tumor
+TF: tumor image predicted as no tumor
+FT: no-tumor image predicted as tumor
+FF: no-tumor image predicted as no tumor
+```
+
+Selected results from `result\results task 1\cnn_on_distortion_restoration\confusion_percentages.csv`:
+
+| Source | TT % | TF % | FT % | FF % | Total |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| clean original | 52.63 | 7.89 | 13.16 | 26.32 | 38 |
+| gaussian_noise distorted | 57.89 | 2.63 | 26.32 | 13.16 | 38 |
+| gaussian_noise restored | 60.53 | 0.00 | 31.58 | 7.89 | 38 |
+| salt_and_pepper distorted | 5.26 | 55.26 | 0.00 | 39.47 | 38 |
+| salt_and_pepper restored | 57.89 | 2.63 | 23.68 | 15.79 | 38 |
+| gaussian_blur distorted | 60.53 | 0.00 | 39.47 | 0.00 | 38 |
+| gaussian_blur restored | 60.53 | 0.00 | 39.47 | 0.00 | 38 |
+
+CNN visualization files:
+
+```text
+result\results task 1\cnn_on_basic\training_history.png
+result\results task 1\cnn_on_basic\confusion_matrix.png
+result\results task 1\cnn_on_distortion\total_true_percent_graph.png
+result\results task 1\cnn_on_distortion_restoration\total_true_percent_graph.png
+result\results task 1\cnn_fine_tune_distortion\total_true_percent_graph.png
+result\results task 1\cnn_compare_snr_distortion_restoration_fine_tune_total_true_percent_graph.png
+result\results task 1\cnn_compare_salt_and_pepper_distortion_restoration_fine_tune_total_true_percent_graph.png
+result\results task 1\cnn_compare_gaussian_blur_distortion_restoration_fine_tune_total_true_percent_graph.png
+```
+
+CNN result visualizations:
+
+![CNN basic confusion matrix](result/results%20task%201/cnn_on_basic/confusion_matrix.png)
+
+![CNN SNR comparison](result/results%20task%201/cnn_compare_snr_distortion_restoration_fine_tune_total_true_percent_graph.png)
+
+![CNN salt and pepper comparison](result/results%20task%201/cnn_compare_salt_and_pepper_distortion_restoration_fine_tune_total_true_percent_graph.png)
+
+![CNN gaussian blur comparison](result/results%20task%201/cnn_compare_gaussian_blur_distortion_restoration_fine_tune_total_true_percent_graph.png)
+
+### Task 2 Super-Resolution Measurements
+
+Task 2 metrics:
+
+```text
+PSNR: higher is better.
+SSIM: closer to 1 is better.
+Reconstruction score: closer to 100 is better.
+MSE, RMSE, MAE: lower is better.
+```
+
+In `super_resolution_snr`, distorted images are compared to the distorted input, and restored images are compared to the restored input. The table below uses the `sharpened_lanczos` reconstruction method.
+
+| Distortion | Level | Image type | PSNR | SSIM | Reconstruction score |
+| --- | --- | --- | ---: | ---: | ---: |
+| gaussian_noise_snr | 5db | distorted | 17.25 | 0.930 | 89.83 |
+| gaussian_noise_snr | 5db | restored | 27.35 | 0.986 | 97.26 |
+| gaussian_noise_snr | 30db | distorted | 26.74 | 0.987 | 97.31 |
+| gaussian_noise_snr | 30db | restored | 28.14 | 0.990 | 97.88 |
+| salt_and_pepper_density | 0.01 | distorted | 22.68 | 0.966 | 96.53 |
+| salt_and_pepper_density | 0.01 | restored | 27.79 | 0.989 | 97.80 |
+| salt_and_pepper_density | 0.10 | distorted | 14.95 | 0.820 | 89.87 |
+| salt_and_pepper_density | 0.10 | restored | 27.31 | 0.988 | 97.71 |
+| gaussian_blur_sigma | 0.5 | distorted | 27.50 | 0.988 | 97.62 |
+| gaussian_blur_sigma | 3.0 | distorted | 43.95 | 1.000 | 99.74 |
+
+Task 2 visualization files:
+
+```text
+result\results task 2\super_resolution\detailed_psnr_graph.png
+result\results task 2\super_resolution\detailed_ssim_graph.png
+result\results task 2\super_resolution\detailed_reconstruction_score_graph.png
+result\results task 2\super_resolution\vs_original_psnr_graph.png
+result\results task 2\super_resolution\vs_original_ssim_graph.png
+result\results task 2\super_resolution\vs_original_reconstruction_score_graph.png
+result\results task 2\super_resolution_snr\gaussian_noise_snr_psnr_graph.png
+result\results task 2\super_resolution_snr\salt_and_pepper_density_psnr_graph.png
+result\results task 2\super_resolution_snr\gaussian_blur_sigma_psnr_graph.png
+```
+
+Super-resolution visualizations:
+
+![Clean super-resolution grid](result/results%20task%202/super_resolution/Clean/super_resolution_grid.png)
+
+![Super-resolution gaussian noise PSNR](result/results%20task%202/super_resolution_snr/gaussian_noise_snr_psnr_graph.png)
+
+![Super-resolution gaussian noise SSIM](result/results%20task%202/super_resolution_snr/gaussian_noise_snr_ssim_graph.png)
+
+![Super-resolution salt and pepper PSNR](result/results%20task%202/super_resolution_snr/salt_and_pepper_density_psnr_graph.png)
+
+![Super-resolution gaussian blur reconstruction score](result/results%20task%202/super_resolution_snr/gaussian_blur_sigma_reconstruction_score_graph.png)
+
+### Task 3 YOLO Measurements
+
+YOLO segmentation is measured with mask mAP:
+
+```text
+mAP50: mask average precision at IoU 0.50.
+mAP50-95: average mask precision across IoU thresholds 0.50 to 0.95.
+```
+
+Selected results from `result\results task 3\yolo_snr_results\yolo_distortion_level_metrics.csv`:
+
+| Distortion | Level | Basic mAP50 | Basic restored mAP50 | Fine-tuned mAP50 | Basic mAP50-95 | Basic restored mAP50-95 | Fine-tuned mAP50-95 |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| gaussian_noise_snr | 5db | 0.696 | 0.774 | 0.782 | 0.393 | 0.442 | 0.443 |
+| gaussian_noise_snr | 15db | 0.828 | 0.829 | 0.839 | 0.490 | 0.497 | 0.497 |
+| gaussian_noise_snr | 30db | 0.847 | 0.838 | 0.849 | 0.522 | 0.505 | 0.519 |
+| gaussian_blur_sigma | 0.5 | 0.839 | 0.818 | 0.859 | 0.518 | 0.494 | 0.518 |
+| gaussian_blur_sigma | 3.0 | 0.787 | 0.794 | 0.831 | 0.443 | 0.450 | 0.481 |
+| brightness_contrast | B1.15 C1.25 | 0.843 | 0.837 | 0.857 | 0.517 | 0.505 | 0.513 |
+| brightness_contrast | B1.55 C1.80 | 0.815 | 0.813 | 0.850 | 0.468 | 0.474 | 0.497 |
+
+YOLO visualization files:
+
+```text
+result\results task 3\yolo_basic\train\confusion_matrix.png
+result\results task 3\yolo_basic\train\results.png
+result\results task 3\yolo_snr_results\yolo_gaussian_noise_snr_map50_graph.png
+result\results task 3\yolo_snr_results\yolo_gaussian_noise_snr_map50_95_graph.png
+result\results task 3\yolo_snr_results\yolo_gaussian_blur_sigma_map50_graph.png
+result\results task 3\yolo_snr_results\yolo_gaussian_blur_sigma_map50_95_graph.png
+result\results task 3\yolo_snr_results\yolo_brightness_contrast_level_map50_graph.png
+result\results task 3\yolo_snr_results\yolo_brightness_contrast_level_map50_95_graph.png
+```
+
+YOLO result visualizations:
+
+![YOLO basic training results](result/results%20task%203/yolo_basic/train/results.png)
+
+![YOLO gaussian noise mAP50](result/results%20task%203/yolo_snr_results/yolo_gaussian_noise_snr_map50_graph.png)
+
+![YOLO gaussian noise mAP50-95](result/results%20task%203/yolo_snr_results/yolo_gaussian_noise_snr_map50_95_graph.png)
+
+![YOLO gaussian blur mAP50](result/results%20task%203/yolo_snr_results/yolo_gaussian_blur_sigma_map50_graph.png)
+
+![YOLO brightness contrast mAP50-95](result/results%20task%203/yolo_snr_results/yolo_brightness_contrast_level_map50_95_graph.png)
+
+### Measurements Summary
+
+| Task | Measurements | Main plots |
+| --- | --- | --- |
+| Task 1 CNN | TT, TF, FT, FF, total true percent, confusion matrix | bar plots comparing clean, distorted, restored, and fine-tuned CNN results |
+| Task 2 Super-resolution | MSE, RMSE, MAE, PSNR, SSIM, reconstruction score | PSNR, SSIM, reconstruction-score heatmaps and bar plots |
+| Task 3 YOLO | mask mAP50 and mask mAP50-95 | mAP50 and mAP50-95 bar plots comparing basic, restored, and fine-tuned YOLO |
 
 ## Future Enhancements
 
