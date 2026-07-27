@@ -20,6 +20,48 @@ Data 1: Kaggle brain MRI tumor/no-tumor classification dataset
 Data 2: MRI tumor segmentation dataset with masks, converted to YOLO format
 ```
 
+## Objective And Experiment Design
+
+The objective of this project is to evaluate the robustness of image-processing
+and computer-vision algorithms/models when MRI images are changed by different
+distortions. The project measures how much performance degrades after
+distortion, and then checks whether restoration or model fine-tuning can improve
+the results.
+
+The project follows this experiment structure:
+
+| Requirement | Project implementation |
+| --- | --- |
+| Select a public dataset | Data 1 uses the Kaggle brain MRI tumor/no-tumor dataset. Data 2 uses an MRI tumor segmentation dataset with masks. |
+| Select 3 distortions | Gaussian noise, salt-and-pepper noise, and gaussian blur. YOLO also includes brightness/contrast levels. |
+| Select 3 tasks | Task 1: CNN tumor classification. Task 2: super-resolution. Task 3: YOLO tumor segmentation. |
+| Select a model/algorithm for each task | CNN classifier, interpolation-based super-resolution algorithms, and YOLO segmentation. |
+| Baseline | Measure performance on clean images. |
+| Distortion | Apply distortions and measure degradation. |
+| Improvement 1 | Restore/enhance distorted images before evaluation. |
+| Improvement 2 | Fine-tune deep-learning models on distorted data. |
+
+The main distortions and levels are:
+
+| Distortion | Levels |
+| --- | --- |
+| Gaussian noise | SNR 5, 10, 15, 20, 30 dB |
+| Salt-and-pepper noise | density 0.01, 0.03, 0.05, 0.10 |
+| Gaussian blur | sigma 0.5, 1.0, 1.5, 2.0, 3.0 |
+| Brightness/contrast for YOLO | B1.15 C1.25, B1.35 C1.55, B1.55 C1.80 |
+
+For each task, the project compares clean baseline, distorted input, restored
+input, and fine-tuned models when fine-tuning is relevant:
+
+| Task | Baseline | Distortion test | Restoration / enhancement | Fine-tuning |
+| --- | --- | --- | --- | --- |
+| Task 1 CNN classification | `cnn_on_basic` | `cnn_on_distortion` | `cnn_on_distortion_restoration` | `cnn_fine_tune_distortion` |
+| Task 2 super-resolution | `super_resolution\Clean` | `super_resolution_snr\distortions` | `super_resolution_snr\restoration` | Not used, because this task uses classical interpolation algorithms. |
+| Task 3 YOLO segmentation | `yolo_basic` | `yolo_basic_on_distortion_levels` | `yolo_basic_on_restored_distortion_levels` | `yolo_fine_tuned` |
+
+The measurements are saved as CSV tables and visualized with bar plots, curves,
+confusion matrices, before/after images, and YOLO annotated output images.
+
 ## Setup
 
 ```bash
