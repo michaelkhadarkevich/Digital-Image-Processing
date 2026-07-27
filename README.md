@@ -245,8 +245,6 @@ data\Data 1 with distortion\restoration\
 
 Distortion and restoration result images:
 
-![Distortion grid](data/Data%201%20with%20distortion/distortions/distortion_grid.png)
-
 ![Restoration grid](data/Data%201%20with%20distortion/restoration/restoration_grid.png)
 
 ## Task 1: CNN Tumor Classification
