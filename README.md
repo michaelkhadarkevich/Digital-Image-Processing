@@ -380,38 +380,6 @@ The YOLO dataset is saved under:
 data\Data 2\mri_segmentation\
 ```
 
-## Task 3: YOLO Detection
-
-Task 3 runs YOLO on clear images, shared distortion images, and shared
-restoration images.
-
-Run YOLO:
-
-```bash
-python "task\task 3 yolo\yolo_detection.py"
-```
-
-This uses `yolo11n.pt` by default. You can also pass a custom YOLO model:
-
-```bash
-python "task\task 3 yolo\yolo_detection.py" --model "path\to\custom_model.pt"
-```
-
-YOLO outputs are saved to:
-
-```text
-result\results task 3\yolo_detection\
-  summary.txt
-  yolo_predictions.csv
-  clear\annotated\
-  distortions\annotated\
-  restoration\annotated\
-```
-
-Note: pretrained YOLO detection models are trained on natural images, not MRI
-scans. They are useful for an image-processing comparison, but they are not
-tumor detectors.
-
 ## Task 3: YOLO Tumor Segmentation
 
 YOLO can mark tumor regions if it is trained as a segmentation model. Data 2
