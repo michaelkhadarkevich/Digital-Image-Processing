@@ -17,8 +17,8 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--model",
-        default="yolov8n-seg.pt",
-        help="Base YOLO segmentation model. Example: yolov8n-seg.pt or yolo11n-seg.pt.",
+        default="models/yolo/yolov8n-seg.pt",
+        help="Base YOLO segmentation model. Example: models/yolo/yolov8n-seg.pt or models/yolo/yolo11n-seg.pt.",
     )
     parser.add_argument("--epochs", type=int, default=50)
     parser.add_argument("--imgsz", type=int, default=256)

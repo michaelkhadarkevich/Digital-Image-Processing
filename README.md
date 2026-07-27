@@ -70,7 +70,10 @@ venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-## Shared Data Preparation
+## Data 1 Preparation For CNN And Super-Resolution
+
+`data\Data 1` is used for Task 1 CNN classification and Task 2
+super-resolution.
 
 Download the dataset:
 
@@ -95,7 +98,7 @@ data\Data 1\
   test\
 ```
 
-## Task 2: Super-Resolution
+## Super-Resolution Preparation From Data 1
 
 Task 2 downsamples an MRI image by x2 and reconstructs it back to the original
 size using interpolation-based super-resolution techniques.
@@ -361,7 +364,7 @@ result\results task 1\cnn_on_distortion_restoration\
   gaussian_blur_total_true_percent_graph.png
 ```
 
-## data\Data 2: YOLO Data
+## Data 2 Preparation For YOLO
 
 `data\Data 2` is for the YOLO MRI segmentation dataset.
 
