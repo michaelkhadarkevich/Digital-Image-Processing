@@ -249,22 +249,6 @@ did improve the model, but only by a small amount. The main conclusion was that
 changing the position or rotation of the head does not help very much for this
 dataset.
 
-## data\Data 2: YOLO Data
-
-`data\Data 2` is for the YOLO MRI segmentation dataset.
-
-Download the YOLO dataset:
-
-```bash
-python "data\Data 2\download_mri_data.py"
-```
-
-The YOLO dataset is saved under:
-
-```text
-data\Data 2\mri_segmentation\
-```
-
 The augmented model is saved to:
 
 ```text
@@ -333,6 +317,22 @@ result\results task 1\cnn_on_distortion_restoration\
   snr_total_true_percent_graph.png
   salt_and_pepper_total_true_percent_graph.png
   gaussian_blur_total_true_percent_graph.png
+```
+
+## data\Data 2: YOLO Data
+
+`data\Data 2` is for the YOLO MRI segmentation dataset.
+
+Download the YOLO dataset:
+
+```bash
+python "data\Data 2\download_mri_data.py"
+```
+
+The YOLO dataset is saved under:
+
+```text
+data\Data 2\mri_segmentation\
 ```
 
 ## Task 3: YOLO Detection
