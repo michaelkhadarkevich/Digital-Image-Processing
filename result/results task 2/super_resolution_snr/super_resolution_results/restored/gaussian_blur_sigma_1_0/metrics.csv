@@ -1,0 +1,12 @@
+Super-Resolution Results
+
+Input image: C:\Users\micha\OneDrive\שולחן העבודה\wordsFiles\Brain_Mri\result\results task 2\super_resolution_snr\restoration\gaussian_blur_sigma_1_0_restored.png
+Original size: 224x224
+Downsampled x2 size: 112x112
+
+method,mse,rmse,mae,psnr,ssim,reconstruction_score
+nearest,388.1256,19.7009,9.1873,22.2411,0.970473,96.40
+bilinear,255.3510,15.9797,8.4697,24.0594,0.979477,96.68
+bicubic,133.3725,11.5487,5.5845,26.8801,0.989667,97.81
+lanczos,91.5694,9.5692,4.4395,28.5133,0.992971,98.26
+sharpened_lanczos,125.6992,11.2116,5.6379,27.1375,0.991014,97.79

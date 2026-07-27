@@ -35,6 +35,27 @@ DISTORTION_METHODS = [
     "perspective_warp",
     "barrel_distortion",
     "pixelation",
+    "gaussian_noise_snr_5db",
+    "gaussian_noise_snr_10db",
+    "gaussian_noise_snr_15db",
+    "gaussian_noise_snr_20db",
+    "gaussian_noise_snr_30db",
+    "salt_and_pepper_density_0_01",
+    "salt_and_pepper_density_0_03",
+    "salt_and_pepper_density_0_05",
+    "salt_and_pepper_density_0_10",
+    "gaussian_blur_sigma_0_5",
+    "gaussian_blur_sigma_1_0",
+    "gaussian_blur_sigma_1_5",
+    "gaussian_blur_sigma_2_0",
+    "gaussian_blur_sigma_3_0",
+]
+SNR_METHODS = [
+    "gaussian_noise_snr_5db",
+    "gaussian_noise_snr_10db",
+    "gaussian_noise_snr_15db",
+    "gaussian_noise_snr_20db",
+    "gaussian_noise_snr_30db",
 ]
 
 
@@ -124,6 +145,19 @@ def gaussian_noise(image: Image.Image, sigma: float = 24.0) -> Image.Image:
     return Image.fromarray(noisy)
 
 
+def gaussian_noise_snr(image: Image.Image, snr_db: float) -> Image.Image:
+    array = np.asarray(image).astype(np.float32)
+    signal_power = np.mean(array * array)
+    if signal_power <= 0:
+        sigma = 0.0
+    else:
+        noise_power = signal_power / (10 ** (snr_db / 10))
+        sigma = float(np.sqrt(noise_power))
+    noise = np.random.default_rng(42).normal(0, sigma, array.shape)
+    noisy = np.clip(array + noise, 0, 255).astype(np.uint8)
+    return Image.fromarray(noisy)
+
+
 def salt_and_pepper_noise(image: Image.Image, amount: float = 0.04) -> Image.Image:
     array = np.asarray(image).copy()
     rng = np.random.default_rng(42)
@@ -135,6 +169,10 @@ def salt_and_pepper_noise(image: Image.Image, amount: float = 0.04) -> Image.Ima
 
 def blur(image: Image.Image) -> Image.Image:
     return image.filter(ImageFilter.GaussianBlur(radius=3))
+
+
+def gaussian_blur_sigma(image: Image.Image, sigma: float) -> Image.Image:
+    return image.filter(ImageFilter.GaussianBlur(radius=sigma))
 
 
 def brightness_contrast(image: Image.Image) -> Image.Image:
@@ -207,7 +245,18 @@ def apply_distortion(image: Image.Image, method: str) -> Image.Image:
         "barrel_distortion": barrel_distortion,
         "pixelation": pixelate,
     }
-    return functions[method](image)
+    if method in functions:
+        return functions[method](image)
+    if method.startswith("gaussian_noise_snr_") and method.endswith("db"):
+        snr_db = float(method.removeprefix("gaussian_noise_snr_").removesuffix("db"))
+        return gaussian_noise_snr(image, snr_db)
+    if method.startswith("salt_and_pepper_density_"):
+        amount = float(method.removeprefix("salt_and_pepper_density_").replace("_", "."))
+        return salt_and_pepper_noise(image, amount)
+    if method.startswith("gaussian_blur_sigma_"):
+        sigma = float(method.removeprefix("gaussian_blur_sigma_").replace("_", "."))
+        return gaussian_blur_sigma(image, sigma)
+    raise KeyError(f"Unknown distortion method: {method}")
 
 
 def source_images(split: str) -> list[Path]:
@@ -428,6 +477,38 @@ def save_total_true_graph(summary_path: Path, output_path: Path) -> None:
     plt.tight_layout()
     plt.savefig(output_path, dpi=160)
     plt.close()
+
+    snr_indexes = [index for index, method in enumerate(methods) if method in SNR_METHODS]
+    if snr_indexes:
+        snr_methods = [methods[index] for index in snr_indexes]
+        snr_labels = [method.removeprefix("gaussian_noise_snr_") for method in snr_methods]
+        snr_base_values = [base_values[index] for index in snr_indexes]
+        snr_fine_tuned_percentages = [fine_tuned_percentages[index] for index in snr_indexes]
+        snr_positions = np.arange(len(snr_methods))
+
+        plt.figure(figsize=(8, 5))
+        plt.bar(
+            snr_positions - width / 2,
+            snr_base_values,
+            width,
+            label="CNN not fine tuned",
+            color="#4E79A7",
+        )
+        plt.bar(
+            snr_positions + width / 2,
+            snr_fine_tuned_percentages,
+            width,
+            label="CNN fine tuned",
+            color="#59A14F",
+        )
+        plt.xticks(snr_positions, snr_labels)
+        plt.ylabel("Percent")
+        plt.ylim(0, 100)
+        plt.title("Total True Percent By Gaussian Noise SNR")
+        plt.legend()
+        plt.tight_layout()
+        plt.savefig(output_path.with_name("snr_total_true_percent_graph.png"), dpi=160)
+        plt.close()
 
 
 def main() -> None:

@@ -60,6 +60,19 @@ def gaussian_noise(image: Image.Image, sigma: float = 24.0) -> Image.Image:
     return Image.fromarray(noisy)
 
 
+def gaussian_noise_snr(image: Image.Image, snr_db: float) -> Image.Image:
+    array = np.asarray(image).astype(np.float32)
+    signal_power = np.mean(array * array)
+    if signal_power <= 0:
+        sigma = 0.0
+    else:
+        noise_power = signal_power / (10 ** (snr_db / 10))
+        sigma = float(np.sqrt(noise_power))
+    noise = np.random.default_rng(42).normal(0, sigma, array.shape)
+    noisy = np.clip(array + noise, 0, 255).astype(np.uint8)
+    return Image.fromarray(noisy)
+
+
 def salt_and_pepper_noise(image: Image.Image, amount: float = 0.04) -> Image.Image:
     array = np.asarray(image).copy()
     rng = np.random.default_rng(42)
@@ -71,6 +84,10 @@ def salt_and_pepper_noise(image: Image.Image, amount: float = 0.04) -> Image.Ima
 
 def blur(image: Image.Image) -> Image.Image:
     return image.filter(ImageFilter.GaussianBlur(radius=3))
+
+
+def gaussian_blur_sigma(image: Image.Image, sigma: float) -> Image.Image:
+    return image.filter(ImageFilter.GaussianBlur(radius=sigma))
 
 
 def brightness_contrast(image: Image.Image) -> Image.Image:
@@ -144,6 +161,34 @@ def pixelate(image: Image.Image, block_size: int = 12) -> Image.Image:
     small_size = (IMAGE_SIZE[0] // block_size, IMAGE_SIZE[1] // block_size)
     small = image.resize(small_size, Image.Resampling.BILINEAR)
     return small.resize(IMAGE_SIZE, Image.Resampling.NEAREST)
+
+
+def cnn_level_distortions(original: Image.Image) -> dict[str, Image.Image]:
+    return {
+        "original": original,
+        "gaussian_noise": gaussian_noise(original),
+        "salt_and_pepper": salt_and_pepper_noise(original),
+        "gaussian_blur": blur(original),
+        "brightness_contrast": brightness_contrast(original),
+        "rotation": rotate(original),
+        "perspective_warp": perspective_warp(original),
+        "barrel_distortion": barrel_distortion(original),
+        "pixelation": pixelate(original),
+        "gaussian_noise_snr_5db": gaussian_noise_snr(original, 5),
+        "gaussian_noise_snr_10db": gaussian_noise_snr(original, 10),
+        "gaussian_noise_snr_15db": gaussian_noise_snr(original, 15),
+        "gaussian_noise_snr_20db": gaussian_noise_snr(original, 20),
+        "gaussian_noise_snr_30db": gaussian_noise_snr(original, 30),
+        "salt_and_pepper_density_0_01": salt_and_pepper_noise(original, 0.01),
+        "salt_and_pepper_density_0_03": salt_and_pepper_noise(original, 0.03),
+        "salt_and_pepper_density_0_05": salt_and_pepper_noise(original, 0.05),
+        "salt_and_pepper_density_0_10": salt_and_pepper_noise(original, 0.10),
+        "gaussian_blur_sigma_0_5": gaussian_blur_sigma(original, 0.5),
+        "gaussian_blur_sigma_1_0": gaussian_blur_sigma(original, 1.0),
+        "gaussian_blur_sigma_1_5": gaussian_blur_sigma(original, 1.5),
+        "gaussian_blur_sigma_2_0": gaussian_blur_sigma(original, 2.0),
+        "gaussian_blur_sigma_3_0": gaussian_blur_sigma(original, 3.0),
+    }
 
 
 def save_comparison_grid(images: dict[str, Image.Image], output_path: Path) -> None:

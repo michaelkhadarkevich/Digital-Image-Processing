@@ -25,6 +25,50 @@ OUTPUT_DIR = Path("result/results task 1/cnn_on_distortion_restoration")
 IMAGE_SIZE = (224, 224)
 TRUE_LABEL = "no_tumor"
 VALID_SUFFIXES = {".jpg", ".jpeg", ".png", ".bmp"}
+SNR_METHODS = [
+    "gaussian_noise_snr_5db",
+    "gaussian_noise_snr_10db",
+    "gaussian_noise_snr_15db",
+    "gaussian_noise_snr_20db",
+    "gaussian_noise_snr_30db",
+]
+SALT_PEPPER_METHODS = [
+    "salt_and_pepper_density_0_01",
+    "salt_and_pepper_density_0_03",
+    "salt_and_pepper_density_0_05",
+    "salt_and_pepper_density_0_10",
+]
+BLUR_METHODS = [
+    "gaussian_blur_sigma_0_5",
+    "gaussian_blur_sigma_1_0",
+    "gaussian_blur_sigma_1_5",
+    "gaussian_blur_sigma_2_0",
+    "gaussian_blur_sigma_3_0",
+]
+METHOD_ORDER = [
+    "gaussian_noise",
+    "salt_and_pepper",
+    "gaussian_blur",
+    "brightness_contrast",
+    "rotation",
+    "perspective_warp",
+    "barrel_distortion",
+    "pixelation",
+    "gaussian_noise_snr_5db",
+    "gaussian_noise_snr_10db",
+    "gaussian_noise_snr_15db",
+    "gaussian_noise_snr_20db",
+    "gaussian_noise_snr_30db",
+    "salt_and_pepper_density_0_01",
+    "salt_and_pepper_density_0_03",
+    "salt_and_pepper_density_0_05",
+    "salt_and_pepper_density_0_10",
+    "gaussian_blur_sigma_0_5",
+    "gaussian_blur_sigma_1_0",
+    "gaussian_blur_sigma_1_5",
+    "gaussian_blur_sigma_2_0",
+    "gaussian_blur_sigma_3_0",
+]
 
 
 def parse_args() -> argparse.Namespace:
@@ -142,16 +186,15 @@ def paired_rows(rows: list[dict[str, str]]) -> list[dict[str, str]]:
         if row["group"] == "clean" and row["method"] == "clean":
             row["method"] = "original"
 
-    distorted_methods = sorted({
-        row["method"]
-        for row in rows
-        if row["group"] == "distorted"
-    })
-    restored_methods = sorted({
-        row["method"]
-        for row in rows
-        if row["group"] == "restored"
-    })
+    method_order = {method: index for index, method in enumerate(METHOD_ORDER)}
+    distorted_methods = sorted(
+        {row["method"] for row in rows if row["group"] == "distorted"},
+        key=lambda method: method_order.get(method, 999),
+    )
+    restored_methods = sorted(
+        {row["method"] for row in rows if row["group"] == "restored"},
+        key=lambda method: method_order.get(method, 999),
+    )
 
     ordered = []
     ordered.extend(row for row in rows if row["group"] == "clean")
@@ -215,10 +258,75 @@ def save_probability_chart(rows: list[dict[str, str]], output_path: Path) -> Non
     plt.close()
 
 
+def restoration_for_method(method: str, restoration_module):
+    if method == "gaussian_noise" or method.startswith("gaussian_noise_snr_"):
+        return restoration_module.denoise_gaussian
+    if method == "salt_and_pepper" or method.startswith("salt_and_pepper_density_"):
+        return restoration_module.remove_salt_and_pepper
+    if method == "gaussian_blur" or method.startswith("gaussian_blur_sigma_"):
+        return restoration_module.deblur_sharpen
+    if method == "brightness_contrast":
+        return restoration_module.normalize_intensity
+    if method == "rotation":
+        return restoration_module.restore_rotation
+    if method == "perspective_warp":
+        return restoration_module.perspective_restore
+    if method == "barrel_distortion":
+        return restoration_module.pincushion_correction
+    if method == "pixelation":
+        return restoration_module.smooth_pixelation
+    raise KeyError(f"No restoration function for method: {method}")
+
+
 def metric_key(row: dict[str, str]) -> str:
     if row["group"] == "clean":
         return "clean original"
     return f'{row["method"]} {row["group"]}'
+
+
+def save_paired_level_graph(
+    counts: dict[str, dict[str, int]],
+    methods: list[str],
+    labels: list[str],
+    title: str,
+    output_path: Path,
+) -> None:
+    distorted_values = []
+    restored_values = []
+    graph_labels = []
+    for method, label in zip(methods, labels):
+        distorted_key = f"{method} distorted"
+        restored_key = f"{method} restored"
+        if distorted_key not in counts or restored_key not in counts:
+            continue
+        distorted_values.append(
+            (counts[distorted_key]["TT"] + counts[distorted_key]["FF"])
+            / counts[distorted_key]["total"]
+            * 100
+        )
+        restored_values.append(
+            (counts[restored_key]["TT"] + counts[restored_key]["FF"])
+            / counts[restored_key]["total"]
+            * 100
+        )
+        graph_labels.append(label)
+
+    if not graph_labels:
+        return
+
+    x_positions = np.arange(len(graph_labels))
+    width = 0.36
+    plt.figure(figsize=(8, 5))
+    plt.bar(x_positions - width / 2, distorted_values, width, label="Distorted", color="#4E79A7")
+    plt.bar(x_positions + width / 2, restored_values, width, label="Restored", color="#59A14F")
+    plt.xticks(x_positions, graph_labels)
+    plt.ylabel("Percent")
+    plt.ylim(0, 100)
+    plt.title(title)
+    plt.legend()
+    plt.tight_layout()
+    plt.savefig(output_path, dpi=160)
+    plt.close()
 
 
 def save_confusion_percentages(rows: list[dict[str, str]], output_dir: Path) -> None:
@@ -253,21 +361,50 @@ def save_confusion_percentages(rows: list[dict[str, str]], output_dir: Path) -> 
         encoding="utf-8",
     )
 
+    main_graph_keys = [
+        key
+        for key in keys
+        if "_snr_" not in key
+        and "_density_" not in key
+        and "_sigma_" not in key
+    ]
     true_percentages = [
         ((counts[key]["TT"] + counts[key]["FF"]) / counts[key]["total"] * 100)
         if counts[key]["total"]
         else 0.0
-        for key in keys
+        for key in main_graph_keys
     ]
-    plt.figure(figsize=(max(12, len(keys) * 0.7), 5))
-    plt.bar(range(len(keys)), true_percentages, color="#59A14F")
-    plt.xticks(range(len(keys)), keys, rotation=65, ha="right")
+    plt.figure(figsize=(max(12, len(main_graph_keys) * 0.7), 5))
+    plt.bar(range(len(main_graph_keys)), true_percentages, color="#59A14F")
+    plt.xticks(range(len(main_graph_keys)), main_graph_keys, rotation=65, ha="right")
     plt.ylabel("Percent")
     plt.ylim(0, 100)
     plt.title("Total True Percent By Image Type")
     plt.tight_layout()
     plt.savefig(output_dir / "total_true_percent_graph.png", dpi=160)
     plt.close()
+
+    save_paired_level_graph(
+        counts,
+        SNR_METHODS,
+        [method.removeprefix("gaussian_noise_snr_") for method in SNR_METHODS],
+        "Total True Percent By Gaussian Noise SNR",
+        output_dir / "snr_total_true_percent_graph.png",
+    )
+    save_paired_level_graph(
+        counts,
+        SALT_PEPPER_METHODS,
+        [method.removeprefix("salt_and_pepper_density_").replace("_", ".") for method in SALT_PEPPER_METHODS],
+        "Total True Percent By Salt And Pepper Density",
+        output_dir / "salt_and_pepper_total_true_percent_graph.png",
+    )
+    save_paired_level_graph(
+        counts,
+        BLUR_METHODS,
+        [method.removeprefix("gaussian_blur_sigma_").replace("_", ".") for method in BLUR_METHODS],
+        "Total True Percent By Gaussian Blur Sigma",
+        output_dir / "gaussian_blur_total_true_percent_graph.png",
+    )
 
 
 def safe_image_dir_name(image_path: Path) -> str:
@@ -322,37 +459,20 @@ def run_all_images_evaluation(model: tf.keras.Model, output_dir: Path) -> None:
         restoration_dir.mkdir(parents=True, exist_ok=True)
 
         original = distortion_module.load_image(image_path)
-        distortions = {
-            "clean": original,
-            "gaussian_noise": distortion_module.gaussian_noise(original),
-            "salt_and_pepper": distortion_module.salt_and_pepper_noise(original),
-            "gaussian_blur": distortion_module.blur(original),
-            "brightness_contrast": distortion_module.brightness_contrast(original),
-            "rotation": distortion_module.rotate(original),
-            "perspective_warp": distortion_module.perspective_warp(original),
-            "barrel_distortion": distortion_module.barrel_distortion(original),
-            "pixelation": distortion_module.pixelate(original),
-        }
+        distortions = distortion_module.cnn_level_distortions(original)
 
         for method, image in distortions.items():
             distorted_path = distortion_dir / f"{method}.png"
             image.save(distorted_path)
-            group = "clean" if method == "clean" else "distorted"
-            label_method = "original" if method == "clean" else method
+            group = "clean" if method == "original" else "distorted"
+            label_method = method
             append_prediction_row(rows, model, distorted_path, group, label_method, true_label)
 
-        restoration_steps = {
-            "gaussian_noise": restoration_module.denoise_gaussian,
-            "salt_and_pepper": restoration_module.remove_salt_and_pepper,
-            "gaussian_blur": restoration_module.deblur_sharpen,
-            "brightness_contrast": restoration_module.normalize_intensity,
-            "rotation": restoration_module.restore_rotation,
-            "perspective_warp": restoration_module.perspective_restore,
-            "barrel_distortion": restoration_module.pincushion_correction,
-            "pixelation": restoration_module.smooth_pixelation,
-        }
-        for method, restore_function in restoration_steps.items():
-            restored_image = restore_function(distortions[method])
+        for method, distorted_image in distortions.items():
+            if method == "original":
+                continue
+            restore_function = restoration_for_method(method, restoration_module)
+            restored_image = restore_function(distorted_image)
             restored_path = restoration_dir / f"{method}_restored.png"
             restored_image.save(restored_path)
             append_prediction_row(rows, model, restored_path, "restored", method, true_label)

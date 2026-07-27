@@ -21,6 +21,13 @@ ALL_IMAGES_DATA_DIR = Path("data/Data 1 with distortion/all_images")
 OUTPUT_DIR = Path("result/results task 1/cnn_on_distortion")
 IMAGE_SIZE = (224, 224)
 VALID_SUFFIXES = {".jpg", ".jpeg", ".png", ".bmp"}
+SNR_METHODS = [
+    "gaussian_noise_snr_5db",
+    "gaussian_noise_snr_10db",
+    "gaussian_noise_snr_15db",
+    "gaussian_noise_snr_20db",
+    "gaussian_noise_snr_30db",
+]
 
 
 def parse_args() -> argparse.Namespace:
@@ -121,6 +128,20 @@ def ordered_rows(rows: list[dict[str, str]]) -> list[dict[str, str]]:
         "perspective_warp",
         "barrel_distortion",
         "pixelation",
+        "gaussian_noise_snr_5db",
+        "gaussian_noise_snr_10db",
+        "gaussian_noise_snr_15db",
+        "gaussian_noise_snr_20db",
+        "gaussian_noise_snr_30db",
+        "salt_and_pepper_density_0_01",
+        "salt_and_pepper_density_0_03",
+        "salt_and_pepper_density_0_05",
+        "salt_and_pepper_density_0_10",
+        "gaussian_blur_sigma_0_5",
+        "gaussian_blur_sigma_1_0",
+        "gaussian_blur_sigma_1_5",
+        "gaussian_blur_sigma_2_0",
+        "gaussian_blur_sigma_3_0",
     ]
     order = {method: index for index, method in enumerate(methods)}
     return sorted(rows, key=lambda row: (order.get(row["method"], 999), row["image_path"]))
@@ -207,6 +228,23 @@ def save_confusion_percentages(rows: list[dict[str, str]], output_dir: Path) -> 
     plt.savefig(output_dir / "total_true_percent_graph.png", dpi=160)
     plt.close()
 
+    snr_keys = [f"{method} distorted" for method in SNR_METHODS if f"{method} distorted" in counts]
+    if snr_keys:
+        snr_values = [
+            (counts[key]["TT"] + counts[key]["FF"]) / counts[key]["total"] * 100
+            for key in snr_keys
+        ]
+        snr_labels = [key.removeprefix("gaussian_noise_snr_").removesuffix(" distorted") for key in snr_keys]
+        plt.figure(figsize=(8, 5))
+        plt.bar(range(len(snr_keys)), snr_values, color="#4E79A7")
+        plt.xticks(range(len(snr_keys)), snr_labels)
+        plt.ylabel("Percent")
+        plt.ylim(0, 100)
+        plt.title("Total True Percent By Gaussian Noise SNR")
+        plt.tight_layout()
+        plt.savefig(output_dir / "snr_total_true_percent_graph.png", dpi=160)
+        plt.close()
+
 
 def run_evaluation(model: tf.keras.Model, output_dir: Path) -> None:
     distortion_module = load_module(
@@ -225,17 +263,7 @@ def run_evaluation(model: tf.keras.Model, output_dir: Path) -> None:
         distortion_dir.mkdir(parents=True, exist_ok=True)
 
         original = distortion_module.load_image(image_path)
-        distortions = {
-            "original": original,
-            "gaussian_noise": distortion_module.gaussian_noise(original),
-            "salt_and_pepper": distortion_module.salt_and_pepper_noise(original),
-            "gaussian_blur": distortion_module.blur(original),
-            "brightness_contrast": distortion_module.brightness_contrast(original),
-            "rotation": distortion_module.rotate(original),
-            "perspective_warp": distortion_module.perspective_warp(original),
-            "barrel_distortion": distortion_module.barrel_distortion(original),
-            "pixelation": distortion_module.pixelate(original),
-        }
+        distortions = distortion_module.cnn_level_distortions(original)
 
         for method, image in distortions.items():
             distorted_path = distortion_dir / f"{method}.png"

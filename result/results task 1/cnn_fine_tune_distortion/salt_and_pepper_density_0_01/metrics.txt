@@ -1,0 +1,11 @@
+Brain MRI CNN Fine-Tune Distortion Results
+
+Distortion method: salt_and_pepper_density_0_01
+Base model: models\cnn_basic.keras
+Test loss: 0.5256
+Test accuracy: 76.32%
+
+Confusion matrix rows are actual labels; columns are predicted labels.
+Classes: no_tumor, tumor
+[[12  3]
+ [ 6 17]]

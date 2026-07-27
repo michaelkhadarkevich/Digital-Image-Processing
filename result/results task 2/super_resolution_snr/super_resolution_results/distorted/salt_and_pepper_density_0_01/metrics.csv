@@ -1,0 +1,12 @@
+Super-Resolution Results
+
+Input image: C:\Users\micha\OneDrive\שולחן העבודה\wordsFiles\Brain_Mri\result\results task 2\super_resolution_snr\distortions\salt_and_pepper_density_0_01.png
+Original size: 224x224
+Downsampled x2 size: 112x112
+
+method,mse,rmse,mae,psnr,ssim,reconstruction_score
+nearest,440.9839,20.9996,9.1586,21.6866,0.953984,96.41
+bilinear,397.3622,19.9339,8.4602,22.1389,0.956914,96.68
+bicubic,323.3553,17.9821,7.0262,23.0340,0.965855,97.24
+lanczos,295.3793,17.1866,6.4203,23.4270,0.969080,97.48
+sharpened_lanczos,351.1078,18.7379,8.8594,22.6764,0.966365,96.53

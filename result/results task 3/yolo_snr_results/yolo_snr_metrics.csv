@@ -1,0 +1,4 @@
+snr,method,mask_map50,mask_map50_95
+5db,gaussian_noise_snr_5db,0.78161,0.44265
+15db,gaussian_noise_snr_15db,0.83918,0.49709
+30db,gaussian_noise_snr_30db,0.84877,0.51851

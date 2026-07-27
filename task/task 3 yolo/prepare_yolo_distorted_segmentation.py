@@ -9,7 +9,20 @@ from PIL import Image, ImageEnhance, ImageFilter
 
 DEFAULT_SOURCE = Path("data/Data 2/yolo_segmentation")
 DEFAULT_OUTPUT_ROOT = Path("data/Data 2 with distortion")
-DEFAULT_METHODS = ["gaussian_noise", "gaussian_blur", "brightness_contrast"]
+DEFAULT_METHODS = [
+    "gaussian_noise",
+    "gaussian_blur",
+    "brightness_contrast",
+    "gaussian_noise_snr_5db",
+    "gaussian_noise_snr_15db",
+    "gaussian_noise_snr_30db",
+    "gaussian_blur_sigma_0_5",
+    "gaussian_blur_sigma_1_5",
+    "gaussian_blur_sigma_3_0",
+    "brightness_contrast_b1_15_c1_25",
+    "brightness_contrast_b1_35_c1_55",
+    "brightness_contrast_b1_55_c1_80",
+]
 
 
 def parse_args() -> argparse.Namespace:
@@ -44,9 +57,27 @@ def gaussian_noise(image: Image.Image, rng: np.random.Generator) -> Image.Image:
     return Image.fromarray(noisy)
 
 
+def gaussian_noise_snr(image: Image.Image, rng: np.random.Generator, snr_db: float) -> Image.Image:
+    array = np.asarray(image).astype(np.float32)
+    signal_power = np.mean(array * array)
+    if signal_power <= 0:
+        sigma = 0.0
+    else:
+        noise_power = signal_power / (10 ** (snr_db / 10))
+        sigma = float(np.sqrt(noise_power))
+    noise = rng.normal(0, sigma, array.shape)
+    noisy = np.clip(array + noise, 0, 255).astype(np.uint8)
+    return Image.fromarray(noisy)
+
+
 def gaussian_blur(image: Image.Image, rng: np.random.Generator) -> Image.Image:
     del rng
     return image.filter(ImageFilter.GaussianBlur(radius=3))
+
+
+def gaussian_blur_sigma(image: Image.Image, rng: np.random.Generator, sigma: float) -> Image.Image:
+    del rng
+    return image.filter(ImageFilter.GaussianBlur(radius=sigma))
 
 
 def brightness_contrast(image: Image.Image, rng: np.random.Generator) -> Image.Image:
@@ -55,10 +86,30 @@ def brightness_contrast(image: Image.Image, rng: np.random.Generator) -> Image.I
     return ImageEnhance.Contrast(image).enhance(1.55)
 
 
+def brightness_contrast_values(
+    image: Image.Image,
+    rng: np.random.Generator,
+    brightness: float,
+    contrast: float,
+) -> Image.Image:
+    del rng
+    image = ImageEnhance.Brightness(image).enhance(brightness)
+    return ImageEnhance.Contrast(image).enhance(contrast)
+
+
 DISTORTION_METHODS = {
     "gaussian_noise": gaussian_noise,
     "gaussian_blur": gaussian_blur,
     "brightness_contrast": brightness_contrast,
+    "gaussian_noise_snr_5db": lambda image, rng: gaussian_noise_snr(image, rng, 5),
+    "gaussian_noise_snr_15db": lambda image, rng: gaussian_noise_snr(image, rng, 15),
+    "gaussian_noise_snr_30db": lambda image, rng: gaussian_noise_snr(image, rng, 30),
+    "gaussian_blur_sigma_0_5": lambda image, rng: gaussian_blur_sigma(image, rng, 0.5),
+    "gaussian_blur_sigma_1_5": lambda image, rng: gaussian_blur_sigma(image, rng, 1.5),
+    "gaussian_blur_sigma_3_0": lambda image, rng: gaussian_blur_sigma(image, rng, 3.0),
+    "brightness_contrast_b1_15_c1_25": lambda image, rng: brightness_contrast_values(image, rng, 1.15, 1.25),
+    "brightness_contrast_b1_35_c1_55": lambda image, rng: brightness_contrast_values(image, rng, 1.35, 1.55),
+    "brightness_contrast_b1_55_c1_80": lambda image, rng: brightness_contrast_values(image, rng, 1.55, 1.80),
 }
 
 
@@ -129,7 +180,7 @@ def prepare_method(source: Path, output_root: Path, method: str, seed: int) -> N
         "",
     ]
     (output / "summary.txt").write_text("\n".join(summary), encoding="utf-8")
-    print(f"Saved {method} YOLO segmentation dataset to: {output.resolve()}")
+    print(f"Saved {method} YOLO segmentation dataset to: {output}")
 
 
 def main() -> None:

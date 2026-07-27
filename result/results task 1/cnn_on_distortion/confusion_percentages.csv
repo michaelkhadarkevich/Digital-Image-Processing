@@ -8,3 +8,17 @@ rotation distorted,50.00,10.53,13.16,26.32,38
 perspective_warp distorted,18.42,42.11,2.63,36.84,38
 barrel_distortion distorted,28.95,31.58,13.16,26.32,38
 pixelation distorted,60.53,0.00,39.47,0.00,38
+gaussian_noise_snr_5db distorted,15.79,44.74,7.89,31.58,38
+gaussian_noise_snr_10db distorted,60.53,0.00,28.95,10.53,38
+gaussian_noise_snr_15db distorted,57.89,2.63,26.32,13.16,38
+gaussian_noise_snr_20db distorted,55.26,5.26,23.68,15.79,38
+gaussian_noise_snr_30db distorted,52.63,7.89,15.79,23.68,38
+salt_and_pepper_density_0_01 distorted,23.68,36.84,5.26,34.21,38
+salt_and_pepper_density_0_03 distorted,7.89,52.63,0.00,39.47,38
+salt_and_pepper_density_0_05 distorted,2.63,57.89,0.00,39.47,38
+salt_and_pepper_density_0_10 distorted,0.00,60.53,0.00,39.47,38
+gaussian_blur_sigma_0_5 distorted,55.26,5.26,23.68,15.79,38
+gaussian_blur_sigma_1_0 distorted,57.89,2.63,28.95,10.53,38
+gaussian_blur_sigma_1_5 distorted,60.53,0.00,34.21,5.26,38
+gaussian_blur_sigma_2_0 distorted,60.53,0.00,39.47,0.00,38
+gaussian_blur_sigma_3_0 distorted,60.53,0.00,39.47,0.00,38

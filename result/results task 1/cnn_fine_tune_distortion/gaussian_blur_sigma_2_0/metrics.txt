@@ -1,0 +1,11 @@
+Brain MRI CNN Fine-Tune Distortion Results
+
+Distortion method: gaussian_blur_sigma_2_0
+Base model: models\cnn_basic.keras
+Test loss: 0.5003
+Test accuracy: 76.32%
+
+Confusion matrix rows are actual labels; columns are predicted labels.
+Classes: no_tumor, tumor
+[[10  5]
+ [ 4 19]]
