@@ -2,8 +2,8 @@
 
 ## Brain MRI Project
 
-This project works with the Kaggle brain MRI dataset and is organized into
-three tasks:
+This project works with two brain MRI datasets and is organized into three
+tasks:
 
 ```text
 Task 1: CNN tumor classification
@@ -11,7 +11,14 @@ Task 2: Super-resolution
 Task 3: YOLO detection
 ```
 
-Dataset: `navoneel/brain-mri-images-for-brain-tumor-detection`
+Datasets:
+
+```text
+Data 1: Kaggle brain MRI tumor/no-tumor classification dataset
+        navoneel/brain-mri-images-for-brain-tumor-detection
+
+Data 2: MRI tumor segmentation dataset with masks, converted to YOLO format
+```
 
 ## Setup
 
