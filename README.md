@@ -179,6 +179,18 @@ result\results task 2\super_resolution_snr\
   gaussian_blur_sigma_reconstruction_score_graph.png
 ```
 
+Super-resolution result images:
+
+![Clean super-resolution grid](result/results%20task%202/super_resolution/Clean/super_resolution_grid.png)
+
+![Super-resolution gaussian noise PSNR](result/results%20task%202/super_resolution_snr/gaussian_noise_snr_psnr_graph.png)
+
+![Super-resolution gaussian noise SSIM](result/results%20task%202/super_resolution_snr/gaussian_noise_snr_ssim_graph.png)
+
+![Super-resolution salt and pepper PSNR](result/results%20task%202/super_resolution_snr/salt_and_pepper_density_psnr_graph.png)
+
+![Super-resolution gaussian blur reconstruction score](result/results%20task%202/super_resolution_snr/gaussian_blur_sigma_reconstruction_score_graph.png)
+
 ## Shared Distortion and Restoration
 
 Distortion and restoration are shared experiments. They can be used by all
@@ -239,6 +251,12 @@ data\Data 1 with distortion\restoration\
   barrel_distortion_restored.png
   pixelation_restored.png
 ```
+
+Distortion and restoration result images:
+
+![Distortion grid](data/Data%201%20with%20distortion/distortions/distortion_grid.png)
+
+![Restoration grid](data/Data%201%20with%20distortion/restoration/restoration_grid.png)
 
 ## Task 1: CNN Tumor Classification
 
@@ -364,6 +382,16 @@ result\results task 1\cnn_on_distortion_restoration\
   gaussian_blur_total_true_percent_graph.png
 ```
 
+CNN result images:
+
+![CNN basic confusion matrix](result/results%20task%201/cnn_on_basic/confusion_matrix.png)
+
+![CNN SNR comparison](result/results%20task%201/cnn_compare_snr_distortion_restoration_fine_tune_total_true_percent_graph.png)
+
+![CNN salt and pepper comparison](result/results%20task%201/cnn_compare_salt_and_pepper_distortion_restoration_fine_tune_total_true_percent_graph.png)
+
+![CNN gaussian blur comparison](result/results%20task%201/cnn_compare_gaussian_blur_distortion_restoration_fine_tune_total_true_percent_graph.png)
+
 ## Data 2 Preparation For YOLO
 
 `data\Data 2` is for the YOLO MRI segmentation dataset.
@@ -463,6 +491,18 @@ result\results task 3\yolo_snr_results\
   yolo_brightness_contrast_level_map50_95_graph.png
 ```
 
+YOLO result images:
+
+![YOLO basic training results](result/results%20task%203/yolo_basic/train/results.png)
+
+![YOLO gaussian noise mAP50](result/results%20task%203/yolo_snr_results/yolo_gaussian_noise_snr_map50_graph.png)
+
+![YOLO gaussian noise mAP50-95](result/results%20task%203/yolo_snr_results/yolo_gaussian_noise_snr_map50_95_graph.png)
+
+![YOLO gaussian blur mAP50](result/results%20task%203/yolo_snr_results/yolo_gaussian_blur_sigma_map50_graph.png)
+
+![YOLO brightness contrast mAP50-95](result/results%20task%203/yolo_snr_results/yolo_brightness_contrast_level_map50_95_graph.png)
+
 ## Documentation Of Choices, Processing, And Results
 
 ### Project Choices
@@ -496,12 +536,6 @@ result\results task 2\super_resolution\Clean\super_resolution_grid.png
 result\results task 2\super_resolution_snr\super_resolution_results\
 result\results task 3\yolo_tumor_segmentation\annotated\
 ```
-
-Example distortion and restoration images:
-
-![Distortion grid](data/Data%201%20with%20distortion/distortions/distortion_grid.png)
-
-![Restoration grid](data/Data%201%20with%20distortion/restoration/restoration_grid.png)
 
 ### Task 1 CNN Measurements
 
@@ -538,16 +572,6 @@ result\results task 1\cnn_compare_snr_distortion_restoration_fine_tune_total_tru
 result\results task 1\cnn_compare_salt_and_pepper_distortion_restoration_fine_tune_total_true_percent_graph.png
 result\results task 1\cnn_compare_gaussian_blur_distortion_restoration_fine_tune_total_true_percent_graph.png
 ```
-
-CNN result visualizations:
-
-![CNN basic confusion matrix](result/results%20task%201/cnn_on_basic/confusion_matrix.png)
-
-![CNN SNR comparison](result/results%20task%201/cnn_compare_snr_distortion_restoration_fine_tune_total_true_percent_graph.png)
-
-![CNN salt and pepper comparison](result/results%20task%201/cnn_compare_salt_and_pepper_distortion_restoration_fine_tune_total_true_percent_graph.png)
-
-![CNN gaussian blur comparison](result/results%20task%201/cnn_compare_gaussian_blur_distortion_restoration_fine_tune_total_true_percent_graph.png)
 
 ### Task 2 Super-Resolution Measurements
 
@@ -589,18 +613,6 @@ result\results task 2\super_resolution_snr\salt_and_pepper_density_psnr_graph.pn
 result\results task 2\super_resolution_snr\gaussian_blur_sigma_psnr_graph.png
 ```
 
-Super-resolution visualizations:
-
-![Clean super-resolution grid](result/results%20task%202/super_resolution/Clean/super_resolution_grid.png)
-
-![Super-resolution gaussian noise PSNR](result/results%20task%202/super_resolution_snr/gaussian_noise_snr_psnr_graph.png)
-
-![Super-resolution gaussian noise SSIM](result/results%20task%202/super_resolution_snr/gaussian_noise_snr_ssim_graph.png)
-
-![Super-resolution salt and pepper PSNR](result/results%20task%202/super_resolution_snr/salt_and_pepper_density_psnr_graph.png)
-
-![Super-resolution gaussian blur reconstruction score](result/results%20task%202/super_resolution_snr/gaussian_blur_sigma_reconstruction_score_graph.png)
-
 ### Task 3 YOLO Measurements
 
 YOLO segmentation is measured with mask mAP:
@@ -634,18 +646,6 @@ result\results task 3\yolo_snr_results\yolo_gaussian_blur_sigma_map50_95_graph.p
 result\results task 3\yolo_snr_results\yolo_brightness_contrast_level_map50_graph.png
 result\results task 3\yolo_snr_results\yolo_brightness_contrast_level_map50_95_graph.png
 ```
-
-YOLO result visualizations:
-
-![YOLO basic training results](result/results%20task%203/yolo_basic/train/results.png)
-
-![YOLO gaussian noise mAP50](result/results%20task%203/yolo_snr_results/yolo_gaussian_noise_snr_map50_graph.png)
-
-![YOLO gaussian noise mAP50-95](result/results%20task%203/yolo_snr_results/yolo_gaussian_noise_snr_map50_95_graph.png)
-
-![YOLO gaussian blur mAP50](result/results%20task%203/yolo_snr_results/yolo_gaussian_blur_sigma_map50_graph.png)
-
-![YOLO brightness contrast mAP50-95](result/results%20task%203/yolo_snr_results/yolo_brightness_contrast_level_map50_95_graph.png)
 
 ### Measurements Summary
 
