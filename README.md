@@ -145,12 +145,6 @@ result\results task 2\super_resolution\distortions\
 result\results task 2\super_resolution\restoration\
 ```
 
-Super-resolution main metric shown in this README:
-
-```text
-PSNR: higher is better
-```
-
 Run the Task 1-style SNR/level super-resolution experiment:
 
 ```bash
@@ -169,18 +163,6 @@ result\results task 2\super_resolution_snr\
   salt_and_pepper_density_psnr_graph.png
   gaussian_blur_sigma_psnr_graph.png
 ```
-
-Super-resolution result images:
-
-Main metric shown: **PSNR**.
-
-![Clean super-resolution grid](result/results%20task%202/super_resolution/Clean/super_resolution_grid.png)
-
-![Super-resolution gaussian noise PSNR](result/results%20task%202/super_resolution_snr/gaussian_noise_snr_psnr_graph.png)
-
-![Super-resolution salt and pepper PSNR](result/results%20task%202/super_resolution_snr/salt_and_pepper_density_psnr_graph.png)
-
-![Super-resolution gaussian blur PSNR](result/results%20task%202/super_resolution_snr/gaussian_blur_sigma_psnr_graph.png)
 
 ## Shared Distortion and Restoration
 
@@ -588,6 +570,16 @@ result\results task 2\super_resolution_snr\gaussian_noise_snr_psnr_graph.png
 result\results task 2\super_resolution_snr\salt_and_pepper_density_psnr_graph.png
 result\results task 2\super_resolution_snr\gaussian_blur_sigma_psnr_graph.png
 ```
+
+Super-resolution result images:
+
+![Clean super-resolution grid](result/results%20task%202/super_resolution/Clean/super_resolution_grid.png)
+
+![Super-resolution gaussian noise PSNR](result/results%20task%202/super_resolution_snr/gaussian_noise_snr_psnr_graph.png)
+
+![Super-resolution salt and pepper PSNR](result/results%20task%202/super_resolution_snr/salt_and_pepper_density_psnr_graph.png)
+
+![Super-resolution gaussian blur PSNR](result/results%20task%202/super_resolution_snr/gaussian_blur_sigma_psnr_graph.png)
 
 ### Task 3 YOLO Measurements
 
