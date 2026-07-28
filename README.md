@@ -98,7 +98,7 @@ data\Data 1\
   test\
 ```
 
-## Super-Resolution Preparation From Data 1
+## Task 1: Super-Resolution
 
 Task 1 downsamples an MRI image by x2 and reconstructs it back to the original
 size using interpolation-based super-resolution techniques.
@@ -145,7 +145,7 @@ result\results task 1\super_resolution\distortions\
 result\results task 1\super_resolution\restoration\
 ```
 
-Run the Task 2-style SNR/level super-resolution experiment:
+Run the Task 1 SNR/level super-resolution experiment:
 
 ```bash
 python "task\task 1 super resalution\super_resolution_snr.py"
