@@ -188,6 +188,49 @@ result\results task 1\super_resolution_snr\
   gaussian_blur_sigma_psnr_graph.png
 ```
 
+Task 1 main metric:
+
+```text
+PSNR: higher is better.
+```
+
+In `super_resolution_snr`, distorted images are compared to the distorted
+input, and restored images are compared to the restored input. The table below
+uses the `sharpened_lanczos` reconstruction method.
+
+| Distortion | Level | Image type | PSNR |
+| --- | --- | --- | ---: |
+| gaussian_noise_snr | 5db | distorted | 17.25 |
+| gaussian_noise_snr | 5db | restored | 27.35 |
+| gaussian_noise_snr | 30db | distorted | 26.74 |
+| gaussian_noise_snr | 30db | restored | 28.14 |
+| salt_and_pepper_density | 0.01 | distorted | 22.68 |
+| salt_and_pepper_density | 0.01 | restored | 27.79 |
+| salt_and_pepper_density | 0.10 | distorted | 14.95 |
+| salt_and_pepper_density | 0.10 | restored | 27.31 |
+| gaussian_blur_sigma | 0.5 | distorted | 27.50 |
+| gaussian_blur_sigma | 3.0 | distorted | 43.95 |
+
+Task 1 visualization files:
+
+```text
+result\results task 1\super_resolution\detailed_psnr_graph.png
+result\results task 1\super_resolution\vs_original_psnr_graph.png
+result\results task 1\super_resolution_snr\gaussian_noise_snr_psnr_graph.png
+result\results task 1\super_resolution_snr\salt_and_pepper_density_psnr_graph.png
+result\results task 1\super_resolution_snr\gaussian_blur_sigma_psnr_graph.png
+```
+
+Super-resolution result images:
+
+![Clean super-resolution grid](result/results%20task%201/super_resolution/Clean/super_resolution_grid.png)
+
+![Super-resolution gaussian noise PSNR](result/results%20task%201/super_resolution_snr/gaussian_noise_snr_psnr_graph.png)
+
+![Super-resolution salt and pepper PSNR](result/results%20task%201/super_resolution_snr/salt_and_pepper_density_psnr_graph.png)
+
+![Super-resolution gaussian blur PSNR](result/results%20task%201/super_resolution_snr/gaussian_blur_sigma_psnr_graph.png)
+
 ## Task 2: CNN Tumor Classification
 
 Task 2 trains a CNN binary classifier that predicts whether an MRI image has a
@@ -435,51 +478,6 @@ result\results task 1\super_resolution\Clean\super_resolution_grid.png
 result\results task 1\super_resolution_snr\super_resolution_results\
 result\results task 3\yolo_tumor_segmentation\annotated\
 ```
-
-### Task 1 Super-Resolution Measurements
-
-Task 1 main metric:
-
-```text
-PSNR: higher is better.
-```
-
-In `super_resolution_snr`, distorted images are compared to the distorted
-input, and restored images are compared to the restored input. The table below
-uses the `sharpened_lanczos` reconstruction method.
-
-| Distortion | Level | Image type | PSNR |
-| --- | --- | --- | ---: |
-| gaussian_noise_snr | 5db | distorted | 17.25 |
-| gaussian_noise_snr | 5db | restored | 27.35 |
-| gaussian_noise_snr | 30db | distorted | 26.74 |
-| gaussian_noise_snr | 30db | restored | 28.14 |
-| salt_and_pepper_density | 0.01 | distorted | 22.68 |
-| salt_and_pepper_density | 0.01 | restored | 27.79 |
-| salt_and_pepper_density | 0.10 | distorted | 14.95 |
-| salt_and_pepper_density | 0.10 | restored | 27.31 |
-| gaussian_blur_sigma | 0.5 | distorted | 27.50 |
-| gaussian_blur_sigma | 3.0 | distorted | 43.95 |
-
-Task 1 visualization files:
-
-```text
-result\results task 1\super_resolution\detailed_psnr_graph.png
-result\results task 1\super_resolution\vs_original_psnr_graph.png
-result\results task 1\super_resolution_snr\gaussian_noise_snr_psnr_graph.png
-result\results task 1\super_resolution_snr\salt_and_pepper_density_psnr_graph.png
-result\results task 1\super_resolution_snr\gaussian_blur_sigma_psnr_graph.png
-```
-
-Super-resolution result images:
-
-![Clean super-resolution grid](result/results%20task%201/super_resolution/Clean/super_resolution_grid.png)
-
-![Super-resolution gaussian noise PSNR](result/results%20task%201/super_resolution_snr/gaussian_noise_snr_psnr_graph.png)
-
-![Super-resolution salt and pepper PSNR](result/results%20task%201/super_resolution_snr/salt_and_pepper_density_psnr_graph.png)
-
-![Super-resolution gaussian blur PSNR](result/results%20task%201/super_resolution_snr/gaussian_blur_sigma_psnr_graph.png)
 
 ### Task 2 CNN Measurements
 
