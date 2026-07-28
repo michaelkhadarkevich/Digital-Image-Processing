@@ -227,18 +227,18 @@ In `super_resolution_snr`, distorted images are compared to the distorted
 input, and restored images are compared to the restored input. The table below
 uses the `sharpened_lanczos` reconstruction method.
 
-| Distortion | Level | Image type | PSNR |
-| --- | --- | --- | ---: |
-| gaussian_noise_snr | 5db | distorted | 17.25 |
-| gaussian_noise_snr | 5db | restored | 27.35 |
-| gaussian_noise_snr | 30db | distorted | 26.74 |
-| gaussian_noise_snr | 30db | restored | 28.14 |
-| salt_and_pepper_density | 0.01 | distorted | 22.68 |
-| salt_and_pepper_density | 0.01 | restored | 27.79 |
-| salt_and_pepper_density | 0.10 | distorted | 14.95 |
-| salt_and_pepper_density | 0.10 | restored | 27.31 |
-| gaussian_blur_sigma | 0.5 | distorted | 27.50 |
-| gaussian_blur_sigma | 3.0 | distorted | 43.95 |
+| Distortion | Level | Image type | PSNR | Example image |
+| --- | --- | --- | ---: | --- |
+| gaussian_noise_snr | 5db | distorted | 17.25 | ![Gaussian noise 5db distorted](docs/readme_images/task1_gaussian_noise_snr_5db_distorted.png) |
+| gaussian_noise_snr | 5db | restored | 27.35 | ![Gaussian noise 5db restored](docs/readme_images/task1_gaussian_noise_snr_5db_restored.png) |
+| gaussian_noise_snr | 30db | distorted | 26.74 | ![Gaussian noise 30db distorted](docs/readme_images/task1_gaussian_noise_snr_30db_distorted.png) |
+| gaussian_noise_snr | 30db | restored | 28.14 | ![Gaussian noise 30db restored](docs/readme_images/task1_gaussian_noise_snr_30db_restored.png) |
+| salt_and_pepper_density | 0.01 | distorted | 22.68 | ![Salt and pepper 0.01 distorted](docs/readme_images/task1_salt_and_pepper_density_0_01_distorted.png) |
+| salt_and_pepper_density | 0.01 | restored | 27.79 | ![Salt and pepper 0.01 restored](docs/readme_images/task1_salt_and_pepper_density_0_01_restored.png) |
+| salt_and_pepper_density | 0.10 | distorted | 14.95 | ![Salt and pepper 0.10 distorted](docs/readme_images/task1_salt_and_pepper_density_0_10_distorted.png) |
+| salt_and_pepper_density | 0.10 | restored | 27.31 | ![Salt and pepper 0.10 restored](docs/readme_images/task1_salt_and_pepper_density_0_10_restored.png) |
+| gaussian_blur_sigma | 0.5 | distorted | 27.50 | ![Gaussian blur 0.5 distorted](docs/readme_images/task1_gaussian_blur_sigma_0_5_distorted.png) |
+| gaussian_blur_sigma | 3.0 | distorted | 43.95 | ![Gaussian blur 3.0 distorted](docs/readme_images/task1_gaussian_blur_sigma_3_0_distorted.png) |
 
 Task 1 visualization files:
 
