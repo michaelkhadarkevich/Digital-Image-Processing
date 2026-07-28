@@ -136,6 +136,19 @@ Restoration techniques can be applied to the distortion outputs.
 Run `distortion_methods.py` first, because this script uses files from
 `data\Data 1 with distortion\distortions`.
 
+How each distortion and restoration works:
+
+| Distortion | How the distortion works | How the restoration works |
+| --- | --- | --- |
+| Gaussian noise | Adds random normally distributed pixel noise to the image. | Applies light Gaussian smoothing to reduce noise, then unsharp masking to recover edges. |
+| Salt-and-pepper noise | Randomly changes pixels to black or white. | Uses a median filter, which removes isolated black/white pixels while keeping edges better than simple blur. |
+| Gaussian blur | Smooths the image with a Gaussian filter, reducing details and edges. | Uses unsharp masking to increase local contrast and make edges sharper again. |
+| Brightness/contrast | Increases brightness and contrast, changing intensity distribution. | Uses autocontrast and then lowers contrast to normalize image intensity. |
+| Rotation | Rotates the image by 18 degrees and fills empty areas with black. | Rotates the image back by -18 degrees. Some border information can still be lost. |
+| Perspective warp | Moves the image corners to simulate a changed camera/view angle. | Applies the inverse perspective transform using the same corner mapping. |
+| Barrel distortion | Bends pixels outward from the image center. | Applies a pincushion-style correction to bend pixels back toward the original geometry. |
+| Pixelation | Downsamples the image into large blocks and resizes it back with nearest-neighbor interpolation. | Uses bicubic interpolation and mild sharpening to smooth block edges. Lost detail cannot be fully recovered. |
+
 Restoration outputs are saved to:
 
 ```text
