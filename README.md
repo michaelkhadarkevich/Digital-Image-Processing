@@ -83,6 +83,22 @@ data\Data 1\
   test\
 ```
 
+Data 1 examples:
+
+```text
+No tumor image:
+data\Data 1\test\no_tumor\14 no_28.jpg
+
+Tumor image:
+data\Data 1\test\tumor\Y115_5.jpg
+```
+
+The label is the folder name: `no_tumor` or `tumor`.
+
+![Data 1 no tumor example](data/Data%201/test/no_tumor/14%20no_28.jpg)
+
+![Data 1 tumor example](data/Data%201/test/tumor/Y115_5.jpg)
+
 ## Shared Distortion and Restoration
 
 Distortion and restoration are shared experiments. They can be used by all
