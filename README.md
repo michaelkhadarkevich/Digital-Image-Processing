@@ -387,6 +387,26 @@ The YOLO dataset is saved under:
 data\Data 2\mri_segmentation\
 ```
 
+Example Data 2 YOLO segmentation item:
+
+```text
+image:
+data\Data 2\yolo_segmentation\images\train\kaggle_3m__TCGA_CS_4941_19960909__TCGA_CS_4941_19960909_11.tif
+
+label:
+data\Data 2\yolo_segmentation\labels\train\kaggle_3m__TCGA_CS_4941_19960909__TCGA_CS_4941_19960909_11.txt
+
+label content starts like:
+0 0.492188 0.257812 0.476562 0.257812 0.468750 0.265625 ...
+```
+
+In the label file, `0` is the class id for `tumor`. The following numbers are
+normalized x/y polygon points that mark the tumor mask.
+
+Example Data 2 image:
+
+![Data 2 YOLO image example](data/Data%202/yolo_segmentation/example_data2_yolo_image.png)
+
 ## Task 3: YOLO Tumor Segmentation
 
 YOLO can mark tumor regions if it is trained as a segmentation model. Data 2
@@ -417,26 +437,6 @@ data\Data 2\yolo_segmentation\
   labels\val\
   labels\test\
 ```
-
-Example Data 2 YOLO segmentation item:
-
-```text
-image:
-data\Data 2\yolo_segmentation\images\train\kaggle_3m__TCGA_CS_4941_19960909__TCGA_CS_4941_19960909_11.tif
-
-label:
-data\Data 2\yolo_segmentation\labels\train\kaggle_3m__TCGA_CS_4941_19960909__TCGA_CS_4941_19960909_11.txt
-
-label content starts like:
-0 0.492188 0.257812 0.476562 0.257812 0.468750 0.265625 ...
-```
-
-In the label file, `0` is the class id for `tumor`. The following numbers are
-normalized x/y polygon points that mark the tumor mask.
-
-Example Data 2 image:
-
-![Data 2 YOLO image example](data/Data%202/yolo_segmentation/example_data2_yolo_image.png)
 
 Train YOLO segmentation:
 
