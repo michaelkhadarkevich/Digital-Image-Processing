@@ -64,30 +64,15 @@ confusion matrices, before/after images, and YOLO annotated output images.
 
 ## Setup
 
-```bash
-python -m venv venv
-venv\Scripts\activate
-pip install -r requirements.txt
-```
+Setup commands are listed in the **How To Run** section at the end of this file.
 
 ## Data 1 Preparation For CNN And Super-Resolution
 
 `data\Data 1` is used for Task 1 super-resolution and Task 2 CNN classification
 super-resolution.
 
-Download the dataset:
-
-```bash
-python "data\Data 1\download_dataset.py"
-```
-
-This downloads the dataset with KaggleHub and prints the local dataset path.
-
-Preprocess the images:
-
-```bash
-python "data\Data 1\preprocess.py" --input "PASTE_DATASET_PATH_HERE"
-```
+The Data 1 download and preprocessing commands are listed in the **How To Run**
+section.
 
 Processed files are saved into:
 
@@ -109,11 +94,7 @@ Task 2 can run the CNN on distorted/restored images.
 Task 3 can run YOLO on distorted/restored images.
 ```
 
-Apply common digital image distortion methods to one image:
-
-```bash
-python "task\distortion methods\distortion_methods.py" --image "path\to\image.jpg"
-```
+Common digital image distortion methods can be applied to one image.
 
 If `--image` is not provided, the script uses one image from
 `data\Data 1\test`.
@@ -134,11 +115,7 @@ data\Data 1 with distortion\distortions\
   pixelation.png
 ```
 
-Apply restoration techniques to the distortion outputs:
-
-```bash
-python "task\restoration\image_restoration.py"
-```
+Restoration techniques can be applied to the distortion outputs.
 
 Run `distortion_methods.py` first, because this script uses files from
 `data\Data 1 with distortion\distortions`.
@@ -168,17 +145,7 @@ Distortion and restoration result images:
 This task downsamples an MRI image by x2 and reconstructs it back to the original
 size using interpolation-based super-resolution techniques.
 
-Run on the default image:
-
-```bash
-python "task\task 1 super resalution\super_resolution.py"
-```
-
-Or choose a specific image:
-
-```bash
-python "task\task 1 super resalution\super_resolution.py" --image "path\to\image.jpg"
-```
+It can run on the default image or on a selected image.
 
 Outputs are saved to:
 
@@ -197,11 +164,7 @@ result\results task 1\super_resolution\
   methods.txt
 ```
 
-To also run super-resolution on distortion and restoration images:
-
-```bash
-python "task\task 1 super resalution\super_resolution.py" --include-derived
-```
+It can also run super-resolution on distortion and restoration images.
 
 Additional outputs are saved to:
 
@@ -210,11 +173,7 @@ result\results task 1\super_resolution\distortions\
 result\results task 1\super_resolution\restoration\
 ```
 
-Run the SNR/level super-resolution experiment:
-
-```bash
-python "task\task 1 super resalution\super_resolution_snr.py"
-```
+The SNR/level super-resolution experiment is also available.
 
 Outputs are saved to:
 
@@ -234,11 +193,7 @@ result\results task 1\super_resolution_snr\
 Task 2 trains a CNN binary classifier that predicts whether an MRI image has a
 tumor.
 
-Train the normal CNN:
-
-```bash
-python "task\task 2 cnn\train_cnn.py"
-```
+The normal CNN can be trained on clean Data 1 images.
 
 The trained model is saved to:
 
@@ -256,11 +211,7 @@ result\results task 2\cnn_on_basic\
   predictions.csv
 ```
 
-Create a larger training set with rotated copies:
-
-```bash
-python "task\augmentation\augment_train_rotate.py"
-```
+The augmented CNN uses a larger training set with rotated copies.
 
 This writes:
 
@@ -268,11 +219,7 @@ This writes:
 data\Data 1 augmented\
 ```
 
-Train the CNN on the augmented dataset:
-
-```bash
-python "task\task 2 cnn\train_cnn_augmented.py"
-```
+The CNN can also be trained on the augmented dataset.
 
 Augmentation note:
 
@@ -305,11 +252,7 @@ Fine-tuned distortion CNN results should be saved to:
 result\results task 2\cnn_fine_tune_distortion\
 ```
 
-Run the trained basic CNN on clean and distorted images only:
-
-```bash
-python "task\task 2 cnn\evaluate_distortion.py"
-```
+The trained basic CNN can be evaluated on clean and distorted images only.
 
 The distortion-only CNN outputs are saved to:
 
@@ -323,22 +266,9 @@ result\results task 2\cnn_on_distortion\
 
 Predict one image:
 
-```bash
-python "task\task 2 cnn\predict.py" --image "path\to\image.jpg"
-```
+Single-image prediction is also supported.
 
-Run the trained CNN on shared distortion and restoration images:
-
-```bash
-python "task\task 2 cnn\evaluate_distortion_restoration.py"
-```
-
-Run these first:
-
-```bash
-python "task\distortion methods\distortion_methods.py"
-python "task\restoration\image_restoration.py"
-```
+The trained CNN can also run on shared distortion and restoration images.
 
 The CNN comparison outputs are saved to:
 
@@ -375,11 +305,7 @@ Augmented CNN on Data 1 with rotated training images:
 
 `data\Data 2` is for the YOLO MRI segmentation dataset.
 
-Download the YOLO dataset:
-
-```bash
-python "data\Data 2\download_mri_data.py"
-```
+The Data 2 download command is listed in the **How To Run** section.
 
 The YOLO dataset is saved under:
 
@@ -417,17 +343,7 @@ YOLO can mark tumor regions if it is trained as a segmentation model. Data 2
 uses the LGG MRI segmentation dataset masks and converts them into YOLO
 segmentation labels.
 
-Download Data 2:
-
-```bash
-python "data\Data 2\download_mri_data.py"
-```
-
-Convert the segmentation masks into YOLO segmentation format:
-
-```bash
-python "task\task 3 yolo\prepare_yolo_segmentation.py"
-```
+Data 2 is downloaded and converted into YOLO segmentation format.
 
 This creates:
 
@@ -442,11 +358,7 @@ data\Data 2\yolo_segmentation\
   labels\test\
 ```
 
-Train YOLO segmentation:
-
-```bash
-python "task\task 3 yolo\train_yolo_segmentation.py"
-```
+YOLO segmentation can be trained on the prepared segmentation dataset.
 
 The trained tumor segmentation model is copied to:
 
@@ -454,11 +366,7 @@ The trained tumor segmentation model is copied to:
 models\yolo\yolo_tumor_seg.pt
 ```
 
-Use the trained model to mark tumors:
-
-```bash
-python "task\task 3 yolo\run_yolo_segmentation.py"
-```
+The trained model can be used to mark tumors.
 
 Tumor segmentation outputs are saved to:
 
@@ -469,15 +377,8 @@ result\results task 3\yolo_tumor_segmentation\
   labels\
 ```
 
-Run YOLO distortion-level experiments:
-
-```bash
-python "task\task 3 yolo\prepare_yolo_distorted_segmentation.py"
-python "task\task 3 yolo\prepare_yolo_restored_segmentation.py"
-python "task\task 3 yolo\validate_yolo_basic_on_distortion_levels.py"
-python "task\task 3 yolo\validate_yolo_basic_on_restored_distortion_levels.py"
-python "task\task 3 yolo\plot_yolo_snr_results.py"
-```
+YOLO distortion-level experiments compare the clean basic model, restored
+inputs, and fine-tuned models.
 
 YOLO distortion-level results are saved to:
 
@@ -671,3 +572,66 @@ YOLO enhancement
 
 This project is for learning and experimentation. It is not a medical diagnostic
 tool and should not be used for clinical decisions.
+
+## How To Run
+
+Create and activate the virtual environment:
+
+```bash
+python -m venv venv
+venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+Prepare Data 1 for super-resolution and CNN:
+
+```bash
+python "data\Data 1\download_dataset.py"
+python "data\Data 1\preprocess.py" --input "PASTE_DATASET_PATH_HERE"
+```
+
+Run shared distortion and restoration:
+
+```bash
+python "task\distortion methods\distortion_methods.py" --image "path\to\image.jpg"
+python "task\restoration\image_restoration.py"
+```
+
+Run Task 1 super-resolution:
+
+```bash
+python "task\task 1 super resalution\super_resolution.py"
+python "task\task 1 super resalution\super_resolution.py" --image "path\to\image.jpg"
+python "task\task 1 super resalution\super_resolution.py" --include-derived
+python "task\task 1 super resalution\super_resolution_snr.py"
+```
+
+Run Task 2 CNN:
+
+```bash
+python "task\task 2 cnn\train_cnn.py"
+python "task\augmentation\augment_train_rotate.py"
+python "task\task 2 cnn\train_cnn_augmented.py"
+python "task\task 2 cnn\evaluate_distortion.py"
+python "task\task 2 cnn\predict.py" --image "path\to\image.jpg"
+python "task\task 2 cnn\evaluate_distortion_restoration.py"
+```
+
+Prepare Data 2 and run Task 3 YOLO:
+
+```bash
+python "data\Data 2\download_mri_data.py"
+python "task\task 3 yolo\prepare_yolo_segmentation.py"
+python "task\task 3 yolo\train_yolo_segmentation.py"
+python "task\task 3 yolo\run_yolo_segmentation.py"
+```
+
+Run YOLO distortion-level experiments:
+
+```bash
+python "task\task 3 yolo\prepare_yolo_distorted_segmentation.py"
+python "task\task 3 yolo\prepare_yolo_restored_segmentation.py"
+python "task\task 3 yolo\validate_yolo_basic_on_distortion_levels.py"
+python "task\task 3 yolo\validate_yolo_basic_on_restored_distortion_levels.py"
+python "task\task 3 yolo\plot_yolo_snr_results.py"
+```
