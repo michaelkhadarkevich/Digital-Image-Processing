@@ -631,6 +631,33 @@ result\results task 3\yolo_snr_results\yolo_brightness_contrast_level_map50_grap
 | Task 2 CNN | total true percent | bar plots comparing clean, distorted, restored, and fine-tuned CNN results |
 | Task 3 YOLO | mask mAP50 | mAP50 bar plots comparing basic, restored, and fine-tuned YOLO |
 
+## Conclusion
+
+The experiments show that image distortions can reduce the quality and
+reliability of MRI image-processing tasks, but the effect depends on the task
+and on the distortion strength.
+
+For Task 1, super-resolution works best when the input image still keeps useful
+structure. Strong gaussian noise and high salt-and-pepper density reduce PSNR,
+while restoration usually improves the reconstructed image before applying the
+`sharpened_lanczos` super-resolution method.
+
+For Task 2, the CNN performs best on clean Data 1 images. Distortions lower the
+classification accuracy, especially salt-and-pepper noise. Restoration helps in
+some cases, and augmentation improved the basic CNN only slightly. This suggests
+that simple rotation augmentation is not enough to make the classifier fully
+robust.
+
+For Task 3, YOLO segmentation can mark tumor regions after being trained on
+Data 2 masks. The clean YOLO model is strong on clean images, but distortion can
+lower mask mAP50. Fine-tuning on distorted YOLO data generally improves
+robustness compared with using only the clean basic YOLO model.
+
+Overall, the project shows that robustness should be measured with clean,
+distorted, restored, and fine-tuned settings. Restoration is useful as a
+pre-processing step, but for deep-learning models, fine-tuning on distorted data
+is often the stronger improvement.
+
 ## Future Enhancements
 
 Planned improvements are tracked in:
