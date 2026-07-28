@@ -483,6 +483,7 @@ shows the ground-truth tumor mask for the example image.
 
 | Distortion | Level | Image type | mAP50 | Input image | Mask |
 | --- | --- | --- | ---: | --- | --- |
+| original | clean | original | 0.851 | ![Task 3 YOLO basic clean example](docs/readme_images/task3_yolo_basic_example.png) | ![YOLO tumor mask](docs/readme_images/task3_yolo_mask_example.png) |
 | gaussian_noise_snr | 5db | distorted | 0.696 | ![YOLO gaussian noise 5db distorted](docs/readme_images/task3_yolo_gaussian_noise_snr_5db_distorted.jpg) | ![YOLO tumor mask](docs/readme_images/task3_yolo_mask_example.png) |
 | gaussian_noise_snr | 5db | restored | 0.774 | ![YOLO gaussian noise 5db restored](docs/readme_images/task3_yolo_gaussian_noise_snr_5db_restored.jpg) | ![YOLO tumor mask](docs/readme_images/task3_yolo_mask_example.png) |
 | gaussian_noise_snr | 15db | distorted | 0.828 | ![YOLO gaussian noise 15db distorted](docs/readme_images/task3_yolo_gaussian_noise_snr_15db_distorted.jpg) | ![YOLO tumor mask](docs/readme_images/task3_yolo_mask_example.png) |
