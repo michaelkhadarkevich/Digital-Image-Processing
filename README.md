@@ -95,9 +95,9 @@ data\Data 1\test\tumor\Y115_5.jpg
 
 The label is the folder name: `no_tumor` or `tumor`.
 
-![Data 1 no tumor example](data/Data%201/test/no_tumor/14%20no_28.jpg)
+![Data 1 no tumor example](docs/readme_images/data1_no_tumor_example.jpg)
 
-![Data 1 tumor example](data/Data%201/test/tumor/Y115_5.jpg)
+![Data 1 tumor example](docs/readme_images/data1_tumor_example.jpg)
 
 ## Shared Distortion and Restoration
 
