@@ -224,8 +224,9 @@ PSNR: higher is better.
 ```
 
 In `super_resolution_snr`, distorted images are compared to the distorted
-input, and restored images are compared to the restored input. The table below
-uses the `sharpened_lanczos` reconstruction method.
+input, and restored images are compared to the restored input. The PSNR table
+and the super-resolution example images below use the `sharpened_lanczos`
+reconstruction method.
 
 | Distortion | Level | Image type | PSNR | Input image | Downsampled x2 | Super-resolution |
 | --- | --- | --- | ---: | --- | --- | --- |
