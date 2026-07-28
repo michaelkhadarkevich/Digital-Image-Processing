@@ -266,6 +266,11 @@ Super-resolution result images:
 Task 2 trains a CNN binary classifier that predicts whether an MRI image has a
 tumor.
 
+Task 2 uses the same Data 1 MRI images as Task 1 super-resolution. It also uses
+the same shared distortion and restoration techniques described above, so CNN
+results can be compared on clean, distorted, and restored versions of the same
+image data.
+
 The normal CNN can be trained on clean Data 1 images.
 
 The trained model is saved to:
