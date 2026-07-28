@@ -471,6 +471,15 @@ result\results task 3\yolo_tumor_segmentation\
   labels\
 ```
 
+YOLO image examples:
+
+| Example | Image |
+| --- | --- |
+| Basic clean Data 2 image | ![Task 3 YOLO basic clean example](docs/readme_images/task3_yolo_basic_example.png) |
+| Ground-truth tumor mask | ![Task 3 YOLO mask example](docs/readme_images/task3_yolo_mask_example.png) |
+| Distorted image, gaussian noise SNR 15 dB | ![Task 3 YOLO distorted gaussian noise 15db example](docs/readme_images/task3_yolo_distorted_gaussian_noise_15db_example.jpg) |
+| Restored image after gaussian-noise restoration | ![Task 3 YOLO restored gaussian noise 15db example](docs/readme_images/task3_yolo_restored_gaussian_noise_15db_example.jpg) |
+
 YOLO distortion-level experiments compare the clean basic model, restored
 inputs, and fine-tuned models.
 
