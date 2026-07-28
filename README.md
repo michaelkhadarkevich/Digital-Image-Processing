@@ -377,6 +377,37 @@ result\results task 2\cnn_on_distortion_restoration\
   gaussian_blur_total_true_percent_graph.png
 ```
 
+CNN main metric:
+
+```text
+Total true percent = correct predictions / all predictions
+```
+
+Selected results from `result\results task 2\cnn_on_distortion_restoration\confusion_percentages.csv`:
+
+| Source | Total true % | Total images |
+| --- | ---: | ---: |
+| clean original | 78.95 | 38 |
+| gaussian_noise distorted | 71.05 | 38 |
+| gaussian_noise restored | 68.42 | 38 |
+| salt_and_pepper distorted | 44.73 | 38 |
+| salt_and_pepper restored | 73.68 | 38 |
+| gaussian_blur distorted | 60.53 | 38 |
+| gaussian_blur restored | 60.53 | 38 |
+
+CNN visualization files:
+
+```text
+result\results task 2\cnn_on_basic\training_history.png
+result\results task 2\cnn_on_basic\confusion_matrix.png
+result\results task 2\cnn_on_distortion\total_true_percent_graph.png
+result\results task 2\cnn_on_distortion_restoration\total_true_percent_graph.png
+result\results task 2\cnn_fine_tune_distortion\total_true_percent_graph.png
+result\results task 2\cnn_compare_snr_distortion_restoration_fine_tune_total_true_percent_graph.png
+result\results task 2\cnn_compare_salt_and_pepper_distortion_restoration_fine_tune_total_true_percent_graph.png
+result\results task 2\cnn_compare_gaussian_blur_distortion_restoration_fine_tune_total_true_percent_graph.png
+```
+
 CNN result images:
 
 Main metric shown: **total true percent**.
@@ -560,39 +591,6 @@ data\Data 1 with distortion\restoration\restoration_grid.png
 result\results task 1\super_resolution\Clean\super_resolution_grid.png
 result\results task 1\super_resolution_snr\super_resolution_results\
 result\results task 3\yolo_tumor_segmentation\annotated\
-```
-
-### Task 2 CNN Measurements
-
-CNN main metric:
-
-```text
-Total true percent = correct predictions / all predictions
-```
-
-Selected results from `result\results task 2\cnn_on_distortion_restoration\confusion_percentages.csv`:
-
-| Source | Total true % | Total images |
-| --- | ---: | ---: |
-| clean original | 78.95 | 38 |
-| gaussian_noise distorted | 71.05 | 38 |
-| gaussian_noise restored | 68.42 | 38 |
-| salt_and_pepper distorted | 44.73 | 38 |
-| salt_and_pepper restored | 73.68 | 38 |
-| gaussian_blur distorted | 60.53 | 38 |
-| gaussian_blur restored | 60.53 | 38 |
-
-CNN visualization files:
-
-```text
-result\results task 2\cnn_on_basic\training_history.png
-result\results task 2\cnn_on_basic\confusion_matrix.png
-result\results task 2\cnn_on_distortion\total_true_percent_graph.png
-result\results task 2\cnn_on_distortion_restoration\total_true_percent_graph.png
-result\results task 2\cnn_fine_tune_distortion\total_true_percent_graph.png
-result\results task 2\cnn_compare_snr_distortion_restoration_fine_tune_total_true_percent_graph.png
-result\results task 2\cnn_compare_salt_and_pepper_distortion_restoration_fine_tune_total_true_percent_graph.png
-result\results task 2\cnn_compare_gaussian_blur_distortion_restoration_fine_tune_total_true_percent_graph.png
 ```
 
 ### Task 3 YOLO Measurements
