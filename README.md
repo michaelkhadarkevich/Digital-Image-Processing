@@ -477,8 +477,30 @@ YOLO image examples:
 | --- | --- |
 | Basic clean Data 2 image | ![Task 3 YOLO basic clean example](docs/readme_images/task3_yolo_basic_example.png) |
 | Ground-truth tumor mask | ![Task 3 YOLO mask example](docs/readme_images/task3_yolo_mask_example.png) |
-| Distorted image, gaussian noise SNR 15 dB | ![Task 3 YOLO distorted gaussian noise 15db example](docs/readme_images/task3_yolo_distorted_gaussian_noise_15db_example.jpg) |
-| Restored image after gaussian-noise restoration | ![Task 3 YOLO restored gaussian noise 15db example](docs/readme_images/task3_yolo_restored_gaussian_noise_15db_example.jpg) |
+
+YOLO distortion/restoration examples use `mAP50`, not PSNR. The mask column
+shows the ground-truth tumor mask for the example image.
+
+| Distortion | Level | Image type | mAP50 | Input image | Mask |
+| --- | --- | --- | ---: | --- | --- |
+| gaussian_noise_snr | 5db | distorted | 0.696 | ![YOLO gaussian noise 5db distorted](docs/readme_images/task3_yolo_gaussian_noise_snr_5db_distorted.jpg) | ![YOLO tumor mask](docs/readme_images/task3_yolo_mask_example.png) |
+| gaussian_noise_snr | 5db | restored | 0.774 | ![YOLO gaussian noise 5db restored](docs/readme_images/task3_yolo_gaussian_noise_snr_5db_restored.jpg) | ![YOLO tumor mask](docs/readme_images/task3_yolo_mask_example.png) |
+| gaussian_noise_snr | 15db | distorted | 0.828 | ![YOLO gaussian noise 15db distorted](docs/readme_images/task3_yolo_gaussian_noise_snr_15db_distorted.jpg) | ![YOLO tumor mask](docs/readme_images/task3_yolo_mask_example.png) |
+| gaussian_noise_snr | 15db | restored | 0.829 | ![YOLO gaussian noise 15db restored](docs/readme_images/task3_yolo_gaussian_noise_snr_15db_restored.jpg) | ![YOLO tumor mask](docs/readme_images/task3_yolo_mask_example.png) |
+| gaussian_noise_snr | 30db | distorted | 0.847 | ![YOLO gaussian noise 30db distorted](docs/readme_images/task3_yolo_gaussian_noise_snr_30db_distorted.jpg) | ![YOLO tumor mask](docs/readme_images/task3_yolo_mask_example.png) |
+| gaussian_noise_snr | 30db | restored | 0.838 | ![YOLO gaussian noise 30db restored](docs/readme_images/task3_yolo_gaussian_noise_snr_30db_restored.jpg) | ![YOLO tumor mask](docs/readme_images/task3_yolo_mask_example.png) |
+| gaussian_blur_sigma | 0.5 | distorted | 0.839 | ![YOLO gaussian blur 0.5 distorted](docs/readme_images/task3_yolo_gaussian_blur_sigma_0_5_distorted.jpg) | ![YOLO tumor mask](docs/readme_images/task3_yolo_mask_example.png) |
+| gaussian_blur_sigma | 0.5 | restored | 0.818 | ![YOLO gaussian blur 0.5 restored](docs/readme_images/task3_yolo_gaussian_blur_sigma_0_5_restored.jpg) | ![YOLO tumor mask](docs/readme_images/task3_yolo_mask_example.png) |
+| gaussian_blur_sigma | 1.5 | distorted | 0.850 | ![YOLO gaussian blur 1.5 distorted](docs/readme_images/task3_yolo_gaussian_blur_sigma_1_5_distorted.jpg) | ![YOLO tumor mask](docs/readme_images/task3_yolo_mask_example.png) |
+| gaussian_blur_sigma | 1.5 | restored | 0.826 | ![YOLO gaussian blur 1.5 restored](docs/readme_images/task3_yolo_gaussian_blur_sigma_1_5_restored.jpg) | ![YOLO tumor mask](docs/readme_images/task3_yolo_mask_example.png) |
+| gaussian_blur_sigma | 3.0 | distorted | 0.787 | ![YOLO gaussian blur 3.0 distorted](docs/readme_images/task3_yolo_gaussian_blur_sigma_3_0_distorted.jpg) | ![YOLO tumor mask](docs/readme_images/task3_yolo_mask_example.png) |
+| gaussian_blur_sigma | 3.0 | restored | 0.794 | ![YOLO gaussian blur 3.0 restored](docs/readme_images/task3_yolo_gaussian_blur_sigma_3_0_restored.jpg) | ![YOLO tumor mask](docs/readme_images/task3_yolo_mask_example.png) |
+| brightness_contrast | B1.15 C1.25 | distorted | 0.843 | ![YOLO brightness contrast B1.15 C1.25 distorted](docs/readme_images/task3_yolo_brightness_contrast_b1_15_c1_25_distorted.jpg) | ![YOLO tumor mask](docs/readme_images/task3_yolo_mask_example.png) |
+| brightness_contrast | B1.15 C1.25 | restored | 0.837 | ![YOLO brightness contrast B1.15 C1.25 restored](docs/readme_images/task3_yolo_brightness_contrast_b1_15_c1_25_restored.jpg) | ![YOLO tumor mask](docs/readme_images/task3_yolo_mask_example.png) |
+| brightness_contrast | B1.35 C1.55 | distorted | 0.835 | ![YOLO brightness contrast B1.35 C1.55 distorted](docs/readme_images/task3_yolo_brightness_contrast_b1_35_c1_55_distorted.jpg) | ![YOLO tumor mask](docs/readme_images/task3_yolo_mask_example.png) |
+| brightness_contrast | B1.35 C1.55 | restored | 0.836 | ![YOLO brightness contrast B1.35 C1.55 restored](docs/readme_images/task3_yolo_brightness_contrast_b1_35_c1_55_restored.jpg) | ![YOLO tumor mask](docs/readme_images/task3_yolo_mask_example.png) |
+| brightness_contrast | B1.55 C1.80 | distorted | 0.815 | ![YOLO brightness contrast B1.55 C1.80 distorted](docs/readme_images/task3_yolo_brightness_contrast_b1_55_c1_80_distorted.jpg) | ![YOLO tumor mask](docs/readme_images/task3_yolo_mask_example.png) |
+| brightness_contrast | B1.55 C1.80 | restored | 0.813 | ![YOLO brightness contrast B1.55 C1.80 restored](docs/readme_images/task3_yolo_brightness_contrast_b1_55_c1_80_restored.jpg) | ![YOLO tumor mask](docs/readme_images/task3_yolo_mask_example.png) |
 
 YOLO distortion-level experiments compare the clean basic model, restored
 inputs, and fine-tuned models.
