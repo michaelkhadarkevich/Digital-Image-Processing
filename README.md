@@ -407,6 +407,10 @@ Example Data 2 image:
 
 ![Data 2 YOLO image example](data/Data%202/yolo_segmentation/example_data2_yolo_image.png)
 
+Example Data 2 image with tumor mask:
+
+![Data 2 YOLO image with mask example](data/Data%202/yolo_segmentation/example_data2_yolo_image_with_mask.png)
+
 ## Task 3: YOLO Tumor Segmentation
 
 YOLO can mark tumor regions if it is trained as a segmentation model. Data 2
