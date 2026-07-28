@@ -188,7 +188,10 @@ def save_metric_graph(
 
     plt.xticks(x_positions, labels)
     plt.ylabel(metric.replace("_", " ").title())
-    plt.title(f"{title} - {metric.replace('_', ' ').title()}")
+    plt.title(
+        f"{title} - {metric.replace('_', ' ').title()} "
+        "(sharpened_lanczos)"
+    )
     plt.grid(axis="y", linestyle="--", alpha=0.35)
     plt.legend()
 
