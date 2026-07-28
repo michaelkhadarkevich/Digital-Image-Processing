@@ -165,7 +165,7 @@ Distortion and restoration result images:
 
 ## Task 1: Super-Resolution
 
-Task 1 downsamples an MRI image by x2 and reconstructs it back to the original
+This task downsamples an MRI image by x2 and reconstructs it back to the original
 size using interpolation-based super-resolution techniques.
 
 Run on the default image:
@@ -210,7 +210,7 @@ result\results task 1\super_resolution\distortions\
 result\results task 1\super_resolution\restoration\
 ```
 
-Run the Task 1 SNR/level super-resolution experiment:
+Run the SNR/level super-resolution experiment:
 
 ```bash
 python "task\task 1 super resalution\super_resolution_snr.py"
