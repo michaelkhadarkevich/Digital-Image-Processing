@@ -98,6 +98,71 @@ data\Data 1\
   test\
 ```
 
+## Shared Distortion and Restoration
+
+Distortion and restoration are shared experiments. They can be used by all
+tasks:
+
+```text
+Task 1 can run super-resolution on distorted/restored images.
+Task 2 can run the CNN on distorted/restored images.
+Task 3 can run YOLO on distorted/restored images.
+```
+
+Apply common digital image distortion methods to one image:
+
+```bash
+python "task\distortion methods\distortion_methods.py" --image "path\to\image.jpg"
+```
+
+If `--image` is not provided, the script uses one image from
+`data\Data 1\test`.
+
+Distortion outputs are saved to:
+
+```text
+data\Data 1 with distortion\distortions\
+  distortion_grid.png
+  methods.txt
+  gaussian_noise.png
+  salt_and_pepper.png
+  gaussian_blur.png
+  brightness_contrast.png
+  rotation.png
+  perspective_warp.png
+  barrel_distortion.png
+  pixelation.png
+```
+
+Apply restoration techniques to the distortion outputs:
+
+```bash
+python "task\restoration\image_restoration.py"
+```
+
+Run `distortion_methods.py` first, because this script uses files from
+`data\Data 1 with distortion\distortions`.
+
+Restoration outputs are saved to:
+
+```text
+data\Data 1 with distortion\restoration\
+  restoration_grid.png
+  methods.txt
+  gaussian_noise_restored.png
+  salt_and_pepper_restored.png
+  gaussian_blur_restored.png
+  brightness_contrast_restored.png
+  rotation_restored.png
+  perspective_warp_restored.png
+  barrel_distortion_restored.png
+  pixelation_restored.png
+```
+
+Distortion and restoration result images:
+
+![Restoration grid](data/Data%201%20with%20distortion/restoration/restoration_grid.png)
+
 ## Task 1: Super-Resolution
 
 Task 1 downsamples an MRI image by x2 and reconstructs it back to the original
@@ -163,71 +228,6 @@ result\results task 1\super_resolution_snr\
   salt_and_pepper_density_psnr_graph.png
   gaussian_blur_sigma_psnr_graph.png
 ```
-
-## Shared Distortion and Restoration
-
-Distortion and restoration are shared experiments. They can be used by all
-tasks:
-
-```text
-Task 1 can run super-resolution on distorted/restored images.
-Task 2 can run the CNN on distorted/restored images.
-Task 3 can run YOLO on distorted/restored images.
-```
-
-Apply common digital image distortion methods to one image:
-
-```bash
-python "task\distortion methods\distortion_methods.py" --image "path\to\image.jpg"
-```
-
-If `--image` is not provided, the script uses one image from
-`data\Data 1\test`.
-
-Distortion outputs are saved to:
-
-```text
-data\Data 1 with distortion\distortions\
-  distortion_grid.png
-  methods.txt
-  gaussian_noise.png
-  salt_and_pepper.png
-  gaussian_blur.png
-  brightness_contrast.png
-  rotation.png
-  perspective_warp.png
-  barrel_distortion.png
-  pixelation.png
-```
-
-Apply restoration techniques to the distortion outputs:
-
-```bash
-python "task\restoration\image_restoration.py"
-```
-
-Run `distortion_methods.py` first, because this script uses files from
-`data\Data 1 with distortion\distortions`.
-
-Restoration outputs are saved to:
-
-```text
-data\Data 1 with distortion\restoration\
-  restoration_grid.png
-  methods.txt
-  gaussian_noise_restored.png
-  salt_and_pepper_restored.png
-  gaussian_blur_restored.png
-  brightness_contrast_restored.png
-  rotation_restored.png
-  perspective_warp_restored.png
-  barrel_distortion_restored.png
-  pixelation_restored.png
-```
-
-Distortion and restoration result images:
-
-![Restoration grid](data/Data%201%20with%20distortion/restoration/restoration_grid.png)
 
 ## Task 2: CNN Tumor Classification
 
