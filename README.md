@@ -357,7 +357,11 @@ CNN result images:
 
 Main metric shown: **total true percent**.
 
+Basic CNN on clean Data 1:
+
 ![CNN basic confusion matrix](result/results%20task%201/cnn_on_basic/confusion_matrix.png)
+
+Augmented CNN on Data 1 with rotated training images:
 
 ![CNN augmented confusion matrix](result/results%20task%201/cnn_on_augmented/confusion_matrix.png)
 
