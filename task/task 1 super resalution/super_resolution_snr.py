@@ -19,6 +19,7 @@ if hasattr(sys.stdout, "reconfigure"):
 
 
 OUTPUT_DIR = Path("result/results task 1/super_resolution_snr")
+CLEAN_METRICS_PATH = Path("result/results task 1/super_resolution/Clean/metrics.csv")
 RESTORATION_MODULE_PATH = Path("task/restoration/image_restoration.py")
 LEVEL_GROUPS = {
     "gaussian_noise_snr": {
@@ -166,6 +167,7 @@ def save_metric_graph(
     title: str,
     metric: str,
     output_path: Path,
+    clean_baseline: float | None = None,
 ) -> None:
     x_positions = np.arange(len(labels))
     width = 0.34
@@ -193,6 +195,16 @@ def save_metric_graph(
         "(sharpened_lanczos)"
     )
     plt.grid(axis="y", linestyle="--", alpha=0.35)
+
+    if clean_baseline is not None:
+        plt.axhline(
+            clean_baseline,
+            color="#E15759",
+            linestyle="--",
+            linewidth=2,
+            label=f"Clean no distortion ({clean_baseline:.2f})",
+        )
+
     plt.legend()
 
     for bars in [distorted_bars, restored_bars]:
@@ -226,6 +238,8 @@ def main() -> None:
     restoration_module = load_restoration_module()
     rows: list[dict[str, str | float]] = []
     graph_values: dict[str, dict[str, dict[str, list[float] | list[str]]]] = {}
+    clean_metrics = read_method_metrics(CLEAN_METRICS_PATH)
+    clean_baseline_psnr = clean_metrics["sharpened_lanczos"]["psnr"]
 
     for distortion_type, group in LEVEL_GROUPS.items():
         graph_values[distortion_type] = {
@@ -282,6 +296,7 @@ def main() -> None:
                 group["title"],
                 metric,
                 OUTPUT_DIR / f"{distortion_type}_{metric}_graph.png",
+                clean_baseline_psnr if metric == "psnr" else None,
             )
 
     (OUTPUT_DIR / "methods.txt").write_text(
