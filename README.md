@@ -227,18 +227,18 @@ In `super_resolution_snr`, distorted images are compared to the distorted
 input, and restored images are compared to the restored input. The table below
 uses the `sharpened_lanczos` reconstruction method.
 
-| Distortion | Level | Image type | PSNR | Example image |
-| --- | --- | --- | ---: | --- |
-| gaussian_noise_snr | 5db | distorted | 17.25 | ![Gaussian noise 5db distorted](docs/readme_images/task1_gaussian_noise_snr_5db_distorted.png) |
-| gaussian_noise_snr | 5db | restored | 27.35 | ![Gaussian noise 5db restored](docs/readme_images/task1_gaussian_noise_snr_5db_restored.png) |
-| gaussian_noise_snr | 30db | distorted | 26.74 | ![Gaussian noise 30db distorted](docs/readme_images/task1_gaussian_noise_snr_30db_distorted.png) |
-| gaussian_noise_snr | 30db | restored | 28.14 | ![Gaussian noise 30db restored](docs/readme_images/task1_gaussian_noise_snr_30db_restored.png) |
-| salt_and_pepper_density | 0.01 | distorted | 22.68 | ![Salt and pepper 0.01 distorted](docs/readme_images/task1_salt_and_pepper_density_0_01_distorted.png) |
-| salt_and_pepper_density | 0.01 | restored | 27.79 | ![Salt and pepper 0.01 restored](docs/readme_images/task1_salt_and_pepper_density_0_01_restored.png) |
-| salt_and_pepper_density | 0.10 | distorted | 14.95 | ![Salt and pepper 0.10 distorted](docs/readme_images/task1_salt_and_pepper_density_0_10_distorted.png) |
-| salt_and_pepper_density | 0.10 | restored | 27.31 | ![Salt and pepper 0.10 restored](docs/readme_images/task1_salt_and_pepper_density_0_10_restored.png) |
-| gaussian_blur_sigma | 0.5 | distorted | 27.50 | ![Gaussian blur 0.5 distorted](docs/readme_images/task1_gaussian_blur_sigma_0_5_distorted.png) |
-| gaussian_blur_sigma | 3.0 | distorted | 43.95 | ![Gaussian blur 3.0 distorted](docs/readme_images/task1_gaussian_blur_sigma_3_0_distorted.png) |
+| Distortion | Level | Image type | PSNR | Input image | Downsampled x2 | Super-resolution |
+| --- | --- | --- | ---: | --- | --- | --- |
+| gaussian_noise_snr | 5db | distorted | 17.25 | ![Gaussian noise 5db distorted](docs/readme_images/task1_gaussian_noise_snr_5db_distorted.png) | ![Gaussian noise 5db distorted downsampled](docs/readme_images/task1_gaussian_noise_snr_5db_distorted_downsampled.png) | ![Gaussian noise 5db distorted super-resolution](docs/readme_images/task1_gaussian_noise_snr_5db_distorted_super.png) |
+| gaussian_noise_snr | 5db | restored | 27.35 | ![Gaussian noise 5db restored](docs/readme_images/task1_gaussian_noise_snr_5db_restored.png) | ![Gaussian noise 5db restored downsampled](docs/readme_images/task1_gaussian_noise_snr_5db_restored_downsampled.png) | ![Gaussian noise 5db restored super-resolution](docs/readme_images/task1_gaussian_noise_snr_5db_restored_super.png) |
+| gaussian_noise_snr | 30db | distorted | 26.74 | ![Gaussian noise 30db distorted](docs/readme_images/task1_gaussian_noise_snr_30db_distorted.png) | ![Gaussian noise 30db distorted downsampled](docs/readme_images/task1_gaussian_noise_snr_30db_distorted_downsampled.png) | ![Gaussian noise 30db distorted super-resolution](docs/readme_images/task1_gaussian_noise_snr_30db_distorted_super.png) |
+| gaussian_noise_snr | 30db | restored | 28.14 | ![Gaussian noise 30db restored](docs/readme_images/task1_gaussian_noise_snr_30db_restored.png) | ![Gaussian noise 30db restored downsampled](docs/readme_images/task1_gaussian_noise_snr_30db_restored_downsampled.png) | ![Gaussian noise 30db restored super-resolution](docs/readme_images/task1_gaussian_noise_snr_30db_restored_super.png) |
+| salt_and_pepper_density | 0.01 | distorted | 22.68 | ![Salt and pepper 0.01 distorted](docs/readme_images/task1_salt_and_pepper_density_0_01_distorted.png) | ![Salt and pepper 0.01 distorted downsampled](docs/readme_images/task1_salt_and_pepper_density_0_01_distorted_downsampled.png) | ![Salt and pepper 0.01 distorted super-resolution](docs/readme_images/task1_salt_and_pepper_density_0_01_distorted_super.png) |
+| salt_and_pepper_density | 0.01 | restored | 27.79 | ![Salt and pepper 0.01 restored](docs/readme_images/task1_salt_and_pepper_density_0_01_restored.png) | ![Salt and pepper 0.01 restored downsampled](docs/readme_images/task1_salt_and_pepper_density_0_01_restored_downsampled.png) | ![Salt and pepper 0.01 restored super-resolution](docs/readme_images/task1_salt_and_pepper_density_0_01_restored_super.png) |
+| salt_and_pepper_density | 0.10 | distorted | 14.95 | ![Salt and pepper 0.10 distorted](docs/readme_images/task1_salt_and_pepper_density_0_10_distorted.png) | ![Salt and pepper 0.10 distorted downsampled](docs/readme_images/task1_salt_and_pepper_density_0_10_distorted_downsampled.png) | ![Salt and pepper 0.10 distorted super-resolution](docs/readme_images/task1_salt_and_pepper_density_0_10_distorted_super.png) |
+| salt_and_pepper_density | 0.10 | restored | 27.31 | ![Salt and pepper 0.10 restored](docs/readme_images/task1_salt_and_pepper_density_0_10_restored.png) | ![Salt and pepper 0.10 restored downsampled](docs/readme_images/task1_salt_and_pepper_density_0_10_restored_downsampled.png) | ![Salt and pepper 0.10 restored super-resolution](docs/readme_images/task1_salt_and_pepper_density_0_10_restored_super.png) |
+| gaussian_blur_sigma | 0.5 | distorted | 27.50 | ![Gaussian blur 0.5 distorted](docs/readme_images/task1_gaussian_blur_sigma_0_5_distorted.png) | ![Gaussian blur 0.5 distorted downsampled](docs/readme_images/task1_gaussian_blur_sigma_0_5_distorted_downsampled.png) | ![Gaussian blur 0.5 distorted super-resolution](docs/readme_images/task1_gaussian_blur_sigma_0_5_distorted_super.png) |
+| gaussian_blur_sigma | 3.0 | distorted | 43.95 | ![Gaussian blur 3.0 distorted](docs/readme_images/task1_gaussian_blur_sigma_3_0_distorted.png) | ![Gaussian blur 3.0 distorted downsampled](docs/readme_images/task1_gaussian_blur_sigma_3_0_distorted_downsampled.png) | ![Gaussian blur 3.0 distorted super-resolution](docs/readme_images/task1_gaussian_blur_sigma_3_0_distorted_super.png) |
 
 Task 1 visualization files:
 
