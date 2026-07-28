@@ -1,0 +1,9 @@
+Task 1 Super-Resolution SNR/Level Results
+
+Input image: C:\Users\micha\OneDrive\שולחן העבודה\wordsFiles\Brain_Mri\data\Data 1\test\no_tumor\14 no_28.jpg
+
+This folder runs super-resolution on the same parameterized
+distortion levels used in Task 2.
+
+Graphs use the sharpened_lanczos reconstruction method.
+The CSV stores all reconstruction methods.

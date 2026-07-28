@@ -42,6 +42,6 @@ print(f"Final accuracy: {history['accuracy'][-1]}")
 ## Training Scripts
 
 Training is orchestrated by:
-- `task/task 1 cnn/train_cnn.py` - Train CNN on original images
-- `task/task 1 cnn/train_cnn_augmented.py` - Train CNN on augmented images
+- `task/task 2 cnn/train_cnn.py` - Train CNN on original images
+- `task/task 2 cnn/train_cnn_augmented.py` - Train CNN on augmented images
 - Logs are automatically saved to this directory

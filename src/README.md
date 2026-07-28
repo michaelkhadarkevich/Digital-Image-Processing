@@ -14,8 +14,8 @@ Examples:
 
 ```bash
 python "data\Data 1\preprocess.py" --input "PASTE_DATASET_PATH_HERE"
-python "task\task 1 cnn\train_cnn.py"
+python "task\task 2 cnn\train_cnn.py"
 python "task\augmentation\augment_train_rotate.py"
-python "task\task 2 super resalution\super_resolution.py"
+python "task\task 1 super resalution\super_resolution.py"
 python "task\task 3 yolo\yolo_detection.py"
 ```

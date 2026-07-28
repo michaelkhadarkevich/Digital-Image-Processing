@@ -19,9 +19,9 @@ Brain_Mri/
 |   |   `-- yolo_segmentation/
 |   `-- Data 2 with distortion/
 |-- task/
-|   |-- task 1 cnn/
+|   |-- task 1 super resalution/
 |   |-- augmentation/
-|   |-- task 2 super resalution/
+|   |-- task 2 cnn/
 |   |-- task 3 yolo/
 |   |-- distortion methods/
 |   `-- restoration/
@@ -40,11 +40,11 @@ Brain_Mri/
 
 ```bash
 python "data\Data 1\preprocess.py" --input "PASTE_DATASET_PATH_HERE"
-python "task\task 1 cnn\train_cnn.py"
+python "task\task 1 super resalution\super_resolution.py"
+python "task\task 2 cnn\train_cnn.py"
 python "task\augmentation\augment_train_rotate.py"
 python "task\distortion methods\distortion_methods.py"
 python "task\restoration\image_restoration.py"
-python "task\task 2 super resalution\super_resolution.py"
 python "task\task 3 yolo\yolo_detection.py"
 python "task\task 3 yolo\prepare_yolo_segmentation.py"
 python "task\task 3 yolo\train_yolo_segmentation.py"
@@ -62,12 +62,12 @@ python "task\task 3 yolo\run_yolo_segmentation.py"
 - `data\Data 2`: YOLO MRI segmentation dataset.
 - `data\Data 2\yolo_segmentation`: converted YOLO segmentation images, labels, and `data.yaml`.
 - `data\Data 2 with distortion`: reserved for distorted YOLO data.
-- `task\task 1 cnn`: CNN training, prediction, and CNN evaluation scripts.
+- `task\task 2 cnn`: CNN training, prediction, and CNN evaluation scripts.
 - `task\augmentation`: augmentation scripts.
-- `task\task 2 super resalution`: super-resolution scripts.
+- `task\task 1 super resalution`: super-resolution scripts.
 - `task\task 3 yolo`: YOLO detection, YOLO segmentation, and YOLO analysis scripts.
 - `task\distortion methods`: distortion scripts.
 - `task\restoration`: restoration scripts.
-- `result\results task 1`: CNN outputs grouped as `cnn_on_basic`, `cnn_on_augmented`, `cnn_on_distortion`, `cnn_on_distortion_restoration`, and `cnn_fine_tune_distortion`.
-- `result\results task 2`: super-resolution outputs.
+- `result\results task 2`: CNN outputs grouped as `cnn_on_basic`, `cnn_on_augmented`, `cnn_on_distortion`, `cnn_on_distortion_restoration`, and `cnn_fine_tune_distortion`.
+- `result\results task 1`: super-resolution outputs.
 - `result\results task 3`: YOLO outputs.

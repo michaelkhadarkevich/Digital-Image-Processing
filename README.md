@@ -6,8 +6,8 @@ This project works with two brain MRI datasets and is organized into three
 tasks:
 
 ```text
-Task 1: CNN tumor classification
-Task 2: Super-resolution
+Task 1: Super-resolution
+Task 2: CNN tumor classification
 Task 3: YOLO detection
 ```
 
@@ -34,7 +34,7 @@ The project follows this experiment structure:
 | --- | --- |
 | Select a public dataset | Data 1 uses the Kaggle brain MRI tumor/no-tumor dataset. Data 2 uses an MRI tumor segmentation dataset with masks. |
 | Select 3 distortions | Gaussian noise, salt-and-pepper noise, and gaussian blur. YOLO also includes brightness/contrast levels. |
-| Select 3 tasks | Task 1: CNN tumor classification. Task 2: super-resolution. Task 3: YOLO tumor segmentation. |
+| Select 3 tasks | Task 1: super-resolution. Task 2: CNN tumor classification. Task 3: YOLO tumor segmentation. |
 | Select a model/algorithm for each task | CNN classifier, interpolation-based super-resolution algorithms, and YOLO segmentation. |
 | Baseline | Measure performance on clean images. |
 | Distortion | Apply distortions and measure degradation. |
@@ -55,8 +55,8 @@ input, and fine-tuned models when fine-tuning is relevant:
 
 | Task | Baseline | Distortion test | Restoration / enhancement | Fine-tuning |
 | --- | --- | --- | --- | --- |
-| Task 1 CNN classification | `cnn_on_basic` | `cnn_on_distortion` | `cnn_on_distortion_restoration` | `cnn_fine_tune_distortion` |
-| Task 2 super-resolution | `super_resolution\Clean` | `super_resolution_snr\distortions` | `super_resolution_snr\restoration` | Not used, because this task uses classical interpolation algorithms. |
+| Task 1 super-resolution | `super_resolution\Clean` | `super_resolution_snr\distortions` | `super_resolution_snr\restoration` | Not used, because this task uses classical interpolation algorithms. |
+| Task 2 CNN classification | `cnn_on_basic` | `cnn_on_distortion` | `cnn_on_distortion_restoration` | `cnn_fine_tune_distortion` |
 | Task 3 YOLO segmentation | `yolo_basic` | `yolo_basic_on_distortion_levels` | `yolo_basic_on_restored_distortion_levels` | `yolo_fine_tuned` |
 
 The measurements are saved as CSV tables and visualized with bar plots, curves,
@@ -72,7 +72,7 @@ pip install -r requirements.txt
 
 ## Data 1 Preparation For CNN And Super-Resolution
 
-`data\Data 1` is used for Task 1 CNN classification and Task 2
+`data\Data 1` is used for Task 1 super-resolution and Task 2 CNN classification
 super-resolution.
 
 Download the dataset:
@@ -100,25 +100,25 @@ data\Data 1\
 
 ## Super-Resolution Preparation From Data 1
 
-Task 2 downsamples an MRI image by x2 and reconstructs it back to the original
+Task 1 downsamples an MRI image by x2 and reconstructs it back to the original
 size using interpolation-based super-resolution techniques.
 
 Run on the default image:
 
 ```bash
-python "task\task 2 super resalution\super_resolution.py"
+python "task\task 1 super resalution\super_resolution.py"
 ```
 
 Or choose a specific image:
 
 ```bash
-python "task\task 2 super resalution\super_resolution.py" --image "path\to\image.jpg"
+python "task\task 1 super resalution\super_resolution.py" --image "path\to\image.jpg"
 ```
 
 Outputs are saved to:
 
 ```text
-result\results task 2\super_resolution\
+result\results task 1\super_resolution\
   original.png
   downsampled_x2.png
   downsampled_x2_preview.png
@@ -135,26 +135,26 @@ result\results task 2\super_resolution\
 To also run super-resolution on distortion and restoration images:
 
 ```bash
-python "task\task 2 super resalution\super_resolution.py" --include-derived
+python "task\task 1 super resalution\super_resolution.py" --include-derived
 ```
 
 Additional outputs are saved to:
 
 ```text
-result\results task 2\super_resolution\distortions\
-result\results task 2\super_resolution\restoration\
+result\results task 1\super_resolution\distortions\
+result\results task 1\super_resolution\restoration\
 ```
 
-Run the Task 1-style SNR/level super-resolution experiment:
+Run the Task 2-style SNR/level super-resolution experiment:
 
 ```bash
-python "task\task 2 super resalution\super_resolution_snr.py"
+python "task\task 1 super resalution\super_resolution_snr.py"
 ```
 
 Outputs are saved to:
 
 ```text
-result\results task 2\super_resolution_snr\
+result\results task 1\super_resolution_snr\
   distortions\
   restoration\
   super_resolution_results\
@@ -170,8 +170,8 @@ Distortion and restoration are shared experiments. They can be used by all
 tasks:
 
 ```text
-Task 2 can run super-resolution on distorted/restored images.
-Task 1 can run the CNN on distorted/restored images.
+Task 1 can run super-resolution on distorted/restored images.
+Task 2 can run the CNN on distorted/restored images.
 Task 3 can run YOLO on distorted/restored images.
 ```
 
@@ -229,15 +229,15 @@ Distortion and restoration result images:
 
 ![Restoration grid](data/Data%201%20with%20distortion/restoration/restoration_grid.png)
 
-## Task 1: CNN Tumor Classification
+## Task 2: CNN Tumor Classification
 
-Task 1 trains a CNN binary classifier that predicts whether an MRI image has a
+Task 2 trains a CNN binary classifier that predicts whether an MRI image has a
 tumor.
 
 Train the normal CNN:
 
 ```bash
-python "task\task 1 cnn\train_cnn.py"
+python "task\task 2 cnn\train_cnn.py"
 ```
 
 The trained model is saved to:
@@ -249,7 +249,7 @@ models\cnn_basic.keras
 Results are saved to:
 
 ```text
-result\results task 1\cnn_on_basic\
+result\results task 2\cnn_on_basic\
   training_history.png
   confusion_matrix.png
   metrics.txt
@@ -271,7 +271,7 @@ data\Data 1 augmented\
 Train the CNN on the augmented dataset:
 
 ```bash
-python "task\task 1 cnn\train_cnn_augmented.py"
+python "task\task 2 cnn\train_cnn_augmented.py"
 ```
 
 Augmentation note:
@@ -292,7 +292,7 @@ models\cnn_augmented.keras
 Augmented results are saved to:
 
 ```text
-result\results task 1\cnn_on_augmented\
+result\results task 2\cnn_on_augmented\
   training_history.png
   confusion_matrix.png
   metrics.txt
@@ -302,19 +302,19 @@ result\results task 1\cnn_on_augmented\
 Fine-tuned distortion CNN results should be saved to:
 
 ```text
-result\results task 1\cnn_fine_tune_distortion\
+result\results task 2\cnn_fine_tune_distortion\
 ```
 
 Run the trained basic CNN on clean and distorted images only:
 
 ```bash
-python "task\task 1 cnn\evaluate_distortion.py"
+python "task\task 2 cnn\evaluate_distortion.py"
 ```
 
 The distortion-only CNN outputs are saved to:
 
 ```text
-result\results task 1\cnn_on_distortion\
+result\results task 2\cnn_on_distortion\
   cnn_predictions_all_images.csv
   summary_all_images.txt
   confusion_percentages.csv
@@ -324,13 +324,13 @@ result\results task 1\cnn_on_distortion\
 Predict one image:
 
 ```bash
-python "task\task 1 cnn\predict.py" --image "path\to\image.jpg"
+python "task\task 2 cnn\predict.py" --image "path\to\image.jpg"
 ```
 
 Run the trained CNN on shared distortion and restoration images:
 
 ```bash
-python "task\task 1 cnn\evaluate_distortion_restoration.py"
+python "task\task 2 cnn\evaluate_distortion_restoration.py"
 ```
 
 Run these first:
@@ -343,7 +343,7 @@ python "task\restoration\image_restoration.py"
 The CNN comparison outputs are saved to:
 
 ```text
-result\results task 1\cnn_on_distortion_restoration\
+result\results task 2\cnn_on_distortion_restoration\
   cnn_predictions_all_images.csv
   summary_all_images.txt
   confusion_percentages.csv
@@ -359,17 +359,17 @@ Main metric shown: **total true percent**.
 
 Basic CNN on clean Data 1:
 
-![CNN basic confusion matrix](result/results%20task%201/cnn_on_basic/confusion_matrix.png)
+![CNN basic confusion matrix](result/results%20task%202/cnn_on_basic/confusion_matrix.png)
 
 Augmented CNN on Data 1 with rotated training images:
 
-![CNN augmented confusion matrix](result/results%20task%201/cnn_on_augmented/confusion_matrix.png)
+![CNN augmented confusion matrix](result/results%20task%202/cnn_on_augmented/confusion_matrix.png)
 
-![CNN SNR comparison](result/results%20task%201/cnn_compare_snr_distortion_restoration_fine_tune_total_true_percent_graph.png)
+![CNN SNR comparison](result/results%20task%202/cnn_compare_snr_distortion_restoration_fine_tune_total_true_percent_graph.png)
 
-![CNN salt and pepper comparison](result/results%20task%201/cnn_compare_salt_and_pepper_distortion_restoration_fine_tune_total_true_percent_graph.png)
+![CNN salt and pepper comparison](result/results%20task%202/cnn_compare_salt_and_pepper_distortion_restoration_fine_tune_total_true_percent_graph.png)
 
-![CNN gaussian blur comparison](result/results%20task%201/cnn_compare_gaussian_blur_distortion_restoration_fine_tune_total_true_percent_graph.png)
+![CNN gaussian blur comparison](result/results%20task%202/cnn_compare_gaussian_blur_distortion_restoration_fine_tune_total_true_percent_graph.png)
 
 ## Data 2 Preparation For YOLO
 
@@ -509,8 +509,8 @@ Main metric shown: **mAP50**.
 | --- | --- |
 | Data 1 | Brain MRI tumor/no-tumor image classification data. |
 | Data 2 | MRI segmentation data converted into YOLO segmentation format with images, masks, and YOLO labels. |
-| Task 1 | CNN binary classifier for tumor vs no tumor. |
-| Task 2 | x2 downsample then reconstruct using nearest, bilinear, bicubic, lanczos, and sharpened_lanczos. |
+| Task 1 | x2 downsample then reconstruct using nearest, bilinear, bicubic, lanczos, and sharpened_lanczos. |
+| Task 2 | CNN binary classifier for tumor vs no tumor. |
 | Task 3 | YOLO segmentation for marking tumor regions. |
 | Distortion levels | Gaussian noise SNR, salt-and-pepper density, gaussian blur sigma, and YOLO brightness/contrast levels. |
 | Restoration | Noise uses smoothing/sharpening, salt-and-pepper uses median filtering, blur uses unsharp masking, brightness/contrast uses intensity normalization. |
@@ -530,47 +530,14 @@ Important before/after and annotation outputs:
 ```text
 data\Data 1 with distortion\distortions\distortion_grid.png
 data\Data 1 with distortion\restoration\restoration_grid.png
-result\results task 2\super_resolution\Clean\super_resolution_grid.png
-result\results task 2\super_resolution_snr\super_resolution_results\
+result\results task 1\super_resolution\Clean\super_resolution_grid.png
+result\results task 1\super_resolution_snr\super_resolution_results\
 result\results task 3\yolo_tumor_segmentation\annotated\
 ```
 
-### Task 1 CNN Measurements
+### Task 1 Super-Resolution Measurements
 
-CNN main metric:
-
-```text
-Total true percent = correct predictions / all predictions
-```
-
-Selected results from `result\results task 1\cnn_on_distortion_restoration\confusion_percentages.csv`:
-
-| Source | Total true % | Total images |
-| --- | ---: | ---: |
-| clean original | 78.95 | 38 |
-| gaussian_noise distorted | 71.05 | 38 |
-| gaussian_noise restored | 68.42 | 38 |
-| salt_and_pepper distorted | 44.73 | 38 |
-| salt_and_pepper restored | 73.68 | 38 |
-| gaussian_blur distorted | 60.53 | 38 |
-| gaussian_blur restored | 60.53 | 38 |
-
-CNN visualization files:
-
-```text
-result\results task 1\cnn_on_basic\training_history.png
-result\results task 1\cnn_on_basic\confusion_matrix.png
-result\results task 1\cnn_on_distortion\total_true_percent_graph.png
-result\results task 1\cnn_on_distortion_restoration\total_true_percent_graph.png
-result\results task 1\cnn_fine_tune_distortion\total_true_percent_graph.png
-result\results task 1\cnn_compare_snr_distortion_restoration_fine_tune_total_true_percent_graph.png
-result\results task 1\cnn_compare_salt_and_pepper_distortion_restoration_fine_tune_total_true_percent_graph.png
-result\results task 1\cnn_compare_gaussian_blur_distortion_restoration_fine_tune_total_true_percent_graph.png
-```
-
-### Task 2 Super-Resolution Measurements
-
-Task 2 main metric:
+Task 1 main metric:
 
 ```text
 PSNR: higher is better.
@@ -593,25 +560,58 @@ uses the `sharpened_lanczos` reconstruction method.
 | gaussian_blur_sigma | 0.5 | distorted | 27.50 |
 | gaussian_blur_sigma | 3.0 | distorted | 43.95 |
 
-Task 2 visualization files:
+Task 1 visualization files:
 
 ```text
-result\results task 2\super_resolution\detailed_psnr_graph.png
-result\results task 2\super_resolution\vs_original_psnr_graph.png
-result\results task 2\super_resolution_snr\gaussian_noise_snr_psnr_graph.png
-result\results task 2\super_resolution_snr\salt_and_pepper_density_psnr_graph.png
-result\results task 2\super_resolution_snr\gaussian_blur_sigma_psnr_graph.png
+result\results task 1\super_resolution\detailed_psnr_graph.png
+result\results task 1\super_resolution\vs_original_psnr_graph.png
+result\results task 1\super_resolution_snr\gaussian_noise_snr_psnr_graph.png
+result\results task 1\super_resolution_snr\salt_and_pepper_density_psnr_graph.png
+result\results task 1\super_resolution_snr\gaussian_blur_sigma_psnr_graph.png
 ```
 
 Super-resolution result images:
 
-![Clean super-resolution grid](result/results%20task%202/super_resolution/Clean/super_resolution_grid.png)
+![Clean super-resolution grid](result/results%20task%201/super_resolution/Clean/super_resolution_grid.png)
 
-![Super-resolution gaussian noise PSNR](result/results%20task%202/super_resolution_snr/gaussian_noise_snr_psnr_graph.png)
+![Super-resolution gaussian noise PSNR](result/results%20task%201/super_resolution_snr/gaussian_noise_snr_psnr_graph.png)
 
-![Super-resolution salt and pepper PSNR](result/results%20task%202/super_resolution_snr/salt_and_pepper_density_psnr_graph.png)
+![Super-resolution salt and pepper PSNR](result/results%20task%201/super_resolution_snr/salt_and_pepper_density_psnr_graph.png)
 
-![Super-resolution gaussian blur PSNR](result/results%20task%202/super_resolution_snr/gaussian_blur_sigma_psnr_graph.png)
+![Super-resolution gaussian blur PSNR](result/results%20task%201/super_resolution_snr/gaussian_blur_sigma_psnr_graph.png)
+
+### Task 2 CNN Measurements
+
+CNN main metric:
+
+```text
+Total true percent = correct predictions / all predictions
+```
+
+Selected results from `result\results task 2\cnn_on_distortion_restoration\confusion_percentages.csv`:
+
+| Source | Total true % | Total images |
+| --- | ---: | ---: |
+| clean original | 78.95 | 38 |
+| gaussian_noise distorted | 71.05 | 38 |
+| gaussian_noise restored | 68.42 | 38 |
+| salt_and_pepper distorted | 44.73 | 38 |
+| salt_and_pepper restored | 73.68 | 38 |
+| gaussian_blur distorted | 60.53 | 38 |
+| gaussian_blur restored | 60.53 | 38 |
+
+CNN visualization files:
+
+```text
+result\results task 2\cnn_on_basic\training_history.png
+result\results task 2\cnn_on_basic\confusion_matrix.png
+result\results task 2\cnn_on_distortion\total_true_percent_graph.png
+result\results task 2\cnn_on_distortion_restoration\total_true_percent_graph.png
+result\results task 2\cnn_fine_tune_distortion\total_true_percent_graph.png
+result\results task 2\cnn_compare_snr_distortion_restoration_fine_tune_total_true_percent_graph.png
+result\results task 2\cnn_compare_salt_and_pepper_distortion_restoration_fine_tune_total_true_percent_graph.png
+result\results task 2\cnn_compare_gaussian_blur_distortion_restoration_fine_tune_total_true_percent_graph.png
+```
 
 ### Task 3 YOLO Measurements
 
@@ -647,8 +647,8 @@ result\results task 3\yolo_snr_results\yolo_brightness_contrast_level_map50_grap
 
 | Task | Measurements | Main plots |
 | --- | --- | --- |
-| Task 1 CNN | total true percent | bar plots comparing clean, distorted, restored, and fine-tuned CNN results |
-| Task 2 Super-resolution | PSNR | PSNR heatmaps and bar plots |
+| Task 1 Super-resolution | PSNR | PSNR heatmaps and bar plots |
+| Task 2 CNN | total true percent | bar plots comparing clean, distorted, restored, and fine-tuned CNN results |
 | Task 3 YOLO | mask mAP50 | mAP50 bar plots comparing basic, restored, and fine-tuned YOLO |
 
 ## Future Enhancements

@@ -1,0 +1,12 @@
+Super-Resolution Results
+
+Input image: C:\Users\micha\OneDrive\שולחן העבודה\wordsFiles\Brain_Mri\result\results task 1\super_resolution_snr\distortions\gaussian_noise_snr_20db.png
+Original size: 224x224
+Downsampled x2 size: 112x112
+
+method,mse,rmse,mae,psnr,ssim,reconstruction_score
+nearest,259.7441,16.1166,9.5770,23.9853,0.974201,96.24
+bilinear,205.3505,14.3301,9.0661,25.0058,0.979470,96.44
+bicubic,138.9202,11.7864,7.6740,26.7032,0.987272,96.99
+lanczos,112.6746,10.6148,7.0931,27.6125,0.990233,97.22
+sharpened_lanczos,175.6387,13.2529,8.7695,25.6846,0.984908,96.56
