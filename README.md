@@ -357,6 +357,10 @@ CNN result images:
 
 Main metric shown: **total true percent**.
 
+![CNN basic confusion matrix](result/results%20task%201/cnn_on_basic/confusion_matrix.png)
+
+![CNN augmented confusion matrix](result/results%20task%201/cnn_on_augmented/confusion_matrix.png)
+
 ![CNN SNR comparison](result/results%20task%201/cnn_compare_snr_distortion_restoration_fine_tune_total_true_percent_graph.png)
 
 ![CNN salt and pepper comparison](result/results%20task%201/cnn_compare_salt_and_pepper_distortion_restoration_fine_tune_total_true_percent_graph.png)
