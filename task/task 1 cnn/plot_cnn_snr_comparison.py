@@ -13,6 +13,7 @@ RESULTS_TASK_1 = Path("result/results task 1")
 DISTORTION_RESTORATION_CSV = (
     RESULTS_TASK_1 / "cnn_on_distortion_restoration" / "confusion_percentages.csv"
 )
+BASIC_METRICS_PATH = RESULTS_TASK_1 / "cnn_on_basic" / "metrics.txt"
 FINE_TUNE_CSV = RESULTS_TASK_1 / "cnn_fine_tune_distortion" / "summary.csv"
 OUTPUT_PATH = (
     RESULTS_TASK_1
@@ -76,11 +77,20 @@ def read_fine_tune() -> dict[str, float]:
     return fine_tuned
 
 
+def read_basic_clean_percent() -> float:
+    with BASIC_METRICS_PATH.open(encoding="utf-8-sig") as file:
+        for line in file:
+            if line.startswith("Test accuracy:"):
+                return float(line.split(":", 1)[1].strip().removesuffix("%"))
+    raise ValueError(f"Could not find test accuracy in {BASIC_METRICS_PATH}")
+
+
 def save_comparison_graph(
     methods: list[tuple[str, str]],
     distorted: dict[str, float],
     restored: dict[str, float],
     fine_tuned: dict[str, float],
+    basic_clean_percent: float,
     title: str,
     output_path: Path,
 ) -> None:
@@ -119,6 +129,13 @@ def save_comparison_graph(
         label="CNN fine tuned",
         color="#59A14F",
     )
+    plt.axhline(
+        basic_clean_percent,
+        color="#333333",
+        linestyle="--",
+        linewidth=1.8,
+        label=f"Basic CNN on clean ({basic_clean_percent:.2f}%)",
+    )
 
     plt.xticks(x_positions, labels)
     plt.ylabel("Total true percent")
@@ -139,12 +156,14 @@ def main() -> None:
 
     distorted, restored = read_distortion_restoration()
     fine_tuned = read_fine_tune()
+    basic_clean_percent = read_basic_clean_percent()
 
     save_comparison_graph(
         SNR_METHODS,
         distorted,
         restored,
         fine_tuned,
+        basic_clean_percent,
         "CNN Total True Percent By Gaussian Noise SNR",
         OUTPUT_PATH,
     )
@@ -153,6 +172,7 @@ def main() -> None:
         distorted,
         restored,
         fine_tuned,
+        basic_clean_percent,
         "CNN Total True Percent By Salt And Pepper Density",
         SALT_PEPPER_OUTPUT_PATH,
     )
@@ -161,6 +181,7 @@ def main() -> None:
         distorted,
         restored,
         fine_tuned,
+        basic_clean_percent,
         "CNN Total True Percent By Gaussian Blur Sigma",
         BLUR_OUTPUT_PATH,
     )
