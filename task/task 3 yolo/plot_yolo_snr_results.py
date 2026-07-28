@@ -11,6 +11,7 @@ import numpy as np
 
 RESULTS_ROOT = Path("result/results task 3/yolo_fine_tuned")
 OUTPUT_DIR = Path("result/results task 3/yolo_snr_results")
+YOLO_BASIC_RESULTS_CSV = Path("result/results task 3/yolo_basic/train/results.csv")
 BASIC_METRICS_PATH = OUTPUT_DIR / "yolo_basic_distortion_level_metrics.csv"
 BASIC_RESTORED_METRICS_PATH = OUTPUT_DIR / "yolo_basic_restored_distortion_level_metrics.csv"
 DISTORTION_GROUPS = {
@@ -100,6 +101,23 @@ def read_basic_restored_metrics() -> dict[str, dict[str, float]]:
     return metrics_by_method
 
 
+def read_basic_clean_metrics() -> dict[str, float]:
+    if not YOLO_BASIC_RESULTS_CSV.exists():
+        raise FileNotFoundError(YOLO_BASIC_RESULTS_CSV)
+
+    with YOLO_BASIC_RESULTS_CSV.open(newline="", encoding="utf-8") as file:
+        rows = list(csv.DictReader(file))
+
+    if not rows:
+        raise ValueError(f"No training rows found in {YOLO_BASIC_RESULTS_CSV}")
+
+    row = rows[-1]
+    return {
+        "mask_map50": float(row["metrics/mAP50(M)"]),
+        "mask_map50_95": float(row["metrics/mAP50-95(M)"]),
+    }
+
+
 def save_metrics_csv(rows: list[dict[str, str | float]]) -> None:
     output_path = OUTPUT_DIR / "yolo_distortion_level_metrics.csv"
     with output_path.open("w", newline="", encoding="utf-8") as file:
@@ -126,6 +144,7 @@ def save_metric_graph(
     basic_values: list[float],
     basic_restored_values: list[float],
     fine_tuned_values: list[float],
+    basic_clean_value: float,
     title: str,
     metric_name: str,
     output_path: Path,
@@ -154,6 +173,13 @@ def save_metric_graph(
         width,
         label=f"Fine-tuned YOLO {metric_name}",
         color="#59A14F",
+    )
+    plt.axhline(
+        basic_clean_value,
+        color="#333333",
+        linestyle="--",
+        linewidth=1.8,
+        label=f"Basic YOLO on clean {metric_name} ({basic_clean_value:.3f})",
     )
 
     plt.xticks(x_positions, labels)
@@ -185,6 +211,7 @@ def main() -> None:
 
     basic_metrics_by_method = read_basic_metrics()
     basic_restored_metrics_by_method = read_basic_restored_metrics()
+    basic_clean_metrics = read_basic_clean_metrics()
     rows = []
 
     for distortion_type, group in DISTORTION_GROUPS.items():
@@ -225,6 +252,7 @@ def main() -> None:
             basic_map50_values,
             basic_restored_map50_values,
             fine_tuned_map50_values,
+            basic_clean_metrics["mask_map50"],
             group["title"],
             "mAP50",
             OUTPUT_DIR / group["map50_output"],
@@ -234,6 +262,7 @@ def main() -> None:
             basic_map50_95_values,
             basic_restored_map50_95_values,
             fine_tuned_map50_95_values,
+            basic_clean_metrics["mask_map50_95"],
             group["title"],
             "mAP50-95",
             OUTPUT_DIR / group["map50_95_output"],
