@@ -292,6 +292,22 @@ This writes:
 data\Data 1 augmented\
 ```
 
+CNN augmentation example:
+
+```text
+Original training image:
+data\Data 1\train\no_tumor\1 no_23.jpg
+
+Augmented rotated image:
+data\Data 1 augmented\train\no_tumor\1 no_23_rot_20p0.jpg
+```
+
+The augmented image is the same MRI rotated by 20 degrees.
+
+![Task 2 CNN original example](docs/readme_images/task2_cnn_original_example.jpg)
+
+![Task 2 CNN augmented rotated example](docs/readme_images/task2_cnn_augmented_rot20_example.jpg)
+
 The CNN can also be trained on the augmented dataset.
 
 Augmentation note:
