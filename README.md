@@ -434,6 +434,10 @@ label content starts like:
 In the label file, `0` is the class id for `tumor`. The following numbers are
 normalized x/y polygon points that mark the tumor mask.
 
+Example Data 2 image:
+
+![Data 2 YOLO image example](data/Data%202/yolo_segmentation/example_data2_yolo_image.png)
+
 Train YOLO segmentation:
 
 ```bash
