@@ -112,6 +112,62 @@ def save_psnr_svg(rows: list[dict[str, float]], output_path: Path) -> None:
     output_path.write_text("\n".join(lines), encoding="utf-8")
 
 
+def save_psnr_png(rows: list[dict[str, float]], output_path: Path) -> None:
+    width, height = 900, 520
+    margin_left, margin_top, margin_right, margin_bottom = 90, 55, 45, 80
+    chart_w = width - margin_left - margin_right
+    chart_h = height - margin_top - margin_bottom
+
+    psnr_values = [row["psnr"] for row in rows]
+    min_y = math.floor(min(psnr_values)) - 1
+    max_y = math.ceil(max(psnr_values)) + 1
+    if min_y == max_y:
+        max_y += 1
+
+    def x_pos(index: int) -> float:
+        if len(rows) == 1:
+            return margin_left + chart_w / 2
+        return margin_left + index * chart_w / (len(rows) - 1)
+
+    def y_pos(value: float) -> float:
+        return margin_top + chart_h * (1 - (value - min_y) / (max_y - min_y))
+
+    canvas = Image.new("RGB", (width, height), "#f7f9f7")
+    draw = ImageDraw.Draw(canvas)
+    draw.text((35, 18), "Lanczos PSNR after stronger downsampling", fill="#182228")
+    draw.text(
+        (35, 42),
+        "Clean MRI image, downsampled by factor and reconstructed to 224x224 with Lanczos",
+        fill="#56636b",
+    )
+
+    tick_step = max(1, (max_y - min_y) // 6)
+    for tick in range(min_y, max_y + 1, tick_step):
+        y = y_pos(tick)
+        draw.line((margin_left, y, margin_left + chart_w, y), fill="#d8dddd", width=1)
+        draw.text((35, y - 7), str(tick), fill="#56636b")
+
+    draw.line((margin_left, margin_top, margin_left, margin_top + chart_h), fill="#667077", width=2)
+    draw.line(
+        (margin_left, margin_top + chart_h, margin_left + chart_w, margin_top + chart_h),
+        fill="#667077",
+        width=2,
+    )
+
+    points = [(x_pos(i), y_pos(row["psnr"])) for i, row in enumerate(rows)]
+    for start, end in zip(points, points[1:]):
+        draw.line((start[0], start[1], end[0], end[1]), fill="#2666ac", width=4)
+
+    for (x, y), row in zip(points, rows):
+        draw.ellipse((x - 6, y - 6, x + 6, y + 6), fill="#008074")
+        draw.text((x - 18, y - 22), f"{row['psnr']:.2f}", fill="#182228")
+        draw.text((x - 10, margin_top + chart_h + 20), f"x{int(row['factor'])}", fill="#182228")
+
+    draw.text((width // 2 - 70, height - 35), "Downsample factor", fill="#56636b")
+    draw.text((14, height // 2), "PSNR", fill="#56636b")
+    canvas.save(output_path, optimize=True)
+
+
 def save_comparison_grid(original: Image.Image, reconstructions: list[tuple[str, Image.Image]], output_path: Path) -> None:
     thumb_size = (112, 112)
     padding = 16
@@ -173,6 +229,7 @@ def main() -> None:
 
     original.save(OUTPUT_DIR / "original_clean.png", optimize=True)
     save_psnr_svg(rows, OUTPUT_DIR / "lanczos_psnr_by_downscale_factor.svg")
+    save_psnr_png(rows, OUTPUT_DIR / "lanczos_psnr_by_downscale_factor.png")
     save_comparison_grid(original, reconstructions, OUTPUT_DIR / "lanczos_extra_downscale_grid.png")
     (OUTPUT_DIR / "README.txt").write_text(
         "\n".join(
