@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="420" viewBox="0 0 760 420">
+<rect width="100%" height="100%" fill="#f7f9f7"/>
+<text x="30" y="24" font-family="Arial" font-size="18" font-weight="700" fill="#182228">Lanczos quality after stronger downsampling</text>
+<line x1="70" y1="360" x2="730" y2="360" stroke="#667" stroke-width="1"/>
+<line x1="70" y1="35" x2="70" y2="360" stroke="#667" stroke-width="1"/>
+<polyline points="70.0,63.0 180.0,176.0 290.0,228.0 400.0,262.2 510.0,281.5 620.0,308.8 730.0,325.1" fill="none" stroke="#2666ac" stroke-width="3"/>
+<line x1="65" y1="360.0" x2="730" y2="360.0" stroke="#d8dddd" stroke-width="1"/>
+<text x="18" y="364.0" font-family="Arial" font-size="11" fill="#56636b">15</text>
+<line x1="65" y1="299.1" x2="730" y2="299.1" stroke="#d8dddd" stroke-width="1"/>
+<text x="18" y="303.1" font-family="Arial" font-size="11" fill="#56636b">18</text>
+<line x1="65" y1="238.1" x2="730" y2="238.1" stroke="#d8dddd" stroke-width="1"/>
+<text x="18" y="242.1" font-family="Arial" font-size="11" fill="#56636b">21</text>
+<line x1="65" y1="177.2" x2="730" y2="177.2" stroke="#d8dddd" stroke-width="1"/>
+<text x="18" y="181.2" font-family="Arial" font-size="11" fill="#56636b">24</text>
+<line x1="65" y1="116.2" x2="730" y2="116.2" stroke="#d8dddd" stroke-width="1"/>
+<text x="18" y="120.2" font-family="Arial" font-size="11" fill="#56636b">27</text>
+<line x1="65" y1="55.3" x2="730" y2="55.3" stroke="#d8dddd" stroke-width="1"/>
+<text x="18" y="59.3" font-family="Arial" font-size="11" fill="#56636b">30</text>
+<circle cx="70.0" cy="63.0" r="5" fill="#008074"/>
+<text x="60.0" y="385" font-family="Arial" font-size="12" fill="#182228">x2</text>
+<text x="52.0" y="53.0" font-family="Arial" font-size="10" fill="#182228">29.62</text>
+<circle cx="180.0" cy="176.0" r="5" fill="#008074"/>
+<text x="170.0" y="385" font-family="Arial" font-size="12" fill="#182228">x3</text>
+<text x="162.0" y="166.0" font-family="Arial" font-size="10" fill="#182228">24.06</text>
+<circle cx="290.0" cy="228.0" r="5" fill="#008074"/>
+<text x="280.0" y="385" font-family="Arial" font-size="12" fill="#182228">x4</text>
+<text x="272.0" y="218.0" font-family="Arial" font-size="10" fill="#182228">21.50</text>
+<circle cx="400.0" cy="262.2" r="5" fill="#008074"/>
+<text x="390.0" y="385" font-family="Arial" font-size="12" fill="#182228">x5</text>
+<text x="382.0" y="252.2" font-family="Arial" font-size="10" fill="#182228">19.82</text>
+<circle cx="510.0" cy="281.5" r="5" fill="#008074"/>
+<text x="500.0" y="385" font-family="Arial" font-size="12" fill="#182228">x6</text>
+<text x="492.0" y="271.5" font-family="Arial" font-size="10" fill="#182228">18.86</text>
+<circle cx="620.0" cy="308.8" r="5" fill="#008074"/>
+<text x="610.0" y="385" font-family="Arial" font-size="12" fill="#182228">x8</text>
+<text x="602.0" y="298.8" font-family="Arial" font-size="10" fill="#182228">17.52</text>
+<circle cx="730.0" cy="325.1" r="5" fill="#008074"/>
+<text x="720.0" y="385" font-family="Arial" font-size="12" fill="#182228">x10</text>
+<text x="712.0" y="315.1" font-family="Arial" font-size="10" fill="#182228">16.72</text>
+<text x="325.0" y="405" font-family="Arial" font-size="12" fill="#56636b">Downsample factor</text>
+<text x="16" y="220" transform="rotate(-90 16,220)" font-family="Arial" font-size="12" fill="#56636b">PSNR</text>
+</svg>
