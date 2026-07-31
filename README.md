@@ -658,22 +658,6 @@ distorted, restored, and fine-tuned settings. Restoration is useful as a
 pre-processing step, but for deep-learning models, fine-tuning on distorted data
 is often the stronger improvement.
 
-## Future Enhancements
-
-Planned improvements are tracked in:
-
-```text
-ENHANCEMENTS.md
-```
-
-GitHub issue templates are included for:
-
-```text
-CNN enhancement
-Super-resolution enhancement
-YOLO enhancement
-```
-
 ## Notes
 
 This project is for learning and experimentation. It is not a medical diagnostic
