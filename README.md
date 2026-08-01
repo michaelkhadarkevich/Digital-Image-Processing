@@ -20,6 +20,10 @@ Data 1: Kaggle brain MRI tumor/no-tumor classification dataset
 Data 2: MRI tumor segmentation dataset with masks, converted to YOLO format
 ```
 
+**Authors:** [Renana Chaba](https://github.com/renanachaba-svg) & [Michael Khadarkevich](https://github.com/michaelkhadarkevich)
+
+> Digital Image Processing (BIU)
+
 ## Objective And Experiment Design
 
 The objective of this project is to evaluate the robustness of image-processing
@@ -657,11 +661,6 @@ Overall, the project shows that robustness should be measured with clean,
 distorted, restored, and fine-tuned settings. Restoration is useful as a
 pre-processing step, but for deep-learning models, fine-tuning on distorted data
 is often the stronger improvement.
-
-## Notes
-
-This project is for learning and experimentation. It is not a medical diagnostic
-tool and should not be used for clinical decisions.
 
 ## How To Run
 
