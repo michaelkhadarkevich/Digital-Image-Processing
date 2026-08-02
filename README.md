@@ -25,8 +25,24 @@ Data 2: MRI tumor segmentation dataset with masks, converted to YOLO format
 > Digital Image Processing (BIU)
 
 ---
-## Presentation
-The comprehensive project overview presentation is available here: [BrainMRIRobustnessPresentation.pptx](Brain_MRI_Robustness_Presentation.pptx).
+
+## Table of Contents
+  - [Objective And Experiment Design](#objective-and-experiment-design)
+  - [Setup](#setup)
+  - [Data 1 Preparation For CNN And Super-Resolution](#data-1-preparation-for-cnn-and-super-resolution)
+  - [Shared Distortion and Restoration](#shared-distortion-and-restoration)
+  - [Task 1: Super-Resolution](#task-1-super-resolution)
+  - [Task 2: CNN Tumor Classification](#task-2-cnn-tumor-classification)
+  - [Data 2 Preparation For YOLO](#data-2-preparation-for-yolo)
+  - [Task 3: YOLO Tumor Segmentation](#task-3-yolo-tumor-segmentation)
+  - [Documentation Of Choices, Processing, And Results](#documentation-of-choices-processing-and-results)
+    - [Project Choices](#project-choices)
+    - [Input And Output Processing Steps](#input-and-output-processing-steps)
+    - [Task 3 YOLO Measurements](#task-3-yolo-measurements)
+    - [Measurements Summary](#measurements-summary)
+  - [Conclusions](#conclusions)
+  - [How To Run](#how-to-run)
+  - [Presentation](#presentation)
 
 ## Objective And Experiment Design
 
@@ -639,7 +655,7 @@ result\results task 3\yolo_snr_results\yolo_brightness_contrast_level_map50_grap
 | Task 2 CNN | total true percent | bar plots comparing clean, distorted, restored, and fine-tuned CNN results |
 | Task 3 YOLO | mask mAP50 | mAP50 bar plots comparing basic, restored, and fine-tuned YOLO |
 
-## Conclusion
+## Conclusions
 
 The experiments show that image distortions can reduce the quality and
 reliability of MRI image-processing tasks, but the effect depends on the task
@@ -728,3 +744,6 @@ python "task\task 3 yolo\validate_yolo_basic_on_distortion_levels.py"
 python "task\task 3 yolo\validate_yolo_basic_on_restored_distortion_levels.py"
 python "task\task 3 yolo\plot_yolo_snr_results.py"
 ```
+
+## Presentation
+The comprehensive project overview presentation is available here: [BrainMRIRobustnessPresentation.pptx](Brain_MRI_Robustness_Presentation.pptx).
