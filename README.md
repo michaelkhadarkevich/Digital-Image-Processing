@@ -44,6 +44,8 @@ Data 2: MRI tumor segmentation dataset with masks, converted to YOLO format
   - [How To Run](#how-to-run)
   - [Presentation](#presentation)
 
+---
+
 ## Objective And Experiment Design
 
 The objective of this project is to evaluate the robustness of image-processing
