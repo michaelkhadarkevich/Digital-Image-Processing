@@ -173,7 +173,7 @@ How each distortion and restoration works:
 | Rotation | Rotates the image by 18 degrees and fills empty areas with black. | Rotates the image back by -18 degrees. Some border information can still be lost. |
 | Perspective warp | Moves the image corners to simulate a changed camera/view angle. | Applies the inverse perspective transform using the same corner mapping. |
 | Barrel distortion | Bends pixels outward from the image center. | Applies a pincushion-style correction to bend pixels back toward the original geometry. |
-| Pixelation | Downsamples the image into large blocks and resizes it back with nearest-neighbor interpolation. | Uses bicubic interpolation and mild sharpening to smooth block edges. Lost detail cannot be fully recovered. |
+| Pixelation | Downsamples the image into large blocks and resizes it back with nearest-neighbor interpolation. | Uses bicubic interpolation and mild sharpening to smooth blocky edges. Lost details cannot be fully recovered. |
 
 Restoration outputs are saved to:
 
@@ -341,12 +341,7 @@ The augmented image is the same MRI rotated by 20 degrees.
 
 The CNN can also be trained on the augmented dataset.
 
-Augmentation note:
-
-The basic CNN was improved by trying data augmentation. The reason for this
-choice was that Data 1 is not very large, so adding augmented training images
-could give the CNN more examples to learn from. After many runs, augmentation
-did improve the model, but only by a small amount. The main conclusion was that
+Augmentation note: The basic CNN was improved by trying data augmentation. Since Data 1 is relatively small, data augmentation was introduced to expand training diversity and help the model generalize better. After many runs, augmentation did improve the model, but only by a small amount. The main conclusion was that
 changing the position or rotation of the head does not help very much for this
 dataset.
 
