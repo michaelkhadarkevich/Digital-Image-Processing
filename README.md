@@ -24,6 +24,10 @@ Data 2: MRI tumor segmentation dataset with masks, converted to YOLO format
 
 > Digital Image Processing (BIU)
 
+---
+## Presentation
+The comprehensive project overview presentation is available here: [BrainMRIRobustnessPresentation.pptx](Brain_MRI_Robustness_Presentation.pptx).
+
 ## Objective And Experiment Design
 
 The objective of this project is to evaluate the robustness of image-processing
